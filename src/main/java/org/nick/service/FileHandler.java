@@ -1,7 +1,9 @@
 package org.nick.service;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -21,10 +23,24 @@ public class FileHandler {
 	public File readFile(String path,CommonsMultipartFile file) {
 		String filename=file.getOriginalFilename(); 
 		System.out.println(file.getSize());
-        System.out.println("The path is "+path.concat(filename));  
-        File myFile = new File(path.concat(filename));
-        System.out.println(myFile.length());
-		return myFile;
+		
+		
+		byte[] bytes = file.getBytes();
+        File file2 = new File("C:\\Users\\NICK\\Desktop\\TimeSheet.xlsx");
+ 
+        try {
+ 
+            OutputStream os = new FileOutputStream(file2);
+            os.write(bytes);
+            System.out.println("Write bytes to file.");
+            os.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		
+		
+     
+		return file2;
 	}
 	
 	public void makeCalculations(File myFile) throws IOException {

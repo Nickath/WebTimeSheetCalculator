@@ -26,8 +26,12 @@ public class FileHandler {
 		
 		
 		byte[] bytes = file.getBytes();
-        File file2 = new File("C:\\Users\\NICK\\Desktop\\TimeSheet.xlsx");
- 
+		System.out.println("1o " +FileHandler.class
+                .getClassLoader().getResource("").getPath().toString());
+        File file2 = new File(FileHandler.class
+                .getClassLoader().getResource("").getPath().toString().replace("/", "\\")+"TimeSheet.xlsx");
+     
+
         try {
  
             OutputStream os = new FileOutputStream(file2);

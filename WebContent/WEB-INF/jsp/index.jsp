@@ -66,11 +66,22 @@
  
 
       <div class="form-group">
-        <label for="file" class="col-sm-2 control-label">Select a File to upload:</label>
+       <label for="file" class="col-sm-2 control-label">Select a File to upload:</label>
         <div class="col-sm-5">
-          <input type="file" class="inputstl" id="file" name="file">
+          <input type="file" class="inputstl" id="file" name="file" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
+          <div class="bootstrap-filestyle input-group"><input type="text" class="form-control " placeholder="" disabled="" >
+           <span class="group-span-filestyle input-group-btn" tabindex="0">
+            <label for="file" class="btn btn-primary ">
+             <span class="icon-span-filestyle glyphicon glyphicon-upload">
+             </span>
+             <span class="buttonText"> Upload the xlsx</span>
+            </label>
+           </span>
+          </div>
         </div>
       </div>
+      
+      
 
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-4">
@@ -92,6 +103,8 @@
                 iconName : 'glyphicon glyphicon-upload'
 			}); 
 </script>   
+
+
 
 <!-- end of js bootstrap -->
 

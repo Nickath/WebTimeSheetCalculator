@@ -47,7 +47,7 @@ public class FileHandler {
 		return file2;
 	}
 	
-	public void makeCalculations(File myFile) throws IOException {
+	public void makeCalculations(File myFile,int pendingDays,String monthAverage) throws IOException {
 		try {
 			
 			XSSFWorkbook myTimeSheet = new XSSFWorkbook (myFile);
@@ -92,7 +92,7 @@ public class FileHandler {
 			int meanHours= mean/hourDivisor;
 			int meanMinutes= mean%hourDivisor;
 			System.out.println("This month you have worked **"+ daySums.size()+"** days\n");
-			System.out.println("Total Mean Average: " +mean +" ("+meanHours+":"+meanMinutes+")");
+			System.out.println("Total Mean Average: " +mean +" ("+meanHours+":"+(  (meanMinutes<10)?("0"+meanMinutes):meanMinutes)+")");
 			if((((inSums.stream().mapToInt(Integer::intValue).sum()/inSums.size()))%60)<10) {
 				System.out.println("Mean Average coming time: "+ (((inSums.stream().mapToInt(Integer::intValue).sum()/inSums.size()))/60)+":0"+(((inSums.stream().mapToInt(Integer::intValue).sum()/inSums.size()))%60));
 				
@@ -110,17 +110,13 @@ public class FileHandler {
 				System.out.println("Mean Average leaving time: "+(((outSums.stream().mapToInt(Integer::intValue).sum()/outSums.size()))/60)+":"+(((outSums.stream().mapToInt(Integer::intValue).sum()/outSums.size()))%60));
 				
 			}
-			System.out.println("\nHow many working days you have till the end of the month? ");
-			Scanner pendingDaysScanner = new Scanner(System.in);
-			int pendingDays  = pendingDaysScanner.nextInt();
-			System.out.println("And how many hours you would like to have as monthly average? (f.e 9:10)");
-			Scanner averageScanner = new Scanner(System.in);
-			String monthAverage = averageScanner.nextLine();
+			
+			
 			int monthAverageMins =  Integer.parseInt(monthAverage.substring(0, monthAverage.indexOf(":")))*60 + Integer.parseInt(monthAverage.substring(monthAverage.indexOf(":")+1,monthAverage.length()));
 			int allMonthWorkingDays = daySums.size()+pendingDays;
 			int leftWorkingMinutes = ( (allMonthWorkingDays*monthAverageMins)-(mean*daySums.size()) )/pendingDays ;
 			System.out.println("The mean you can have till the end of the month is "+leftWorkingMinutes +" mins"
-					+" ( "+(leftWorkingMinutes/60)+":" + (leftWorkingMinutes%60)+" )");
+					+" ( "+(leftWorkingMinutes/60)+":" + ( (leftWorkingMinutes%60)<10?"0"+(leftWorkingMinutes%60):(leftWorkingMinutes%60) )+" )");
 		} catch (InvalidFormatException e) {
 			System.out.println("Invalid Format Exception "+e);
 			e.printStackTrace();

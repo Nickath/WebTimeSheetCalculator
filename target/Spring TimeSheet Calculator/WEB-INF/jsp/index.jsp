@@ -11,21 +11,21 @@
 <h1> Welcome to the TimeSheet Calculator</h1>
 
 
-<form action="calculate" method="POST" enctype="multipart/form-data">  
+<form:form action="calculate" method="POST" enctype="multipart/form-data">  
 Select File: <input type="file" name="file"/>  
 <input type="submit" value="Upload File"/>  
-<!-- <table>
+<table>
 <tr>
-<td> Desired Average Mean : <input type="text" name="desiredAverage">  </td>
+<td> Desired Average Mean : <input type="text" name="desiredMean">  </td>
 </tr>
 <tr>
 <td> Number of rest working days <input type="text" name="pendingDays">  </td>
 </tr>
-</table> -->
+</table>
 
 
 
-</form>  
+</form:form>  
 
 </body>
 

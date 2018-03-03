@@ -88,7 +88,20 @@
         <groupId>org.apache.poi</groupId>
         <artifactId>poi-ooxml</artifactId>
         <version>3.11-beta2</version>
+     
+    </dependency>
+    
+    <!--  end of dependencies for the xlsx handling -->
+
+    
+
+<!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
+<dependency>
+    <groupId>commons-logging</groupId>
+    <artifactId>commons-logging</artifactId>
+    <version>1.1.1</version>
 </dependency>
+
 
 
 

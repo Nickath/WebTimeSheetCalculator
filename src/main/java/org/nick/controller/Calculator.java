@@ -2,6 +2,8 @@ package org.nick.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Properties;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,15 +12,17 @@ import org.nick.service.FileHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 
 @Controller
 public class Calculator {
+	
+	private static final Logger LOGGER = Logger.getLogger(Calculator.class.getName());
+
+
 
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -32,21 +36,31 @@ public class Calculator {
 	@RequestMapping(value="/calculate", method = RequestMethod.POST)
 	public String TimeSheetCalculator(@ModelAttribute("timeSheetForm") TimeSheetForm form,HttpSession session,ModelMap model) {
 		
+		LOGGER.info("Logger Name: "+LOGGER.getName());
+		
+		/* Properties file to be added to get the logger path programmatically
+		 * Properties prop = new Properties();
+		prop.getProperty("java.util.logging.FileHandler.pattern");*/
+		
+		
+
 		String path=session.getServletContext().getRealPath("/");  
 		model.addAttribute("file",form.getFile());
 		model.addAttribute("pendingDays",form.getPendingDays());
 		model.addAttribute("desiredMean",form.getDesiredMean());
-		System.out.println(form.toString());
-		System.out.println(form.getDesiredMean());
+
+		LOGGER.info("The info of the submitted form are: \n"+form.toString());
+		
 		
 		FileHandler fileHandler = new FileHandler();
-		
         File myFile = fileHandler.readFile(path,form.getFile()); // get the file
-        System.out.println(myFile.length());
+        
+        LOGGER.info("Upload file size in bytes: \n"+myFile.length());
+        
         try {
 			fileHandler.makeCalculations(myFile,form.getPendingDays(),form.getDesiredMean());
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.severe("ERROR"+e);
 		}
         
 		return "results";

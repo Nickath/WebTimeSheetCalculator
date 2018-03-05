@@ -10,9 +10,9 @@
 <!-- bootstrap stuff -->
 <head>
 
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap-filestyle.min.js"> </script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,7 +69,7 @@
        <label for="file" class="col-sm-2 control-label">Select a File to upload:</label>
         <div class="col-sm-5">
           <input type="file" class="inputstl" id="file" name="file" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
-          <div class="bootstrap-filestyle input-group"><input type="text" class="form-control " placeholder="" disabled="" >
+          <div class="bootstrap-filestyle input-group"><input type="hidden" class="form-control " placeholder="" disabled="" >
            <span class="group-span-filestyle input-group-btn" tabindex="0">
             <label for="file" class="btn btn-primary ">
              <span class="icon-span-filestyle glyphicon glyphicon-upload">
@@ -77,7 +77,9 @@
              <span class="buttonText"> Upload the xlsx</span>
             </label>
            </span>
-          </div>
+         </div>
+                 <img id="imgValid" src="C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculator\src\main\resources\correctIcon.png" style="visibility: hidden;" />
+       
         </div>
       </div>
       
@@ -112,7 +114,23 @@
 
 
 
-
+<script type="text/javascript">
+$(document).ready(function () {
+$('#file').change(function() {
+     var str = $(this).val(), // You need to use `val` to get the value (also, note the "()" here)
+     index = $(this).parent().index(); // this gets the index of the input
+     alert($(this).val());
+     if($(this).val()){
+    	 alert('1');
+    	 $('#imgValid').show();
+     }
+     else{
+    	 alert('2');
+    	 $('#imgValid').hide();
+     }
+});
+});
+</script>
 
 
 

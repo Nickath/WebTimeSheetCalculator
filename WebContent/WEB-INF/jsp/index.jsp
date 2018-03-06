@@ -67,7 +67,7 @@
 
       <div class="form-group">
        <label for="file" class="col-sm-2 control-label">Select a File to upload:</label>
-        <div class="col-sm-5">
+        <div class="col-sm-2">
           <input type="file" class="inputstl" id="file" name="file" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
           <div class="bootstrap-filestyle input-group"><input type="hidden" class="form-control " placeholder="" disabled="" >
            <span class="group-span-filestyle input-group-btn" tabindex="0">
@@ -82,6 +82,9 @@
                  <img id="imgValid" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAw1BMVEX////m8urs9PKk4V2507m3zbdosE5mqmem4V88kjJzu2q+3rw/uhdasU1Nzh77/fo6qSFU1CFhuE5AwRlY3CTB47qEznBGtyZnpWdFiEXw/bOj1m0VchX7/7ns/6lepzgyfCQ3hii44X/C54r/+v8eoAve9aVAoTBz4TBUzxNi1hjT69Ck1amh0p1EyBgqtgRGrzcvrBxlvGG15XaV2ky18nGo3Hqk3WNwwl2/6pYwvwBg0CU1lCKh6mVy2C5/v3R6zUn9ASYIAAAAzUlEQVQYlS2P2WKCMBBFb+IWFUOAKoI7IohVXIOt2Or/f1Un0PMy98x9mQGI1ni5Wi3HLdTYwSKaz2bzaBHYlU8nYbImknAyNZugCK+i4poUAdBsJ40KcXO/vttNdCLKQhhnuBQddLW4Ne53cg7m6y6e+v3yy9+SeqZK/UT6c2Hs+DhRrx47nSLdnnnM9hyfKt9l2xS9TG54HJvekVnWQ99y8jOvXTpWHxhI2hxOnnE5MKcrCkdP5jRU/YzryQ9Ceq79/+9w5FuWPxqa/Afa1BWdwGcIDAAAAABJRU5ErkJggg=="
                   class="hidden" />
        
+        </div>
+        <div class="col-sm-2">
+          <input type="button" class="form-control inputstl" name="eraseInput" id="eraseInput" value="clear"  > 
         </div>
       </div>
       
@@ -124,9 +127,13 @@ $('#file').change(function() {
     	 $('#imgValid').removeClass('hidden');
      }
      else{
-    	 $('#imgValid').hide();
+    	 $('#imgValid').addClass('hidden');
      }
 });
+
+
+
+
 });
 </script>
 
@@ -134,6 +141,21 @@ $('#file').change(function() {
 
 
 
+
+
+<script type="text/javascript">
+$(document).ready(function () {
+	$('#eraseInput').click(function() {
+		alert('1');
+		document.getElementById("file").value = "";
+		 $('#imgValid').addClass('hidden');
+	});
+
+
+
+
+});
+</script>
 
 
 

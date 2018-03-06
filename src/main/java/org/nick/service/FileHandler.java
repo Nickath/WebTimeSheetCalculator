@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Scanner;
 import java.util.logging.Logger;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -15,6 +14,7 @@ import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.nick.model.TimeSheet;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class FileHandler {
@@ -47,7 +47,7 @@ public class FileHandler {
 		return file2;
 	}
 	
-	public void makeCalculations(File myFile,int pendingDays,String monthAverage) throws IOException {
+	public TimeSheet makeCalculations(File myFile,int pendingDays,String monthAverage, TimeSheet timesheet) throws IOException {
 		try {
 			
 			XSSFWorkbook myTimeSheet = new XSSFWorkbook (myFile);
@@ -101,20 +101,20 @@ public class FileHandler {
 			LOGGER.info("Total Mean Average: " +mean +" ("+meanHours+":"+(  (meanMinutes<10)?("0"+meanMinutes):meanMinutes)+")");
 			if((((inSums.stream().mapToInt(Integer::intValue).sum()/inSums.size()))%60)<10) {
 				LOGGER.info("Mean Average coming time: "+ (((inSums.stream().mapToInt(Integer::intValue).sum()/inSums.size()))/60)+":0"+(((inSums.stream().mapToInt(Integer::intValue).sum()/inSums.size()))%60));
-				
+				timesheet.setInsertMean( (((inSums.stream().mapToInt(Integer::intValue).sum()/inSums.size()))/60)+":0"+(((inSums.stream().mapToInt(Integer::intValue).sum()/inSums.size()))%60));
 			}
 			else {
 				LOGGER.info("Mean Average coming time: "+ (((inSums.stream().mapToInt(Integer::intValue).sum()/inSums.size()))/60)+":"+(((inSums.stream().mapToInt(Integer::intValue).sum()/inSums.size()))%60));
-				
+				timesheet.setInsertMean((((inSums.stream().mapToInt(Integer::intValue).sum()/inSums.size()))/60)+":"+(((inSums.stream().mapToInt(Integer::intValue).sum()/inSums.size()))%60));
 			}
 			if((((outSums.stream().mapToInt(Integer::intValue).sum()/outSums.size()))%60)<10)
 			{
 				LOGGER.info("Mean Average leaving time: "+(((outSums.stream().mapToInt(Integer::intValue).sum()/outSums.size()))/60)+":0"+(((outSums.stream().mapToInt(Integer::intValue).sum()/outSums.size()))%60));
-				
+				timesheet.setExitMean((((outSums.stream().mapToInt(Integer::intValue).sum()/outSums.size()))/60)+":0"+(((outSums.stream().mapToInt(Integer::intValue).sum()/outSums.size()))%60));
 			}
 			else {
 				LOGGER.info("Mean Average leaving time: "+(((outSums.stream().mapToInt(Integer::intValue).sum()/outSums.size()))/60)+":"+(((outSums.stream().mapToInt(Integer::intValue).sum()/outSums.size()))%60));
-				
+				timesheet.setExitMean((((outSums.stream().mapToInt(Integer::intValue).sum()/outSums.size()))/60)+":"+(((outSums.stream().mapToInt(Integer::intValue).sum()/outSums.size()))%60));
 			}
 			
 			
@@ -124,10 +124,19 @@ public class FileHandler {
 			
 			LOGGER.info("The mean you can have till the end of the month is "+leftWorkingMinutes +" mins"
 					+" ( "+(leftWorkingMinutes/60)+":" + ( (leftWorkingMinutes%60)<10?"0"+(leftWorkingMinutes%60):(leftWorkingMinutes%60) )+" )");
+		    
+			
+            timesheet.setMean(" ("+meanHours+":"+(  (meanMinutes<10)?("0"+meanMinutes):meanMinutes)+")" );
+            timesheet.setWorkingDays(daySums.size());
+            timesheet.setRestAverage((leftWorkingMinutes/60)+":" + ( (leftWorkingMinutes%60)<10?"0"+(leftWorkingMinutes%60):(leftWorkingMinutes%60) ));
+			return	timesheet ;
+		
 		} catch (InvalidFormatException e) {
 			LOGGER.severe("Invalid Format Exception "+e);
 			e.printStackTrace();
 		}
+		
+		return timesheet;
 	}
 	
 	

@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap-filestyle.min.js"> </script>
+<script type="text/javascript" src="js/bootstrap-filestyle.min.js"> </script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -41,8 +41,10 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>TimeSheet Calculator</title>
+</head>
 
 
+<body>
 
 <!-- bootstrap form -->
 <div class="content">
@@ -83,7 +85,7 @@
                   class="hidden" />
        
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-1">
           <input type="button" class="form-control inputstl" name="eraseInput" id="eraseInput" value="clear"  > 
         </div>
       </div>
@@ -97,6 +99,8 @@
       </div>
     </form:form>
    </div> 
+   
+   
   </div>
 
 <!-- end of bootstrap form -->
@@ -122,12 +126,14 @@
 <script type="text/javascript">
 $(document).ready(function () {
 $('#file').change(function() {
-     alert($(this).val());
+   
      if($(this).val()){
     	 $('#imgValid').removeClass('hidden');
+    	  alert($(this).val());
      }
      else{
     	 $('#imgValid').addClass('hidden');
+    	  alert('Path is empty');
      }
 });
 
@@ -146,9 +152,10 @@ $('#file').change(function() {
 <script type="text/javascript">
 $(document).ready(function () {
 	$('#eraseInput').click(function() {
-		alert('1');
+		
 		document.getElementById("file").value = "";
 		 $('#imgValid').addClass('hidden');
+		 alert('Path is empty');
 	});
 
 

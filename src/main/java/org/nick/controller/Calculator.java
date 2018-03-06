@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 
 import org.nick.form.TimeSheetForm;
+import org.nick.model.TimeSheet;
 import org.nick.service.FileHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,27 +42,30 @@ public class Calculator {
 		/* Properties file to be added to get the logger path programmatically
 		 * Properties prop = new Properties();
 		prop.getProperty("java.util.logging.FileHandler.pattern");*/
-		
-		
 
 		String path=session.getServletContext().getRealPath("/");  
-		model.addAttribute("file",form.getFile());
-		model.addAttribute("pendingDays",form.getPendingDays());
-		model.addAttribute("desiredMean",form.getDesiredMean());
-
-		LOGGER.info("The info of the submitted form are: \n"+form.toString());
-		
 		
 		FileHandler fileHandler = new FileHandler();
         File myFile = fileHandler.readFile(path,form.getFile()); // get the file
-        
+        TimeSheet timesheet = new TimeSheet();
+        timesheet.setDaysPending(form.getPendingDays());
+        timesheet.setDesiredMean(form.getDesiredMean());
         LOGGER.info("Upload file size in bytes: \n"+myFile.length());
-        
+        String mean="";
         try {
-			fileHandler.makeCalculations(myFile,form.getPendingDays(),form.getDesiredMean());
+			 timesheet = fileHandler.makeCalculations(myFile,form.getPendingDays(),form.getDesiredMean(),timesheet);
 		} catch (IOException e) {
 			LOGGER.severe("ERROR"+e);
 		}
+		
+		
+		model.addAttribute("file",form.getFile());
+		model.addAttribute("timesheet",timesheet);
+		
+		LOGGER.info("The info of the submitted form are: \n"+form.toString());
+		
+		
+		
         
 		return "results";
 	}

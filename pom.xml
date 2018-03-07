@@ -12,7 +12,7 @@
    <servlet.version>3.0.1</servlet.version>
   </properties>
   <build>
-   <finalName>Spring TimeSheet Calculator</finalName>
+   <finalName>SpringTimeSheetCalculator</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>

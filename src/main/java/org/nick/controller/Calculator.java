@@ -48,12 +48,12 @@ public class Calculator {
 		FileHandler fileHandler = new FileHandler();
         File myFile = fileHandler.readFile(path,form.getFile()); // get the file
         TimeSheet timesheet = new TimeSheet();
-        timesheet.setDaysPending(form.getPendingDays());
-        timesheet.setDesiredMean(form.getDesiredMean());
+
+        
         LOGGER.info("Upload file size in bytes: \n"+myFile.length());
-        String mean="";
+
         try {
-			 timesheet = fileHandler.makeCalculations(myFile,form.getPendingDays(),form.getDesiredMean(),timesheet);
+			 timesheet = fileHandler.makeCalculations(myFile,form.getPendingDays(),form.getDesiredMean());
 		} catch (IOException e) {
 			LOGGER.severe("ERROR"+e);
 		}
@@ -93,22 +93,3 @@ public class Calculator {
 
 
 
-
-
-
-
-
-/*        
-try{  
-byte barr[]=file.getBytes();  
-  
-BufferedOutputStream bout=new BufferedOutputStream(  
-         new FileOutputStream(path+"/"+filename));  
-bout.write(barr);  
-bout.flush();  
-bout.close();  
-  
-}catch(Exception e){
-	System.out.println(e);
-
-} */ 

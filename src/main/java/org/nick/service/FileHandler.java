@@ -47,9 +47,11 @@ public class FileHandler {
 		return file2;
 	}
 	
-	public TimeSheet makeCalculations(File myFile,int pendingDays,String monthAverage, TimeSheet timesheet) throws IOException {
+	public TimeSheet makeCalculations(File myFile,int pendingDays,String monthAverage) throws IOException {
+		
+		TimeSheet timesheet = new TimeSheet();
 		try {
-			
+
 			XSSFWorkbook myTimeSheet = new XSSFWorkbook (myFile);
 			XSSFSheet mySheet = myTimeSheet.getSheetAt(0);
 			// Get iterator to all the rows in current sheet

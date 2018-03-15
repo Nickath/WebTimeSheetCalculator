@@ -4,7 +4,7 @@
   <artifactId>WebTimeSheetCalculator</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
-  <name>Spring TimeSheet Calculator</name>
+  <name>WebTimeSheetCalculator</name>
   <properties>
   
    <spring.version>4.3.12.RELEASE</spring.version>
@@ -12,7 +12,7 @@
    <servlet.version>3.0.1</servlet.version>
   </properties>
   <build>
-   <finalName>SpringTimeSheetCalculator</finalName>
+   <finalName>WebTimeSheetCalculator</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>

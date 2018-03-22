@@ -32,18 +32,20 @@
 <div class="container">
 <h1> Welcome to the TimeSheet Calculator</h1><br><br><br>
 
-    <form:form class="form-horizontal" action="calculate" method="POST" enctype="multipart/form-data">
+    <form:form class="form-horizontal" action="calculate" modelAttribute="timeSheetForm" method="POST" enctype="multipart/form-data">
       <div class="form-group">
-        <label for="desiredMean" class="col-sm-2 control-label">Desired Mean:</label>
+        <form:label path = "desiredMean" class="col-sm-2 control-label">Desired Mean:</form:label>
         <div class="col-sm-4">
-          <input type="text" class="form-control inputstl" name="desiredMean" id="desiredMean" placeholder="Enter Your Desired Mean">
+          <form:input path="desiredMean" class="form-control inputstl" name="desiredMean" id="desiredMean" placeholder="Enter Your Desired Mean"/>
         </div>
+        <form:errors path = "desiredMean" cssClass = "error" />
       </div>
       <div class="form-group">
-        <label for="pendingDays" class="col-sm-2 control-label">Pending Days:</label>
+        <form:label path="pendingDays" class="col-sm-2 control-label">Pending Days:</form:label>
         <div class="col-sm-4">
-          <input type="text" class="form-control inputstl" name="pendingDays" id="pendingDays" placeholder="Enter Your pending Working Days">
+          <form:input path="pendingDays" class="form-control inputstl" name="pendingDays" id="pendingDays" placeholder="Enter Your pending Working Days"/>
         </div>
+        <form:errors path = "pendingDays" cssClass = "error" />
       </div>
  
 

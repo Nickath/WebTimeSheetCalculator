@@ -9,12 +9,17 @@
   
   <!-- mechanism to scan packages for the controllers- autodiscovery -->
     <context:component-scan base-package="org.nick.controller" />
-    <context:component-scan base-package="jbr.springmvc" />
+  
     <context:annotation-config />
     
     <!--  in order to declare explicit support for annotation driven support -->
     <mvc:annotation-driven></mvc:annotation-driven>
+    
+    <!-- Definition for fileHandler bean without constructor-arg to make it autowired -->
+   <bean id = "fileHandler" class = "org.nick.service.FileHandler"></bean>
    
+
+
    <!--  view resolver -->
 	 <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp/" />

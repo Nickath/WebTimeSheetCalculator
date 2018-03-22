@@ -1,12 +1,19 @@
 package org.nick.form;
 
-import org.springframework.web.bind.annotation.RequestParam;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-public class TimeSheetForm {
 
+public class TimeSheetForm {
+     
+ 
 	private  CommonsMultipartFile file;
+	
+    @NotNull(message = "Please enter pending days left ")
 	private  int pendingDays;
+    @NotEmpty(message = "Please enter desired mean")
 	private  String desiredMean;
 	
 	public CommonsMultipartFile getFile() {

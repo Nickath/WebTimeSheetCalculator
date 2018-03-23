@@ -5,6 +5,11 @@
 	display: none; 
 	
 	}
+
+.error {
+color:#FF0000;
+font-weight: bold;
+}
 	
 .inputstl { 
     padding: 9px; 

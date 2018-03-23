@@ -15,8 +15,10 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.nick.model.TimeSheet;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+@Service
 public class FileHandler {
 	
 	private static final Logger LOGGER = Logger.getLogger(FileHandler.class.getName());

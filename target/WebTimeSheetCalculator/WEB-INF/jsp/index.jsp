@@ -79,6 +79,13 @@
           <button type="submit" class="btn btn-lg btn-block btn-primary" onclick="doAjaxPost()" >Submit form</button>
         </div>
       </div>
+      
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-4">
+      <form:checkbox path="check" value="1" />Write it in the database?
+      </div>
+      </div>
+      
     </form:form>
    </div> 
    

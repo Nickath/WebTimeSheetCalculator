@@ -70,6 +70,7 @@
         <div class="col-sm-1">
           <input type="button" class="form-control inputstl" name="eraseInput" id="eraseInput" value="clear"  > 
         </div>
+        <p  id="fileerror" class="error"> ${error} </p>
       </div>
       
       
@@ -79,6 +80,13 @@
           <button type="submit" class="btn btn-lg btn-block btn-primary" onclick="doAjaxPost()" >Submit form</button>
         </div>
       </div>
+      
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-4">
+      <form:checkbox path="check" value="1" />Write it in the database?
+      </div>
+      </div>
+      
     </form:form>
    </div> 
    
@@ -111,10 +119,12 @@ $('#file').change(function() {
    
      if($(this).val()){
     	 $('#imgValid').removeClass('hidden');
+    	 $('#fileerror').addClass('hidden');
     	  alert($(this).val());
      }
      else{
     	 $('#imgValid').addClass('hidden');
+    	 $('#fileerror').removeClass('hidden');
     	  alert('Path is empty');
      }
 });

@@ -62,7 +62,10 @@ public class Calculator {
 
 		String path=session.getServletContext().getRealPath("/");  
 		
-	
+	    if(form.getFile().isEmpty()) {
+	    	model.addAttribute("error","File is Empty, please enter a valid .xlsx file");
+	    	return "index";
+	    }
         File myFile = fileHandler.readFile(path,form.getFile()); // get the file
         TimeSheet timesheet = new TimeSheet();
 
@@ -73,6 +76,7 @@ public class Calculator {
 			 timesheet = fileHandler.makeCalculations(myFile,form.getPendingDays(),form.getDesiredMean());
 		} catch (IOException e) {
 			LOGGER.severe("ERROR"+e);
+			return "index";
 		}
 		
 		

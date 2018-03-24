@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -24,8 +25,12 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
-
+//to bind an existing model object to the session (timeSheetForm) and reuse it
+@SessionAttributes({"timeSheetForm"})
 @Controller
 public class Calculator {
 	
@@ -93,6 +98,56 @@ public class Calculator {
 		
         
 		return "results";
+	}
+	
+	
+	
+
+	@RequestMapping(value="/recalculate", method = RequestMethod.POST)
+	public String TimeSheetReCalculator( @Valid  @ModelAttribute("timeSheetForm") TimeSheetForm form,
+			BindingResult result, HttpSession session,  ModelMap model, HttpServletRequest request)    {
+
+		if (result.hasErrors()) {
+	         return "index";
+	      }
+		
+LOGGER.info("Logger Name: "+LOGGER.getName());
+	
+		String path=session.getServletContext().getRealPath("/");  
+		
+		
+	    if(form.getFile().isEmpty()) {
+	    	model.addAttribute("error","File is Empty, please enter a valid .xlsx file");
+	    	return "index";
+	    }
+	    else if(!form.getFile().getOriginalFilename().contains(".xlsx")) {
+	    	model.addAttribute("error","The file you uploaded is not a .xlsx file");
+	    	return "index";
+	    }
+	    
+        File myFile = fileHandler.readFile(path,form.getFile()); // get the file
+        TimeSheet timesheet = new TimeSheet();
+
+        
+        LOGGER.info("Upload file size in bytes: \n"+myFile.length());
+
+        try {
+			 timesheet = fileHandler.makeCalculations(myFile,form.getPendingDays(),form.getDesiredMean());
+		} catch (IOException e) {
+			LOGGER.severe("ERROR"+e);
+			return "index";
+		}
+
+		model.addAttribute("timesheet",timesheet);
+		
+		LOGGER.info("The info of the submitted form are: \n"+form.toString());
+		
+		
+		
+        
+		return "results";
+ 
+		
 	}
 }
 

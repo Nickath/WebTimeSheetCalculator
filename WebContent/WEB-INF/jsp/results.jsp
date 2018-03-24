@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    
+     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -33,7 +33,23 @@
 <p class="results"> Total Mean Average: </p> ${timesheet.mean} 
 <p class="results"> Mean Average coming time:</p> ${timesheet.insertMean} 
 <p class="results"> Mean Average leaving time:</p> ${timesheet.exitMean} 
-<p class="results"> The mean you can have till the end of the month is: </p>${timesheet.restAverage}
+<p class="results"> The mean you can have till the end of the month is: </p>${timesheet.restAverage} <br><br>
+<p> If you want to recalculate using another mean average expected fill in the input below and submit <br>
+ <form:form class="form-horizontal" action="recalculate" modelAttribute="timeSheetForm" method="POST">
+ <div class="form-group">
+        <form:label path = "desiredMean" class="col-sm-2 control-label">Desired Mean:</form:label>
+        <div class="col-sm-4">
+          <form:input path="desiredMean" class="form-control inputstl" name="desiredMean" id="desiredMean" placeholder="Enter Your Desired Mean"/>
+        </div>
+        <form:errors path = "desiredMean" cssClass = "error" />
+      </div>
+
+ <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-4">
+          <button type="submit" class="btn btn-lg btn-block btn-primary" onclick="doAjaxPost()" >Submit form</button>
+        </div>
+      </div>
+</form:form>
 
 
 

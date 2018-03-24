@@ -15,6 +15,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.nick.model.TimeSheet;
+import org.nick.web.contants.Constants;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -23,7 +24,7 @@ public class FileHandler {
 	
 	private static final Logger LOGGER = Logger.getLogger(FileHandler.class.getName());
 
-	private static int hourDivisor = 60;
+
 	
 	public File readFile(String path,CommonsMultipartFile file) {
 	
@@ -97,8 +98,8 @@ public class FileHandler {
                 outSums.add(Integer.parseInt(col2.substring(0,col2.indexOf(":")))*60 + Integer.parseInt(col2.substring(col2.indexOf(":")+1,col2.length())));
 			}
 			int mean = daySums.stream().mapToInt(Integer::intValue).sum()/daySums.size();
-			int meanHours= mean/hourDivisor;
-			int meanMinutes= mean%hourDivisor;
+			int meanHours= mean/Constants.hourDivisor;
+			int meanMinutes= mean%Constants.hourDivisor;
 			
 			LOGGER.info("This month you have worked **"+ daySums.size()+"** days\n");
 			
@@ -146,9 +147,9 @@ public class FileHandler {
 	
 	public static int calculateDifference(String col1, String col2) {
 
-		int minutesCame = Integer.parseInt(col1.substring(0, col1.indexOf(":"))      )*hourDivisor
+		int minutesCame = Integer.parseInt(col1.substring(0, col1.indexOf(":"))      )*Constants.hourDivisor
 				          +Integer.parseInt(col1.substring(col1.indexOf(":")+1));
-		int minutesGone = Integer.parseInt(col2.substring(0, col2.indexOf(":"))      )*hourDivisor
+		int minutesGone = Integer.parseInt(col2.substring(0, col2.indexOf(":"))      )*Constants.hourDivisor
 		          +Integer.parseInt(col2.substring(col2.indexOf(":")+1));
 		int sumOfTheDay = minutesGone - minutesCame;
 		return sumOfTheDay;

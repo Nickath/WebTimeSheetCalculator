@@ -4,6 +4,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -18,7 +19,8 @@ public class TimeSheetForm {
     @Min(value=1)
     @Max(value=28)
 	private  int pendingDays;
-    @NotEmpty(message = "Please enter desired mean")
+    @NotEmpty(message = "Please enter a valid desired mean")
+    @Length( message="Invalid format (f.e 9:15)", min = 4, max = 5)
 	private  String desiredMean;
     
     private String check;

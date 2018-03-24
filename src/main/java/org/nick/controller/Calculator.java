@@ -35,6 +35,7 @@ public class Calculator {
     @Autowired
     FileHandler fileHandler;
     
+    
 
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -66,6 +67,11 @@ public class Calculator {
 	    	model.addAttribute("error","File is Empty, please enter a valid .xlsx file");
 	    	return "index";
 	    }
+	    else if(!form.getFile().getOriginalFilename().contains(".xlsx")) {
+	    	model.addAttribute("error","The file you uploaded is not a .xlsx file");
+	    	return "index";
+	    }
+	    
         File myFile = fileHandler.readFile(path,form.getFile()); // get the file
         TimeSheet timesheet = new TimeSheet();
 
@@ -78,9 +84,7 @@ public class Calculator {
 			LOGGER.severe("ERROR"+e);
 			return "index";
 		}
-		
-		
-		model.addAttribute("file",form.getFile());
+
 		model.addAttribute("timesheet",timesheet);
 		
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());

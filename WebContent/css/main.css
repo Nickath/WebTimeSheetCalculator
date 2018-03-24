@@ -6,6 +6,12 @@
 	
 	}
 	
+	
+.error {
+color:#FF0000;
+font-weight: bold;
+}
+	
 .inputstl { 
     padding: 9px; 
     border: solid 1px #173955; 

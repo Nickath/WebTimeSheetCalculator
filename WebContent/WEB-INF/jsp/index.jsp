@@ -52,7 +52,7 @@
       <div class="form-group">
        <label for="file" class="col-sm-2 control-label">Select a File to upload:</label>
         <div class="col-sm-2">
-          <input type="file" class="inputstl" id="file" name="file" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
+          <input type="file" class="inputstl" id="file" name="file" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);" onchange="this.form.submit()">
           <div class="bootstrap-filestyle input-group"><input type="hidden" class="form-control " placeholder="" disabled="" >
            <span class="group-span-filestyle input-group-btn" tabindex="0">
             <label for="file" class="btn btn-primary ">
@@ -70,7 +70,7 @@
         <div class="col-sm-1">
           <input type="button" class="form-control inputstl" name="eraseInput" id="eraseInput" value="clear"  > 
         </div>
-        <p  id="fileerror" class="error"> ${error} </p>
+        <p id="fileerror" class="error"> ${error} </p>
       </div>
       
       

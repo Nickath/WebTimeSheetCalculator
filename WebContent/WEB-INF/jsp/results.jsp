@@ -46,7 +46,7 @@
 
  <div class="form-group">
         <div class="col-sm-offset-2 col-sm-4">
-          <button type="submit" class="btn btn-lg btn-block btn-primary" onclick="doAjaxPost()" >Submit form</button>
+          <button type="submit" class="btn btn-lg btn-block btn-primary" >Recalculate</button>
         </div>
       </div>
 </form:form>

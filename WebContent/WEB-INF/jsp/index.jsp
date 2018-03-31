@@ -83,7 +83,7 @@
       
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-4">
-      <form:checkbox path="check" value="1" />Write it in the database?
+      <form:checkbox path="checked" />Write it in the database?
       </div>
       </div>
       

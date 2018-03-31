@@ -23,8 +23,8 @@ public class TimeSheetForm {
     @Length( message="Invalid format (f.e 9:15)", min = 4, max = 5)
 	private  String desiredMean;
     
-    private String check;
-	
+    private boolean checked;
+    
 	public CommonsMultipartFile getFile() {
 		return file;
 	}
@@ -43,15 +43,16 @@ public class TimeSheetForm {
 	public void setDesiredMean(String desiredMean) {
 		this.desiredMean = desiredMean;
 	}
-	public String getCheck() {
-		return check;
+
+	public boolean isChecked() {
+		return checked;
 	}
-	public void setCheck(String check) {
-		this.check = check;
+	public void setChecked(boolean checked) {
+		this.checked = checked;
 	}
 	@Override
 	public String toString() {
-		return "TimeSheetForm [file path is =" + file.getOriginalFilename() + ", pendingDays=" + pendingDays + ", desiredMean=" + desiredMean + "]";
+		return "TimeSheetForm [file path is =" + file.getOriginalFilename() + ", pendingDays=" + pendingDays + ", desiredMean=" + desiredMean + ", checked= " +checked+"  ]";
 	}
 	
 	

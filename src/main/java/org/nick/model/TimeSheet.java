@@ -2,15 +2,33 @@ package org.nick.model;
 
 import java.io.File;
 
-public class TimeSheet {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+@Entity
+public class TimeSheet {
+    
+
+	@Id
+	@GeneratedValue
+	private Long id;
+	@Column(name="file")
 	private File file;
+	@Column(name="desiredMean")
 	private String desiredMean;
+	@Column(name="dayspending")
 	private int daysPending;
+	@Column(name="restmean")
 	private String restAverage;
+	@Column(name="average_coming")
 	private String insertMean;
+	@Column(name="average_leaving")
 	private String exitMean;
+	@Column(name="average")
 	private String mean;
+	@Column(name="days")
 	private int workingDays;
 	
 	public File getFile() {

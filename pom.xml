@@ -94,6 +94,21 @@
     <!--  end of dependencies for the xlsx handling -->
 
     
+        <!-- Spring Data JPA -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>1.10.0.RELEASE</version>
+        </dependency>
+ 
+        <!-- Using H2 Database for this example. If you are using different database, 
+            add DB specific dependency here -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.196</version>
+        </dependency>
+    
 
 <!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
 <dependency>
@@ -138,6 +153,17 @@
     <artifactId>hibernate-ehcache</artifactId>
     <version>4.1.9.Final</version>
 </dependency>
+
+<!--postgres
+ https://mvnrepository.com/artifact/postgresql/postgresql -->
+<dependency>
+    <groupId>postgresql</groupId>
+    <artifactId>postgresql</artifactId>
+    <version>9.1-901-1.jdbc4</version>
+</dependency>
+ 
+
+
   	
   </dependencies>
 </project>

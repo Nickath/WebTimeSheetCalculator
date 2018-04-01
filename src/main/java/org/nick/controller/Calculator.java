@@ -12,8 +12,11 @@ import javax.validation.Valid;
 
 import org.nick.form.TimeSheetForm;
 import org.nick.model.TimeSheet;
+import org.nick.repository.TimeSheetRepository;
 import org.nick.service.FileHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -41,7 +44,8 @@ public class Calculator {
     FileHandler fileHandler;
     
     
-
+    @Autowired
+    TimeSheetRepository repository;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String TimeSheetCalcGetPage(Locale locale,Model model) {
@@ -84,7 +88,7 @@ public class Calculator {
         LOGGER.info("Upload file size in bytes: \n"+myFile.length());
 
         try {
-			 timesheet = fileHandler.makeCalculations(myFile,form.getPendingDays(),form.getDesiredMean());
+			 timesheet = fileHandler.makeCalculations(myFile,form);
 		} catch (IOException e) {
 			LOGGER.severe("ERROR"+e);
 			return "index";
@@ -94,7 +98,9 @@ public class Calculator {
 		
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());
 		
-		
+		if(form.getChecked()) {
+	        repository.save(timesheet);
+		}
 		
         
 		return "results";
@@ -132,7 +138,7 @@ LOGGER.info("Logger Name: "+LOGGER.getName());
         LOGGER.info("Upload file size in bytes: \n"+myFile.length());
 
         try {
-			 timesheet = fileHandler.makeCalculations(myFile,form.getPendingDays(),form.getDesiredMean());
+			 timesheet = fileHandler.makeCalculations(myFile,form);
 		} catch (IOException e) {
 			LOGGER.severe("ERROR"+e);
 			return "index";

@@ -14,12 +14,13 @@ import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.nick.form.TimeSheetForm;
 import org.nick.model.TimeSheet;
 import org.nick.web.contants.Constants;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-@Service
+@Service("fileHandler")
 public class FileHandler {
 	
 	private static final Logger LOGGER = Logger.getLogger(FileHandler.class.getName());
@@ -50,7 +51,7 @@ public class FileHandler {
 		return file2;
 	}
 	
-	public TimeSheet makeCalculations(File myFile,int pendingDays,String monthAverage) throws IOException {
+	public TimeSheet makeCalculations(File myFile,TimeSheetForm timesheetform) throws IOException {
 		
 		TimeSheet timesheet = new TimeSheet();
 		try {
@@ -123,9 +124,9 @@ public class FileHandler {
 			}
 			
 			
-			int monthAverageMins =  Integer.parseInt(monthAverage.substring(0, monthAverage.indexOf(":")))*60 + Integer.parseInt(monthAverage.substring(monthAverage.indexOf(":")+1,monthAverage.length()));
-			int allMonthWorkingDays = daySums.size()+pendingDays;
-			int leftWorkingMinutes = ( (allMonthWorkingDays*monthAverageMins)-(mean*daySums.size()) )/pendingDays ;
+			int monthAverageMins =  Integer.parseInt(timesheetform.getDesiredMean().substring(0, timesheetform.getDesiredMean().indexOf(":")))*60 + Integer.parseInt(timesheetform.getDesiredMean().substring(timesheetform.getDesiredMean().indexOf(":")+1,timesheetform.getDesiredMean().length()));
+			int allMonthWorkingDays = daySums.size()+timesheetform.getPendingDays();
+			int leftWorkingMinutes = ( (allMonthWorkingDays*monthAverageMins)-(mean*daySums.size()) )/timesheetform.getPendingDays() ;
 			
 			LOGGER.info("The mean you can have till the end of the month is "+leftWorkingMinutes +" mins"
 					+" ( "+(leftWorkingMinutes/60)+":" + ( (leftWorkingMinutes%60)<10?"0"+(leftWorkingMinutes%60):(leftWorkingMinutes%60) )+" )");
@@ -134,7 +135,9 @@ public class FileHandler {
             timesheet.setMean(" ("+meanHours+":"+(  (meanMinutes<10)?("0"+meanMinutes):meanMinutes)+")" );
             timesheet.setWorkingDays(daySums.size());
             timesheet.setRestAverage((leftWorkingMinutes/60)+":" + ( (leftWorkingMinutes%60)<10?"0"+(leftWorkingMinutes%60):(leftWorkingMinutes%60) ));
-			return	timesheet ;
+			timesheet.setDesiredMean(timesheetform.getDesiredMean());
+			timesheet.setFile(myFile);
+            return	timesheet ;
 		
 		} catch (InvalidFormatException e) {
 			LOGGER.severe("Invalid Format Exception "+e);

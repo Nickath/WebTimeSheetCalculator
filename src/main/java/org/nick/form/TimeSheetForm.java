@@ -44,7 +44,7 @@ public class TimeSheetForm {
 		this.desiredMean = desiredMean;
 	}
 
-	public boolean isChecked() {
+	public boolean getChecked() {
 		return checked;
 	}
 	public void setChecked(boolean checked) {

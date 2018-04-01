@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-  
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/data/jpa
+        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
   <!-- mechanism to scan packages for the controllers- autodiscovery -->
     <context:component-scan base-package="org.nick.controller" />
   
@@ -18,6 +24,44 @@
     <!-- Definition for fileHandler bean without constructor-arg to make it autowired -->
    <bean id = "fileHandler" class = "org.nick.service.FileHandler"></bean>
    
+   
+   <!-- jpa -->
+      <!-- Scans for components that will be auto-registered as Spring beans -->
+    <context:component-scan base-package="org.nick" />
+    <!-- Scans for repositories that will be auto-registered -->
+    <jpa:repositories base-package="org.nick" />
+    <!-- Activates various annotations to be detected in bean classes e.g: @Autowired -->
+    <context:annotation-config />
+
+    <!-- JPA -->
+
+    <!-- Datasource, that is currently hsqldb (in-memory database). -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.postgresql.Driver" />
+        <property name="url" value="jdbc:postgresql://localhost:5432/timesheetDB" />
+        <property name="username" value="postgres" />
+        <property name="password" value="root" />
+    </bean>
+
+    <!-- EntityManagerFactory -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+            p:packagesToScan="org.nick"
+            p:dataSource-ref="dataSource"
+            >
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="generateDdl" value="true" />
+                <property name="showSql" value="false" />
+            </bean>
+        </property>
+    </bean>
+
+    <!-- Transactions -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+   <!-- end of jpa -->
 
 
    <!--  view resolver -->

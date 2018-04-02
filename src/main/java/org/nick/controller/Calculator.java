@@ -42,8 +42,7 @@ public class Calculator {
 
     @Autowired
     FileHandler fileHandler;
-    
-    
+
     @Autowired
     TimeSheetRepository repository;
 	
@@ -56,7 +55,7 @@ public class Calculator {
 	
 
 	@RequestMapping(value="/calculate", method = RequestMethod.POST)
-	public String TimeSheetCalculator( @Valid  @ModelAttribute("timeSheetForm")TimeSheetForm form, BindingResult result,
+	public String TimeSheetCalculator(@Valid  @ModelAttribute("timeSheetForm")TimeSheetForm form, BindingResult result,
 			HttpSession session,  ModelMap model)    {
 
 		if (result.hasErrors()) {
@@ -98,6 +97,8 @@ public class Calculator {
 		
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());
 		
+		
+		
 		if(form.getChecked()) {
 	        repository.save(timesheet);
 		}
@@ -113,11 +114,12 @@ public class Calculator {
 	public String TimeSheetReCalculator( @Valid  @ModelAttribute("timeSheetForm") TimeSheetForm form,
 			BindingResult result, HttpSession session,  ModelMap model, HttpServletRequest request)    {
 
+		System.out.println("Sto recalculate erxetai etsi " +form.toString());
 		if (result.hasErrors()) {
 	         return "index";
 	      }
 		
-LOGGER.info("Logger Name: "+LOGGER.getName());
+        LOGGER.info("Logger Name: "+LOGGER.getName());
 	
 		String path=session.getServletContext().getRealPath("/");  
 		
@@ -148,7 +150,9 @@ LOGGER.info("Logger Name: "+LOGGER.getName());
 		
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());
 		
-		
+		if(form.getChecked()) {
+			repository.save(timesheet);
+		}
 		
         
 		return "results";

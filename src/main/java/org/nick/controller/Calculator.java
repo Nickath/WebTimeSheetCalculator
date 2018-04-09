@@ -55,7 +55,7 @@ public class Calculator {
 	
 
 	@RequestMapping(value="/calculate", method = RequestMethod.POST)
-	public String TimeSheetCalculator(@Valid  @ModelAttribute("timeSheetForm")TimeSheetForm form, BindingResult result,
+	public String TimeSheetCalculator( @Valid  @ModelAttribute("timeSheetForm")TimeSheetForm form, BindingResult result,
 			HttpSession session,  ModelMap model)    {
 
 		if (result.hasErrors()) {
@@ -114,7 +114,6 @@ public class Calculator {
 	public String TimeSheetReCalculator( @Valid  @ModelAttribute("timeSheetForm") TimeSheetForm form,
 			BindingResult result, HttpSession session,  ModelMap model, HttpServletRequest request)    {
 
-		System.out.println("Sto recalculate erxetai etsi " +form.toString());
 		if (result.hasErrors()) {
 	         return "index";
 	      }

@@ -9,9 +9,11 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
         http://www.springframework.org/schema/data/jpa
         http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
   <!-- mechanism to scan packages for the controllers- autodiscovery -->
     <context:component-scan base-package="org.nick.controller" />
   
+  <!-- in order to enable annotations -->
     <context:annotation-config />
     
     <!--  in order to declare explicit support for annotation driven support -->
@@ -20,48 +22,17 @@
     <!-- Definition for fileHandler bean without constructor-arg to make it autowired -->
    <bean id = "fileHandler" class = "org.nick.service.FileHandler"></bean>
    
+   
    <!-- jpa -->
-   <bean id="myEmf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-      <property name="dataSource" ref="dataSource" />
-      <property name="packagesToScan" value="org.nick" />
-      <property name="jpaVendorAdapter">
-         <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
-      </property>
-      <property name="jpaProperties">
-         <props>
-            <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
-            <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
-         </props>
-      </property>
-   </bean>
-   
-   <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-      <property name="driverClassName" value="org.postgresql.Driver" />
-      <property name="url" value="jdbc:postgresql://localhost:5432/timesheetDB" />
-      <property name="username" value="root" />
-      <property name="password" value="root" />
-   </bean>
-   
-   
-   
-   <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-      <property name="entityManagerFactory" ref="myEmf" />
-   </bean>
+      <!-- Scans for components that will be auto-registered as Spring beans -->
+    <context:component-scan base-package="org.nick.repository" />
+    <!-- Scans for repositories that will be auto-registered -->
+    <jpa:repositories base-package="org.nick.repository" />
+    <!-- Activates various annotations to be detected in bean classes e.g: @Autowired -->
+    <context:annotation-config />
 
-   
-   <bean id="persistenceExceptionTranslationPostProcessor"
-      class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-      
-      
-      <bean id="jpaVendorAdapter"
-        class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-        <property name="showSql" value="true"></property>
-        <property name="generateDdl" value="true"></property>
-        <property name="database" value="H2"></property>
-    </bean>
- 
-  <jpa:repositories base-package="org.nick"></jpa:repositories>
-   <!-- end of jpa -->
+  <!-- i -->
+  <import resource="classpath*:/persistence.xml" />
 
 
    <!--  view resolver -->

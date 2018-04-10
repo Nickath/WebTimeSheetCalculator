@@ -3,6 +3,7 @@ package org.nick.form;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -21,6 +22,7 @@ public class TimeSheetForm {
 	private  int pendingDays;
     @NotEmpty(message = "Please enter a valid desired mean")
     @Length( message="Invalid format (f.e 9:15)", min = 4, max = 5)
+    @Pattern(regexp ="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")
 	private  String desiredMean;
     
     private boolean checked;

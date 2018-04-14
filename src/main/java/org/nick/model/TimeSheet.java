@@ -2,11 +2,13 @@ package org.nick.model;
 
 import java.io.File;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -33,6 +35,10 @@ public class TimeSheet {
 	private String mean;
 	@Column(name="days")
 	private int workingDays;
+	
+	//FK to month table
+	@ManyToOne
+	private Month month;
 	
 	public File getFile() {
 		return file;
@@ -82,6 +88,18 @@ public class TimeSheet {
 	}
 	public void setWorkingDays(int workingDays) {
 		this.workingDays = workingDays;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public Month getMonth() {
+		return month;
+	}
+	public void setMonth(Month month) {
+		this.month = month;
 	}
 	public TimeSheet(File file, String desiredMean, int daysPending, String restAverage, String insertMean,
 			String exitMean, String mean,int workingDays) {

@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Month")
+@Table(name="month_table")
 public class Month {
 
 	@Id()
@@ -34,5 +34,9 @@ public class Month {
 	
 	public Month() {
 		
+	}
+	
+	public Month(Long id) {
+		this.id  = id;
 	}
 }

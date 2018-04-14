@@ -1,9 +1,9 @@
 package org.nick.repository;
 
 import org.nick.model.TimeSheet;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TimeSheetRepository extends CrudRepository<TimeSheet, Long> {
+
+public interface TimeSheetRepository extends JpaRepository<TimeSheet, Long> {
 
 }

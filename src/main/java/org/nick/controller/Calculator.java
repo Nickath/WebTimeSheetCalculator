@@ -2,8 +2,9 @@ package org.nick.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import java.util.Properties;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,25 +12,18 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.nick.form.TimeSheetForm;
+import org.nick.model.Month;
 import org.nick.model.TimeSheet;
 import org.nick.repository.TimeSheetRepository;
 import org.nick.service.FileHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 //to bind an existing model object to the session (timeSheetForm) and reuse it
@@ -93,6 +87,12 @@ public class Calculator {
 			return "index";
 		}
 
+        //get the current month so we write the record in the database pointing to the month ID of the month table
+        LocalDate localDate = LocalDate.now();
+        String date = DateTimeFormatter.ofPattern("yyy/MM/dd").format(localDate).substring(5,7);
+        Long month = Long.parseLong(date);
+        
+        timesheet.setMonth(new Month(month));
 		model.addAttribute("timesheet",timesheet);
 		
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());

@@ -9,7 +9,9 @@ Windows host, either this is a Docker container running inside a Vagrant Box.
 
 ### Prerequisites
 
-A host OS containing Oracle Virtual box and Vagrant (compatible versions)
+To run the docker image: A host OS containing Oracle Virtual box and Vagrant (compatible versions) OR a host OS with docker
+
+To build and run the app: A machine with JDK>= 8, tomcat compatible with your JDK (f.e tomcat 8), maven compatible with the JDK
 
 ### Build and develop 
 
@@ -52,7 +54,9 @@ A host OS containing Oracle Virtual box and Vagrant (compatible versions)
 
 8) run the docker image using docker run <<image_id>> (f.e docker run -t -p 8080:8080 myapp and to expose the port 8080
 
-9) enter into the container using the command "docker exec -it <<container_id>> bash"
+9) find the docker container running the app by using "docker ps" and get the container_id of your running image
+
+10) enter into the container using the command "docker exec -it <<container_id>> bash"
 "
 
 

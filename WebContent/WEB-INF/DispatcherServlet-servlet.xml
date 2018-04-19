@@ -31,7 +31,7 @@
     <!-- Activates various annotations to be detected in bean classes e.g: @Autowired -->
     <context:annotation-config />
 
-  <!-- i -->
+  <!-- import persistence.xml from resources -->
   <import resource="classpath*:/persistence.xml" />
 
 

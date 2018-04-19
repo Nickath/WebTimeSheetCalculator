@@ -20,36 +20,42 @@
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>HomePage</title>
+<title>Register</title>
 </head>
-
-
 <body>
 
 <!-- bootstrap form -->
 <div class="content">
 
 <div class="container">
-<h1> Welcome to the TimeSheet Calculator</h1><br><br><br>
+<h1> Create an account </h1><br><br><br>
 
-    <form:form class="form-horizontal" action="calculate" modelAttribute="timeSheetForm" method="POST" enctype="multipart/form-data">
+    <form:form class="form-horizontal" action="registerAttempt" modelAttribute="registerForm" method="POST" enctype="multipart/form-data">
       <div class="form-group">
-        <form:label path = "desiredMean" class="col-sm-2 control-label">Desired Mean:</form:label>
+        <form:label path = "username" class="col-sm-2 control-label">Username:</form:label>
         <div class="col-sm-4">
-          <form:input path="desiredMean" class="form-control inputstl" name="desiredMean" id="desiredMean" placeholder="Enter Your Desired Mean"/>
+          <form:input path="username" class="form-control inputstl" name="username" id="username" placeholder="Username"/>
         </div>
-        <form:errors path = "desiredMean" cssClass = "error" />
+        <form:errors path = "username" cssClass = "error" /> <div class="error"> ${error} </div>
       </div>
       <div class="form-group">
-        <form:label path="pendingDays" class="col-sm-2 control-label">Pending Days:</form:label>
+        <form:label path="email" class="col-sm-2 control-label">Email:</form:label>
         <div class="col-sm-4">
-          <form:input path="pendingDays" class="form-control inputstl" name="pendingDays" id="pendingDays" placeholder="Enter Your pending Working Days"/>
+          <form:input path="email" class="form-control inputstl" name="email" id="email" placeholder="Email"/>
         </div>
-        <form:errors path = "pendingDays" cssClass = "error" />
+        <form:errors path = "email" cssClass = "error" />
+      </div>
+      
+       <div class="form-group">
+        <form:label path="password" class="col-sm-2 control-label">Password:</form:label>
+        <div class="col-sm-4">
+          <form:password path="password" class="form-control inputstl" name="password" id="password" placeholder=""/>
+        </div>
+        <form:errors path = "password" cssClass = "error" />
       </div>
  
 
-      <div class="form-group">
+    <%--   <div class="form-group">
        <label for="file" class="col-sm-2 control-label">Select a File to upload:</label>
         <div class="col-sm-2">
           <input type="file" class="inputstl" id="file" name="file" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);" onchange="this.form.submit()">
@@ -71,21 +77,17 @@
           <input type="button" class="form-control inputstl" name="eraseInput" id="eraseInput" value="clear"  > 
         </div>
         <p id="fileerror" class="error"> ${error} </p>
-      </div>
+      </div> --%>
       
       
 
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-4">
-          <button type="submit" class="btn btn-lg btn-block btn-primary"  >Submit form</button>
+          <button type="submit" class="btn btn-lg btn-block btn-primary"  >Register</button>
         </div>
       </div>
       
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-4">
-      <form:checkbox path="checked" />Write it in the database?
-      </div>
-      </div>
+      
       
     </form:form>
    </div> 
@@ -93,71 +95,5 @@
    
   </div>
 
-<!-- end of bootstrap form -->
-
-<!--  js bootstrap -->
-
-<script>
-			 $('#file').filestyle({
-				buttonName : 'btn-primary',
-                buttonText : ' Upload an Image',
-                iconName : 'glyphicon glyphicon-upload'
-			}); 
-</script>   
-
-
-
-<!-- end of js bootstrap -->
-
-
-
-
-
-<script type="text/javascript">
-$(document).ready(function () {
-$('#file').change(function() {
-   
-     if($(this).val()){
-    	 $('#imgValid').removeClass('hidden');
-    	 $('#fileerror').addClass('hidden');
-    	  alert($(this).val());
-     }
-     else{
-    	 $('#imgValid').addClass('hidden');
-    	 $('#fileerror').removeClass('hidden');
-    	  alert('Path is empty');
-     }
-});
-
-
-$('#eraseInput').click(function() {
-	
-	document.getElementById("file").value = "";
-	 $('#imgValid').addClass('hidden');
-	 alert('Path is empty');
-});
-
-
-
-
-});
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
-
- 
 </html>

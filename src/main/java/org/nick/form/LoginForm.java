@@ -1,13 +1,13 @@
 package org.nick.form;
 
-import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class LoginForm {
 
 	private Long id;
-	@NotNull(message = "Please enter username")
+	@NotEmpty(message = "Please enter username")
 	private String username;
-	@NotNull(message = "Please enter a password")
+	@NotEmpty(message = "Please enter a password")
 	private String password;
 	
 	public String getUsername() {

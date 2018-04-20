@@ -1,6 +1,5 @@
 package org.nick.form;
 
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;

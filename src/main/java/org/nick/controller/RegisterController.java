@@ -1,13 +1,10 @@
 package org.nick.controller;
 
 import java.util.List;
-import java.util.Locale;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.nick.form.RegisterForm;
-import org.nick.form.TimeSheetForm;
 import org.nick.model.User;
 import org.nick.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +36,7 @@ public class RegisterController {
 		if (result.hasErrors()) {
 	         return "register";
 	      }
-		
+		//if username already exists, do not allow, else write him on database
 		List<User> existingUsers = userRepository.findAll();
 		for(User user :existingUsers) {
 			if(user.getUsername().equals(form.getUsername())){
@@ -54,7 +51,7 @@ public class RegisterController {
 		userRepository.save(user);
 		
 		
-		return "registerResults";
+		return "successfulRegister";
 	   }
 	
 	

@@ -145,6 +145,12 @@ public class Calculator {
 			return "index";
 		}
 
+        //get the current month so we write the record in the database pointing to the month ID of the month table
+        LocalDate localDate = LocalDate.now();
+        String date = DateTimeFormatter.ofPattern("yyy/MM/dd").format(localDate).substring(5,7);
+        Long month = Long.parseLong(date);
+        
+        timesheet.setMonth(new Month(month));
 		model.addAttribute("timesheet",timesheet);
 		
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());

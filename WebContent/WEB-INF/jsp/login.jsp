@@ -32,7 +32,7 @@
 <div class="container">
 <h1> Login Form</h1><br><br><br>
 
-    <form:form class="form-horizontal" action="login" modelAttribute="loginForm" method="POST">
+    <form:form class="form-horizontal" action="loginAttempt" modelAttribute="loginForm" method="POST">
       <div class="form-group">
         <form:label path = "username" class="col-sm-2 control-label">Username:</form:label>
         <div class="col-sm-4">
@@ -47,6 +47,8 @@
         </div>
         <form:errors path = "password" cssClass = "error" />
       </div>
+      
+      <br><div class="error"> ${invalidCreds} </div>
  
 
      <div class="form-group">

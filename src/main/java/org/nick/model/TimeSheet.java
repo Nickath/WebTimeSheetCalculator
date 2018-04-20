@@ -40,6 +40,10 @@ public class TimeSheet {
 	@ManyToOne
 	private Month month;
 	
+	//FK to User table
+	@ManyToOne
+	private User user;
+	
 	public File getFile() {
 		return file;
 	}
@@ -100,6 +104,12 @@ public class TimeSheet {
 	}
 	public void setMonth(Month month) {
 		this.month = month;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 	public TimeSheet(File file, String desiredMean, int daysPending, String restAverage, String insertMean,
 			String exitMean, String mean,int workingDays) {

@@ -4,9 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>results</title>
+<title>Successful Login</title>
 </head>
 <body>
+
+<h1>Welcome ${username}</h1>
 
 </body>
 </html>

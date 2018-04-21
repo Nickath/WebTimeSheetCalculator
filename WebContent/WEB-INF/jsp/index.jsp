@@ -25,7 +25,7 @@
 
 
 <body>
-
+<jsp:include page="navBar.jsp" />
 <!-- bootstrap form -->
 <div class="content">
 

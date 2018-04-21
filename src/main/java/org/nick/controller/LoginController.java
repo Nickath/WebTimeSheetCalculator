@@ -2,6 +2,7 @@ package org.nick.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -34,7 +35,7 @@ public class LoginController {
 	
 	@RequestMapping(value = "/loginAttempt", method = RequestMethod.POST)
 	public String login(@Valid  @ModelAttribute("loginForm")LoginForm form, BindingResult result,
-			HttpSession session,  ModelMap model) {
+			HttpSession session,HttpServletRequest request,  ModelMap model) {
 		
 		if(result.hasErrors()) {
 			return "login";
@@ -43,7 +44,8 @@ public class LoginController {
 		List<User> existingUsers = userRepository.findAll();
 		for(User user :existingUsers) {
 			if(user.getUsername().equals(form.getUsername()) && user.getPassword().equals(form.getPassword())){
-				model.addAttribute("username",user.getUsername());
+				model.addAttribute("user",user);
+				request.getSession().setAttribute("loggedInUser", user);
 				return "successfulLogin";
 			}
 		}

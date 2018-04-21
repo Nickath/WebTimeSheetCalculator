@@ -6,7 +6,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <!-- bootstrap stuff -->
-<head>
 <style>
 <%@ include file="/css/main.css"%>
 </style>
@@ -15,16 +14,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap-filestyle.min.js"> </script>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Login</title>
 </head>
 
 
 <body>
+<jsp:include page="navBar.jsp" />
 
 <!-- bootstrap form -->
 <div class="content">
@@ -112,18 +109,6 @@ $('#eraseInput').click(function() {
 
 });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

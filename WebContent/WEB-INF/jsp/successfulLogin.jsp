@@ -7,6 +7,7 @@
 <title>Successful Login</title>
 </head>
 <body>
+<jsp:include page="navBar.jsp" />
 
 <h1>Welcome ${username}</h1>
 

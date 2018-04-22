@@ -69,4 +69,10 @@ p.results{
   .navbar-nav  li a:hover {
       color: #1abc9c !important;
   }
+  
+  
+  .ul-nobullets {
+  list-style-type: none;
+}
+  
    

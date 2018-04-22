@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -25,6 +26,10 @@ public class User {
 
 	@Column(name="password")
 	private String password;
+	
+	//FK TO TABLE role, each user has his/her own role
+	@ManyToOne
+	private Role role;
 	
 	public String getUsername() {
 		return username;
@@ -49,6 +54,12 @@ public class User {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
 	}
 	public User(String username, String password) {
 		super();

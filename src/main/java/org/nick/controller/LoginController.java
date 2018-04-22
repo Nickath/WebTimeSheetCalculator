@@ -17,14 +17,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+@SessionAttributes({"loginForm","user"})
 @Controller
 public class LoginController {
 
 	@Autowired
 	UserRepository userRepository;
 	
-	@RequestMapping(value = "/loginPage", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getLoginPage(Model model) {
 		
 		LoginForm loginForm = new LoginForm();
@@ -46,6 +48,10 @@ public class LoginController {
 			if(user.getUsername().equals(form.getUsername()) && user.getPassword().equals(form.getPassword())){
 				model.addAttribute("user",user);
 				request.getSession().setAttribute("loggedInUser", user);
+				//if the user creds depict he is an admin set to the session
+				if(user.getRole().getId()==1) {
+					request.getSession().setAttribute("isAdmin", true);
+				}
 				return "successfulLogin";
 			}
 		}

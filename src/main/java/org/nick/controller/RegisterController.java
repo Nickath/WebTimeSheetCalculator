@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.nick.form.RegisterForm;
+import org.nick.model.Role;
 import org.nick.model.User;
 import org.nick.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,7 @@ public class RegisterController {
 		user.setEmail(form.getEmail());
 		user.setUsername(form.getUsername());
 		user.setPassword(form.getPassword());
+		user.setRole(new Role(2L));   //sets the user role to "2,user", (default) not any user is authorized to create admin user
 		userRepository.save(user);
 		
 		

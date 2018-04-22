@@ -40,8 +40,11 @@ public class Calculator {
     @Autowired
     TimeSheetRepository repository;
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String TimeSheetCalcGetPage(Locale locale,Model model) {
+	@RequestMapping(value = "calculatePage", method = RequestMethod.GET)
+	public String TimeSheetCalcGetPage(Locale locale,Model model,HttpSession session,HttpServletRequest request) {
+		/*  if(request.getSession().getAttribute("user") == null) {
+			  return "login";
+		  }*/
 		  TimeSheetForm form = new TimeSheetForm();
 		  model.addAttribute("timeSheetForm",form);
 	      return "index";

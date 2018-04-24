@@ -26,12 +26,19 @@ public class LoginController {
 	@Autowired
 	UserRepository userRepository;
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/loginPage", method = RequestMethod.GET)
 	public String getLoginPage(Model model) {
 		
 		LoginForm loginForm = new LoginForm();
 		model.addAttribute("loginForm",loginForm);
 		return "login";
+	}
+	
+	
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String welcomePage(Model model) {
+	
+		return "welcome";
 	}
 	
 	
@@ -47,6 +54,7 @@ public class LoginController {
 		for(User user :existingUsers) {
 			if(user.getUsername().equals(form.getUsername()) && user.getPassword().equals(form.getPassword())){
 				model.addAttribute("user",user);
+				request.getSession().setAttribute("user", user);
 				request.getSession().setAttribute("loggedInUser", user);
 				//if the user creds depict he is an admin set to the session
 				if(user.getRole().getId()==1) {

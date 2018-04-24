@@ -26,7 +26,7 @@
        
       </c:if>
       <c:if test="${empty loggedInUser}">
-       <li><a href="<c:url value="/" />" >Login</a></li>
+       <li><a href="<c:url value="/loginPage" />" >Login</a></li>
        <li><a href="<c:url value="/registerPage" />" >Register</a></li>
      </c:if>
       

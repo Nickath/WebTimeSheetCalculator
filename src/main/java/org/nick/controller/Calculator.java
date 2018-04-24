@@ -14,7 +14,9 @@ import javax.validation.Valid;
 import org.nick.form.TimeSheetForm;
 import org.nick.model.Month;
 import org.nick.model.TimeSheet;
+import org.nick.model.User;
 import org.nick.repository.TimeSheetRepository;
+import org.nick.repository.UserRepository;
 import org.nick.service.FileHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,12 +41,14 @@ public class Calculator {
 
     @Autowired
     TimeSheetRepository repository;
+    
+
 	
 	@RequestMapping(value = "calculatePage", method = RequestMethod.GET)
 	public String TimeSheetCalcGetPage(Locale locale,Model model,HttpSession session,HttpServletRequest request) {
-		/*  if(request.getSession().getAttribute("user") == null) {
+		   if(request.getSession().getAttribute("user") == null) {
 			  return "login";
-		  }*/
+		  }
 		  TimeSheetForm form = new TimeSheetForm();
 		  model.addAttribute("timeSheetForm",form);
 	      return "index";
@@ -52,8 +56,8 @@ public class Calculator {
 	
 
 	@RequestMapping(value="/calculate", method = RequestMethod.POST)
-	public String TimeSheetCalculator( @Valid  @ModelAttribute("timeSheetForm")TimeSheetForm form, BindingResult result,
-			HttpSession session,  ModelMap model)    {
+	public String TimeSheetCalculator( @Valid  @ModelAttribute("timeSheetForm")TimeSheetForm form,BindingResult result,
+			HttpSession session, HttpServletRequest request,  ModelMap model)    {
 
 		if (result.hasErrors()) {
 	         return "index";
@@ -96,6 +100,8 @@ public class Calculator {
         Long month = Long.parseLong(date);
         
         timesheet.setMonth(new Month(month));
+        User user = (User)request.getSession().getAttribute("user");
+        timesheet.setUser(new User(user.getId()));
 		model.addAttribute("timesheet",timesheet);
 		
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());
@@ -154,12 +160,16 @@ public class Calculator {
         Long month = Long.parseLong(date);
         
         timesheet.setMonth(new Month(month));
+        User user = (User)request.getSession().getAttribute("user");
+        timesheet.setUser(new User(user.getId()));
 		model.addAttribute("timesheet",timesheet);
 		
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());
 		
 		if(form.getChecked()) {
-			repository.save(timesheet);
+			repository.updateTimeSheetByID(timesheet.getDaysPending(), timesheet.getDesiredMean(), timesheet.getExitMean(), timesheet.getFile(), timesheet.getInsertMean(),
+					timesheet.getMean(), timesheet.getRestAverage(), timesheet.getDaysPending(), timesheet.getMonth().getId(), timesheet.getUser().getId());
+		
 		}
 		
         
@@ -167,6 +177,8 @@ public class Calculator {
  
 		
 	}
+	
+	
 }
 
 

@@ -33,7 +33,9 @@
 
   <!-- import persistence.xml from resources -->
   <import resource="classpath*:/persistence.xml" />
-
+  
+  <!-- import spring security -->
+  <import resource="spring-security.xml" />
 
    <!--  view resolver -->
 	 <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

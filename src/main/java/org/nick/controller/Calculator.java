@@ -167,9 +167,10 @@ public class Calculator {
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());
 		
 		if(form.getChecked()) {
-			repository.updateTimeSheetByID(timesheet.getDaysPending(), timesheet.getDesiredMean(), timesheet.getExitMean(), timesheet.getFile(), timesheet.getInsertMean(),
+			/*repository.updateTimeSheetByID(timesheet.getDaysPending(), timesheet.getDesiredMean(), timesheet.getExitMean(), timesheet.getFile(), timesheet.getInsertMean(),
 					timesheet.getMean(), timesheet.getRestAverage(), timesheet.getDaysPending(), timesheet.getMonth().getId(), timesheet.getUser().getId());
-		
+		*/
+			
 		}
 		
         

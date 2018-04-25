@@ -170,6 +170,10 @@ public class Calculator {
 			/*repository.updateTimeSheetByID(timesheet.getDaysPending(), timesheet.getDesiredMean(), timesheet.getExitMean(), timesheet.getFile(), timesheet.getInsertMean(),
 					timesheet.getMean(), timesheet.getRestAverage(), timesheet.getDaysPending(), timesheet.getMonth().getId(), timesheet.getUser().getId());
 		*/
+			repository.updateTimeSheetByID(timesheet.getDesiredMean(), timesheet.getRestAverage(),
+					timesheet.getMonth().getId(), timesheet.getUser().getId()
+					);
+		
 			
 		}
 		

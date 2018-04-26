@@ -27,19 +27,19 @@ public class LoginController {
 	UserRepository userRepository;
 	
 	@RequestMapping(value = "/loginPage", method = RequestMethod.GET)
-	public String getLoginPage(Model model) {
+	public String getLoginPage(Model model, HttpSession session,HttpServletRequest request ) {
 		
+		if(request.getSession().getAttribute("user")!=null)
+		{
+			return "welcome";
+		}
 		LoginForm loginForm = new LoginForm();
 		model.addAttribute("loginForm",loginForm);
 		return "login";
 	}
 	
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String welcomePage(Model model) {
 	
-		return "welcome";
-	}
 	
 	
 	@RequestMapping(value = "/loginAttempt", method = RequestMethod.POST)

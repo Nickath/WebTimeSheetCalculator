@@ -106,6 +106,16 @@ public class Calculator {
 		
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());
 		
+		if(form.getChecked()) {
+			repository.updateTimeSheetByID(timesheet.getDesiredMean(), timesheet.getRestAverage(),
+					timesheet.getMonth().getId(), timesheet.getUser().getId()
+					);
+		
+			
+		}
+		
+		LOGGER.info("The info of the submitted form are: \n"+form.toString());
+		
 		
 		
 		if(form.getChecked()) {
@@ -167,9 +177,6 @@ public class Calculator {
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());
 		
 		if(form.getChecked()) {
-			/*repository.updateTimeSheetByID(timesheet.getDaysPending(), timesheet.getDesiredMean(), timesheet.getExitMean(), timesheet.getFile(), timesheet.getInsertMean(),
-					timesheet.getMean(), timesheet.getRestAverage(), timesheet.getDaysPending(), timesheet.getMonth().getId(), timesheet.getUser().getId());
-		*/
 			repository.updateTimeSheetByID(timesheet.getDesiredMean(), timesheet.getRestAverage(),
 					timesheet.getMonth().getId(), timesheet.getUser().getId()
 					);
@@ -182,6 +189,10 @@ public class Calculator {
  
 		
 	}
+	
+	
+	
+	
 	
 	
 }

@@ -17,7 +17,8 @@ import org.nick.model.TimeSheet;
 import org.nick.model.User;
 import org.nick.repository.TimeSheetRepository;
 import org.nick.repository.UserRepository;
-import org.nick.service.FileHandler;
+import org.nick.service.impl.FileHandlerImpl;
+import org.nick.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,13 +37,13 @@ public class Calculator {
 	private static final Logger LOGGER = Logger.getLogger(Calculator.class.getName());
 
 
+	@Autowired
+	UserServiceImpl userService;
+	
     @Autowired
-    FileHandler fileHandler;
+    FileHandlerImpl fileHandlerImpl;
 
-    @Autowired
-    TimeSheetRepository repository;
-    
-
+     
 	
 	@RequestMapping(value = "calculatePage", method = RequestMethod.GET)
 	public String TimeSheetCalcGetPage(Locale locale,Model model,HttpSession session,HttpServletRequest request) {
@@ -81,14 +82,14 @@ public class Calculator {
 	    	return "index";
 	    }
 	    
-        File myFile = fileHandler.readFile(path,form.getFile()); // get the file
+        File myFile = fileHandlerImpl.readFile(path,form.getFile()); // get the file
         TimeSheet timesheet = new TimeSheet();
 
         
         LOGGER.info("Upload file size in bytes: \n"+myFile.length());
 
         try {
-			 timesheet = fileHandler.makeCalculations(myFile,form);
+			 timesheet = fileHandlerImpl.makeCalculations(myFile,form);
 		} catch (IOException e) {
 			LOGGER.severe("ERROR"+e);
 			return "index";
@@ -107,19 +108,13 @@ public class Calculator {
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());
 		
 		if(form.getChecked()) {
-			repository.updateTimeSheetByID(timesheet.getDesiredMean(), timesheet.getRestAverage(),
-					timesheet.getMonth().getId(), timesheet.getUser().getId()
-					);
-		
-			
+			userService.updateTimeSheet(timesheet);
 		}
 		
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());
-		
-		
-		
+
 		if(form.getChecked()) {
-	        repository.save(timesheet);
+	        userService.insertTimeSheet(timesheet);
 		}
 		
         
@@ -151,14 +146,14 @@ public class Calculator {
 	    	return "index";
 	    }
 	    
-        File myFile = fileHandler.readFile(path,form.getFile()); // get the file
+        File myFile = fileHandlerImpl.readFile(path,form.getFile()); // get the file
         TimeSheet timesheet = new TimeSheet();
 
         
         LOGGER.info("Upload file size in bytes: \n"+myFile.length());
 
         try {
-			 timesheet = fileHandler.makeCalculations(myFile,form);
+			 timesheet = fileHandlerImpl.makeCalculations(myFile,form);
 		} catch (IOException e) {
 			LOGGER.severe("ERROR"+e);
 			return "index";
@@ -177,11 +172,7 @@ public class Calculator {
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());
 		
 		if(form.getChecked()) {
-			repository.updateTimeSheetByID(timesheet.getDesiredMean(), timesheet.getRestAverage(),
-					timesheet.getMonth().getId(), timesheet.getUser().getId()
-					);
-		
-			
+		    userService.updateTimeSheet(timesheet);
 		}
 		
         

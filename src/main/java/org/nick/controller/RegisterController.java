@@ -8,6 +8,7 @@ import org.nick.form.RegisterForm;
 import org.nick.model.Role;
 import org.nick.model.User;
 import org.nick.repository.UserRepository;
+import org.nick.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,9 @@ public class RegisterController {
 	@Autowired
 	UserRepository userRepository;
 	
+	@Autowired
+	UserServiceImpl userService;
+	
 	@RequestMapping(value = "/registerPage", method = RequestMethod.GET)
 	public String getRegisterPage(Model model) {
 		  RegisterForm form = new RegisterForm();
@@ -37,23 +41,19 @@ public class RegisterController {
 		if (result.hasErrors()) {
 	         return "register";
 	      }
-		//if username already exists, do not allow, else write him on database
-		List<User> existingUsers = userRepository.findAll();
-		for(User user :existingUsers) {
-			if(user.getUsername().equals(form.getUsername())){
-				model.addAttribute("error","Username exists");
-				return "register";
-			}
+		
+		boolean alreadyExists = userService.registerUser(form);
+		
+		if(alreadyExists) {
+		    model.addAttribute("error","Username exists");
+		    return "register";
 		}
-		User user = new User();
-		user.setEmail(form.getEmail());
-		user.setUsername(form.getUsername());
-		user.setPassword(form.getPassword());
-		user.setRole(new Role(2L));   //sets the user role to "2,user", (default) not any user is authorized to create admin user
-		userRepository.save(user);
+		else {
+			return "successfulRegister";
+		}
 		
 		
-		return "successfulRegister";
+		
 	   }
 	
 	

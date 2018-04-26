@@ -1,7 +1,13 @@
 package org.nick.service.impl;
 
+import java.util.List;
+
+import org.nick.form.RegisterForm;
+import org.nick.model.Role;
 import org.nick.model.TimeSheet;
+import org.nick.model.User;
 import org.nick.repository.TimeSheetRepository;
+import org.nick.repository.UserRepository;
 import org.nick.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,11 +16,12 @@ public class UserServiceImpl implements UserService {
 	@Autowired
     TimeSheetRepository repository;
 
+	@Autowired
+	UserRepository userRepository;
 
 
 	@Override
 	public void updateTimeSheet(TimeSheet timesheet) {
-		
 		repository.updateTimeSheetByID(timesheet.getDesiredMean(), timesheet.getRestAverage(),
 				timesheet.getMonth().getId(), timesheet.getUser().getId());
 		
@@ -25,5 +32,26 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void insertTimeSheet(TimeSheet timesheet) {
 		repository.save(timesheet);
+	}
+
+
+
+	@Override
+	public boolean registerUser(RegisterForm form) {
+		//if username already exists, do not allow, else write him on database
+				List<User> existingUsers = userRepository.findAll();
+				for(User user :existingUsers) {
+					if(user.getUsername().equals(form.getUsername())){
+						return true;
+					}
+				}
+				User user = new User();
+				user.setEmail(form.getEmail());
+				user.setUsername(form.getUsername());
+				user.setPassword(form.getPassword());
+				user.setRole(new Role(2L));   //sets the user role to "2,user", (default) not any user is authorized to create admin user
+				userRepository.save(user);
+				return false;
+		
 	}
 }

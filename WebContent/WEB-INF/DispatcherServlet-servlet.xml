@@ -20,7 +20,8 @@
     <mvc:annotation-driven></mvc:annotation-driven>
     
     <!-- Definition for fileHandler bean without constructor-arg to make it autowired -->
-   <bean id = "fileHandler" class = "org.nick.service.FileHandler"></bean>
+   <bean id = "fileHandler" class = "org.nick.service.impl.FileHandlerImpl"></bean>
+   <bean id = "userService" class = "org.nick.service.impl.UserServiceImpl"></bean>
    
    
    <!-- jpa -->

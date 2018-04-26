@@ -15,9 +15,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Transactional(readOnly = true)
     public User loadUserByUsername(String username) throws Exception {
         User user = userRepository.findByUsername(username);
-
-      
-
         return user;
     }
 }

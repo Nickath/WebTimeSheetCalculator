@@ -16,9 +16,7 @@ public class LogoutController {
 	public String logout(Model model,HttpServletRequest request) {
 		
 		LoginForm loginForm = new LoginForm();
-		request.getSession().setAttribute("loggedInUser", null);//destroying the session
-		request.getSession().setAttribute("isAdmin", null);//destroying the session
-		request.getSession().setAttribute("user",null);
+		request.getSession().invalidate();//destroying the session
 		User user = new User();
 		model.addAttribute("loginForm",loginForm);
 		model.addAttribute("user",user); // filling the user object as empty

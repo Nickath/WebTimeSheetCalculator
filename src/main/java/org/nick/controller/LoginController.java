@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-@SessionAttributes({"loginForm","user"})
+@SessionAttributes({"user"})
 @Controller
 public class LoginController {
 
@@ -32,7 +32,7 @@ public class LoginController {
 		
 		if(request.getSession().getAttribute("user")!=null)
 		{
-			return "welcome";
+			return "home";
 		}
 		LoginForm loginForm = new LoginForm();
 		model.addAttribute("loginForm",loginForm);

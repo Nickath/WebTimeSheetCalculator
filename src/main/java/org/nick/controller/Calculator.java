@@ -48,6 +48,7 @@ public class Calculator {
 	@RequestMapping(value = "calculatePage", method = RequestMethod.GET)
 	public String TimeSheetCalcGetPage(Locale locale,Model model,HttpSession session,HttpServletRequest request) {
 		   if(request.getSession().getAttribute("user") == null) {
+			  LOGGER.info("malakia");
 			  return "login";
 		  }
 		  TimeSheetForm form = new TimeSheetForm();
@@ -107,16 +108,12 @@ public class Calculator {
 		
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());
 		
+		
 		if(form.getChecked()) {
-			userService.updateTimeSheet(timesheet);
+			userService.insertOtUpdateTimeSheet(timesheet);
 		}
 		
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());
-
-		if(form.getChecked()) {
-	        userService.insertTimeSheet(timesheet);
-		}
-		
         
 		return "results";
 	}
@@ -172,7 +169,7 @@ public class Calculator {
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());
 		
 		if(form.getChecked()) {
-		    userService.updateTimeSheet(timesheet);
+		    userService.insertOtUpdateTimeSheet(timesheet);
 		}
 		
         

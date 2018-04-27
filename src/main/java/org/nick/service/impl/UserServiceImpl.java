@@ -54,4 +54,20 @@ public class UserServiceImpl implements UserService {
 				return false;
 		
 	}
+
+
+
+	@Override
+	public boolean insertOtUpdateTimeSheet(TimeSheet timesheet) {
+		List<TimeSheet> list = repository.findAll();
+		for(TimeSheet t :list) {
+			if(t.getUser().getId().equals(timesheet.getUser().getId()) && t.getMonth().getId().equals(timesheet.getMonth()
+					.getId())) {
+				updateTimeSheet(timesheet);
+				return true;
+			}
+		}
+		insertTimeSheet(timesheet);
+		return false;
+	}
 }

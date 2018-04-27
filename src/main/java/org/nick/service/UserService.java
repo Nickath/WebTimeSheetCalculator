@@ -10,4 +10,6 @@ public interface UserService {
 	public void insertTimeSheet(TimeSheet timesheet);
 	
 	public boolean registerUser(RegisterForm form);
+	
+	public boolean insertOtUpdateTimeSheet(TimeSheet timesheet);
 }

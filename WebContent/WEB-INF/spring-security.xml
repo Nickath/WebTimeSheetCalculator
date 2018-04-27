@@ -8,16 +8,18 @@
     http://www.springframework.org/schema/beans 
     http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
 
+<!-- securing the URLS -->
    <http auto-config="true" use-expressions="true">
-        <intercept-url pattern="/welcome/**" access="permitAll" />
+        <intercept-url pattern="/welcome/**" access="permitAll" /> 
         <intercept-url pattern="/homePage*" access="hasRole('ROLE_USER,ROLE_ADMIN')" />
+       <!--  <intercept-url pattern="/calculatePage*" access="hasRole('ROLE_USER,ROLE_ADMIN')" /> -->
  
-      <!-- If an user tries to access any secured URL, then user will be authenticated with custom login page based on the configuration of <form-login> element. -->
+      <!-- If a user tries to access any secured URL, then user will be authenticated with custom login page based on the configuration of <form-login> element. -->
         <form-login login-page="/loginPage" default-target-url="/homePage"
             authentication-failure-url="/loginPage" />
             <!-- default-target-url specifies the path of a method in controller where it has to go after successful authentication -->
             <!-- authentication-failure-url specifies the path of a method in controller where it has to go if authentication is failed -->
-        <logout logout-success-url="/logout" logout-url="/j_spring_security_logout" />
+        <logout invalidate-session="true"  logout-success-url="/logout" logout-url="/j_spring_security_logout" />
         <csrf disabled="true" />
     </http>
  

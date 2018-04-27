@@ -1,5 +1,6 @@
 package org.nick.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,12 +45,12 @@ public class LoginController {
 	
 	@RequestMapping(value = "/loginAttempt", method = RequestMethod.POST)
 	public String login(@Valid  @ModelAttribute("loginForm")LoginForm form, BindingResult result,
-			HttpSession session,HttpServletRequest request,  ModelMap model) {
+			HttpSession session,HttpServletRequest request,  ModelMap model, Principal principal) {
 		
 		if(result.hasErrors()) {
 			return "login";
 		}
-		
+
 		List<User> existingUsers = userRepository.findAll();
 		for(User user :existingUsers) {
 			if(user.getUsername().equals(form.getUsername()) && user.getPassword().equals(form.getPassword())){
@@ -60,7 +61,7 @@ public class LoginController {
 				if(user.getRole().getId()==1) {
 					request.getSession().setAttribute("isAdmin", true);
 				}
-				return "successfulLogin";
+				return "home";
 			}
 		}
 		

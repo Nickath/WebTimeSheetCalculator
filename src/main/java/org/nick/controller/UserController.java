@@ -16,10 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class UserController {
 
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	@RequestMapping(value = "/homePage", method = RequestMethod.GET)
 	public String getLoginPage(Model model, HttpSession session,HttpServletRequest request ) {
 
-		return "homePage";
+		return "home";
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)

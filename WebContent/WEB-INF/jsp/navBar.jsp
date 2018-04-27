@@ -21,7 +21,7 @@
  <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
       <c:if test="${not empty loggedInUser}">
-         <li><a href="<c:url value="/home" />" >${user.username}</a></li>
+         <li><a href="<c:url value="/homePage" />" >${user.username}</a></li>
        <li><a data-toggle="modal" href="#myModal" > Actions </a></li>
        
       </c:if>
@@ -33,7 +33,8 @@
         
         <li><a href="#">About</a></li>
       <c:if test="${not empty loggedInUser}">
-       <li><a href="<c:url value="/logout" />" >Logout</a></li>
+       <li><%-- <a href="<c:url value="/logout" />" >Logout</a> --%>
+       <a href="<c:url value="/j_spring_security_logout" />"> Logout</a></li>
        
      </c:if>
       </ul>

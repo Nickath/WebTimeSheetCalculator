@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="`user`")
+@Table(name="users")
 public class User {
 
 	@Id
@@ -26,6 +26,9 @@ public class User {
 
 	@Column(name="password")
 	private String password;
+	
+	@Column(name="enabled")
+	private boolean enabled;
 	
 	//FK TO TABLE role, each user has his/her own role
 	@ManyToOne
@@ -71,5 +74,11 @@ public class User {
 	}
 	public User(Long id) {
 		this.id = id;
+	}
+	public boolean isEnabled() {
+		return enabled;
+	}
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 }

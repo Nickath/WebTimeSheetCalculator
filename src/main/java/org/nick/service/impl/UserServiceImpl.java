@@ -50,6 +50,7 @@ public class UserServiceImpl implements UserService {
 				user.setUsername(form.getUsername());
 				user.setPassword(form.getPassword());
 				user.setRole(new Role(2L));   //sets the user role to "2,user", (default) not any user is authorized to create admin user
+				user.setEnabled(true);
 				userRepository.save(user);
 				return false;
 		

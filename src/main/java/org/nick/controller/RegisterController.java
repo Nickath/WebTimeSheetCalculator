@@ -1,13 +1,9 @@
 package org.nick.controller;
 
-import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-
 import org.nick.form.RegisterForm;
-import org.nick.model.Role;
-import org.nick.model.User;
-import org.nick.repository.UserRepository;
 import org.nick.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,8 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class RegisterController {
 
-	@Autowired
-	UserRepository userRepository;
+	
 	
 	@Autowired
 	UserServiceImpl userService;
@@ -49,6 +44,7 @@ public class RegisterController {
 		    return "register";
 		}
 		else {
+			model.addAttribute("userForm",form);
 			return "successfulRegister";
 		}
 		

@@ -2,6 +2,8 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <%@page session="true"%>
 <html>
 <style>
@@ -14,10 +16,10 @@
 <body>
 <jsp:include page="navBar.jsp" />
 
-
+<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
 
 <div class="content">
-<h1>User Information </h1>
+ <h1>User Information </h1>
 <div class="container">
 
 <c:if test="${pageContext.request.userPrincipal.name != null}">
@@ -25,7 +27,7 @@
             Welcome : ${user.username} | <a
                 href="<c:url value="/j_spring_security_logout" />"> Logout</a>
         </h2>
- </c:if>
+</c:if>
 <p>Username : ${user.username} </p>
 <p>Email : ${user.email} </p>
 <p>Role :
@@ -41,5 +43,7 @@
 
 </div>
 </div>
+
+</sec:authorize>
 </body>
 </html>

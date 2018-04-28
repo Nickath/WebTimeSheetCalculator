@@ -47,10 +47,9 @@ public class Calculator {
 	
 	@RequestMapping(value = "calculatePage", method = RequestMethod.GET)
 	public String TimeSheetCalcGetPage(Locale locale,Model model,HttpSession session,HttpServletRequest request) {
-		   if(request.getSession().getAttribute("user") == null) {
-			  LOGGER.info("malakia");
+		  /* if(request.getSession().getAttribute("user") == null) {
 			  return "login";
-		  }
+		  }*/
 		  TimeSheetForm form = new TimeSheetForm();
 		  model.addAttribute("timeSheetForm",form);
 	      return "index";

@@ -1,5 +1,7 @@
 package org.nick.controller;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -29,20 +31,16 @@ public class UserController {
 	}
 	
 	//for 403 access denied page
-    @RequestMapping(value = "/403", method = RequestMethod.GET)
-    public ModelAndView accesssDenied() {
-
-	  ModelAndView model = new ModelAndView();
-		
-		  //check if user is login
-      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-      if (!(auth instanceof AnonymousAuthenticationToken))   {
-	  UserDetails userDetail = (UserDetails) auth.getPrincipal();	
-	  model.addObject("username", userDetail.getUsername());
-		  }
-			
-		  model.setViewName("403");
-		  return model;
-
-		}
+	 @RequestMapping(value = "/403", method = RequestMethod.GET)
+	    public String accessDenied(Model model, Principal principal) {
+	         
+	        if (principal != null) {
+	            model.addAttribute("message", "Hi " + principal.getName()
+	                    + "<br> You do not have permission to access this page!");
+	        } else {
+	            model.addAttribute("msg",
+	                    "You do not have permission to access this page!");
+	        }
+	        return "403";
+	    }
 }

@@ -43,7 +43,7 @@ public class LoginController {
 	
 	
 	
-	@RequestMapping(value = "/loginAttempt", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/loginAttempt", method = RequestMethod.POST)
 	public String login(@Valid  @ModelAttribute("loginForm")LoginForm form, BindingResult result,
 			HttpSession session,HttpServletRequest request,  ModelMap model, Principal principal) {
 		
@@ -68,5 +68,5 @@ public class LoginController {
 		model.addAttribute("invalidCreds","Wrong username or password");
 		
 		return "login";
-	}
+	}*/
 }

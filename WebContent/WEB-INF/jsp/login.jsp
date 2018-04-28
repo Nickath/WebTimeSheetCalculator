@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-    
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -29,32 +29,31 @@
 <div class="container">
 <h1> Login Form</h1><br><br><br>
 
-    <form:form class="form-horizontal" action="loginAttempt" modelAttribute="loginForm" method="POST">
-      <div class="form-group">
-        <form:label path = "username" class="col-sm-2 control-label">Username:</form:label>
-        <div class="col-sm-4">
-          <form:input path="username" class="form-control inputstl" name="username" id="username" placeholder="Enter username"/>
-        </div>
-        <form:errors path = "username" cssClass = "error" />
-      </div>
-      <div class="form-group">
-        <form:label path="password" class="col-sm-2 control-label">Password:</form:label>
-        <div class="col-sm-4">
-          <form:password path="password" class="form-control inputstl" name="password" id="password"/>
-        </div>
-        <form:errors path = "password" cssClass = "error" />
-      </div>
-      
-      <br><div class="error"> ${invalidCreds} </div>
- 
+  <!-- /login?error=true -->
+     <c:if test="${param.error == 'true'}">
+         <div style="color:red;margin:10px 0px;">
+          
+                Login Failed!!!<br />
+                Reason :  ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+                 
+         </div>
+    </c:if>
 
-     <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-4">
-          <button type="submit" class="btn btn-lg btn-block btn-primary"  >Login</button>
-        </div>
-      </div>
-      
-    </form:form>
+   <form name='f' action="${pageContext.request.contextPath}/j_spring_security_check" method='POST'>
+      <table>
+         <tr>
+            <td>User:</td>
+            <td><input type='text' name='username' value=''></td>
+         </tr>
+         <tr>
+            <td>Password:</td>
+            <td><input type='password' name='password' /></td>
+         </tr>
+         <tr>
+            <td><input name="submit" type="submit" value="submit" /></td>
+         </tr>
+      </table>
+  </form>
    </div> 
    
    

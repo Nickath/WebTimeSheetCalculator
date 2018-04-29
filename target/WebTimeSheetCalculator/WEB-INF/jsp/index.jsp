@@ -20,12 +20,12 @@
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>TimeSheet Calculator</title>
+<title>HomePage</title>
 </head>
 
 
 <body>
-
+<jsp:include page="navBar.jsp" />
 <!-- bootstrap form -->
 <div class="content">
 
@@ -77,7 +77,7 @@
 
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-4">
-          <button type="submit" class="btn btn-lg btn-block btn-primary" onclick="doAjaxPost()" >Submit form</button>
+          <button type="submit" class="btn btn-lg btn-block btn-primary"  >Submit form</button>
         </div>
       </div>
       
@@ -130,6 +130,14 @@ $('#file').change(function() {
 });
 
 
+$('#eraseInput').click(function() {
+	
+	document.getElementById("file").value = "";
+	 $('#imgValid').addClass('hidden');
+	 alert('Path is empty');
+});
+
+
 
 
 });
@@ -141,20 +149,6 @@ $('#file').change(function() {
 
 
 
-<script type="text/javascript">
-$(document).ready(function () {
-	$('#eraseInput').click(function() {
-		
-		document.getElementById("file").value = "";
-		 $('#imgValid').addClass('hidden');
-		 alert('Path is empty');
-	});
-
-
-
-
-});
-</script>
 
 
 

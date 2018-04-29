@@ -39,21 +39,49 @@
          </div>
     </c:if>
 
-   <form name='f' action="${pageContext.request.contextPath}/j_spring_security_check" method='POST'>
-      <table>
-         <tr>
-            <td>User:</td>
-            <td><input type='text' name='username' value=''></td>
-         </tr>
-         <tr>
-            <td>Password:</td>
-            <td><input type='password' name='password' /></td>
-         </tr>
-         <tr>
-            <td><input name="submit" type="submit" value="submit" /></td>
-         </tr>
-      </table>
+   <form class="form-horizontal" name='f' action="${pageContext.request.contextPath}/j_spring_security_check" method='POST'>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Username:</label>
+        <div class="col-sm-4">
+          <input class="form-control inputstl" name="username" id="username" placeholder="Enter username"/>
+        </div>
+        <label cssClass = "error" />
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Password:</label>
+        <div class="col-sm-4">
+          <input type= "password" class="form-control inputstl" name="password" id="password"/>
+        </div>
+        <label cssClass = "error" />
+      </div>
+      
+      <br><div class="error"> ${invalidCreds} </div>
+ 
+
+     <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-4">
+          <button type="submit" class="btn btn-lg btn-block btn-primary"  >Login</button>
+        </div>
+      </div>
   </form>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
    </div> 
    
    

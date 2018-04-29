@@ -20,7 +20,10 @@ public class UserController {
 
 	@RequestMapping(value = "/homePage", method = RequestMethod.GET)
 	public String getLoginPage(Model model, HttpSession session,HttpServletRequest request ) {
-
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getName();
+		Object credentials = auth.getCredentials();
+		model.addAttribute("user",credentials);
 		return "home";
 	}
 	

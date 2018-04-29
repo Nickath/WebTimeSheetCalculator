@@ -5,6 +5,10 @@ import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.nick.model.User;
+import org.nick.repository.UserRepository;
+import org.nick.service.impl.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,13 +21,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class UserController {
+	
+	@Autowired
+	UserRepository userRepository;
+	
+	@Autowired
+	UserServiceImpl userService;
 
+	
 	@RequestMapping(value = "/homePage", method = RequestMethod.GET)
 	public String getLoginPage(Model model, HttpSession session,HttpServletRequest request ) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String username = auth.getName();
-		Object credentials = auth.getCredentials();
-		model.addAttribute("user",credentials);
+		User user = userService.getAuthenticatedUser();
+		model.addAttribute("user",user);
 		return "home";
 	}
 	
@@ -46,4 +55,14 @@ public class UserController {
 	        }
 	        return "403";
 	    }
+	 
+	 @RequestMapping(value = "/invalidSession", method = RequestMethod.GET)
+		public String invalidSession(Model model) {
+		
+			return "login";
+		}
+	 
+	 
+	 
+	
 }

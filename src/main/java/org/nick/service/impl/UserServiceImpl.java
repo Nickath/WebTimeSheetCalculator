@@ -10,6 +10,8 @@ import org.nick.repository.TimeSheetRepository;
 import org.nick.repository.UserRepository;
 import org.nick.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 public class UserServiceImpl implements UserService {
 
@@ -70,5 +72,17 @@ public class UserServiceImpl implements UserService {
 		}
 		insertTimeSheet(timesheet);
 		return false;
+	}
+
+
+
+	@Override
+	public User getAuthenticatedUser() {
+			 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			 String username = auth.getName();
+			 Object credentials = auth.getCredentials();
+			 User user = userRepository.findByUsername(username);
+			 return user;
+		 
 	}
 }

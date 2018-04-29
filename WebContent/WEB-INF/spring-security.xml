@@ -33,13 +33,15 @@
 		<csrf disabled="true" />
 		<!-- access denied page -->
 		<access-denied-handler error-page="/403" />
+		
+		<!-- if the session expires, go to invalidSession controller -->
+		<session-management invalid-session-url="/invalidSession">
+       </session-management>
     </http>
  
-    <authentication-manager erase-credentials="false">
-        <authentication-provider>
-        
-        
-     
+ <!-- if we want to keep password erase-credentials="false" -->
+    <authentication-manager >
+      <authentication-provider>
          <!-- datasource is assigned to it.
          users-by-username-query
 a sql query that will select username and password.
@@ -53,6 +55,8 @@ a sql query that will select username and authority  -->
         </authentication-provider>
         
     </authentication-manager>
+    
+    
  
    
 </beans:beans>

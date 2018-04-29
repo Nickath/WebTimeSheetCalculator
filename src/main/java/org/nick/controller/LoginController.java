@@ -10,7 +10,11 @@ import javax.validation.Valid;
 import org.nick.form.LoginForm;
 import org.nick.model.User;
 import org.nick.repository.UserRepository;
+import org.nick.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -25,14 +29,18 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 public class LoginController {
 
 	@Autowired
-	UserRepository userRepository;
+	UserServiceImpl userService;
 	
 	@RequestMapping(value = "/loginPage", method = RequestMethod.GET)
 	public String getLoginPage(Model model, HttpSession session,HttpServletRequest request ) {
 		
-		if(request.getSession().getAttribute("user")!=null)
-		{
-			return "home";
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+		    /* The user is logged in :) */
+			User user = userService.getAuthenticatedUser();
+			model.addAttribute("user",user);
+		    return "home";
 		}
 		LoginForm loginForm = new LoginForm();
 		model.addAttribute("loginForm",loginForm);

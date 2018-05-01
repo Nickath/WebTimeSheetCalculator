@@ -50,6 +50,9 @@ public class Calculator {
 		  /* if(request.getSession().getAttribute("user") == null) {
 			  return "login";
 		  }*/
+		
+		  User user = userService.getAuthenticatedUser();
+		  model.addAttribute("user",user);
 		  TimeSheetForm form = new TimeSheetForm();
 		  model.addAttribute("timeSheetForm",form);
 	      return "index";
@@ -101,7 +104,8 @@ public class Calculator {
         Long month = Long.parseLong(date);
         
         timesheet.setMonth(new Month(month));
-        User user = (User)request.getSession().getAttribute("user");
+        User user = userService.getAuthenticatedUser();
+		model.addAttribute("user",user);
         timesheet.setUser(new User(user.getId()));
 		model.addAttribute("timesheet",timesheet);
 		
@@ -161,7 +165,8 @@ public class Calculator {
         Long month = Long.parseLong(date);
         
         timesheet.setMonth(new Month(month));
-        User user = (User)request.getSession().getAttribute("user");
+        User user = userService.getAuthenticatedUser();
+		model.addAttribute("user",user);
         timesheet.setUser(new User(user.getId()));
 		model.addAttribute("timesheet",timesheet);
 		

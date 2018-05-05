@@ -100,20 +100,28 @@ public class UserController {
 	    public String loadTimeSheetsAttempt(HttpSession session, HttpServletRequest request,
 	    		@RequestParam("file") MultipartFile[] files ,Model model) {
 		    
+		    //add attributes to the model first
 		    User user = userService.getAuthenticatedUser();
 		    model.addAttribute("user",user);
+		    List<Month> months = monthRepository.findAll();
+			MonthForm form = new MonthForm();
+			form.setMonths(months);
+			model.addAttribute("months",form);
 		    int monthId = 0;
 		    for(MultipartFile file:files) {
 		    	monthId++;
 		    	if(!file.isEmpty()) {
-		    		if (file.getOriginalFilename().contains(".xlsx")) {
+		    		if (!file.getOriginalFilename().contains(".xlsx")) {
 		    	    	model.addAttribute("error","The file you uploaded is not a .xlsx file");
 		    	    	return "loadtimesheets";
-		    	}else {
+		    	}else { // if user has uploaded valid file insert update it
 		    		String path=session.getServletContext().getRealPath("/");  
 		    		File myFile = fileHandlerImpl.readFile(path,(CommonsMultipartFile) file); // get the file
 		            TimeSheet timesheet = new TimeSheet();
-		            
+		            timesheet.setMonth(new Month((long)monthId));
+		            timesheet.setUser(user);
+		            timesheet.setFile(myFile);
+		            userService.insertOtUpdateTimeSheet(timesheet);
 /*
 		            try {
 		    			 timesheet = fileHandlerImpl.makeCalculations(myFile,form);

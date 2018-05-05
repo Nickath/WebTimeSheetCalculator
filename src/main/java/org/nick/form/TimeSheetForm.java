@@ -1,5 +1,7 @@
 package org.nick.form;
 
+import java.util.List;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -7,6 +9,7 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.nick.model.Month;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 
@@ -14,6 +17,8 @@ public class TimeSheetForm {
      
  
 	private  CommonsMultipartFile file;
+	
+	private List<CommonsMultipartFile> fileList;
 	
     @NotNull(message = "Please enter pending days left ")
     @Min(value=1)
@@ -25,6 +30,8 @@ public class TimeSheetForm {
 	private  String desiredMean;
     
     private boolean checked;
+    
+    private List<Month> months;
     
 	public CommonsMultipartFile getFile() {
 		return file;
@@ -50,6 +57,18 @@ public class TimeSheetForm {
 	}
 	public void setChecked(boolean checked) {
 		this.checked = checked;
+	}
+	public List<Month> getMonths() {
+		return months;
+	}
+	public void setMonths(List<Month> months) {
+		this.months = months;
+	}
+	public List<CommonsMultipartFile> getFileList() {
+		return fileList;
+	}
+	public void setFileList(List<CommonsMultipartFile> fileList) {
+		this.fileList = fileList;
 	}
 	@Override
 	public String toString() {

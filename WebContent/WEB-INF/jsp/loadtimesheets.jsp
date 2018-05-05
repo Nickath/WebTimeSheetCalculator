@@ -32,15 +32,16 @@
 <div class="container">
 <h1>Load TimeSheets per Month</h1><br><br><br>
 
-    <form:form class="form-horizontal" action="loadTimeSheetsAttempt" modelAttribute="monthForm" method="POST" enctype="multipart/form-data">
+    <form:form class="form-horizontal" action="loadTimeSheetsAttempt"  method="POST" enctype="multipart/form-data">
   
-<c:forEach items="${monthForm.months}" var="month" varStatus="status">
+<c:forEach items="${months.months}" var="month" varStatus="status">
       <br>
 
       <div class="form-group">
        <label for="file" class="col-sm-2 control-label">${month.month}:</label>
         <div class="col-sm-2">
-         <form:input path="months[${status.index}].month" type="file" class="inputstl" id="file" name="file" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);" onchange="this.form.submit()"/>
+      <%--   name="months[${status.index}].month" --%>
+         <input  type="file" class="inputstl" id="file" name="file" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);" onchange="this.form.submit()"/>
           <div class="bootstrap-filestyle input-group"><input type="hidden" class="form-control " placeholder="" disabled="" >
            <span class="group-span-filestyle input-group-btn" tabindex="0">
             <label for="file" class="btn btn-primary ">

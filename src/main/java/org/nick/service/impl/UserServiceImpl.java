@@ -75,6 +75,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 
+	//to get the authenticated logged in user when is needed
 
 	@Override
 	public User getAuthenticatedUser() {

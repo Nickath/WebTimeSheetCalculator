@@ -21,6 +21,10 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserRepository userRepository;
 
+	
+	public List<TimeSheet> getAllTimeSheets(){
+		return repository.findAll();
+	}
 
 	@Override
 	public void updateTimeSheet(TimeSheet timesheet) {

@@ -1,7 +1,8 @@
 package org.nick.model;
 
 import java.io.File;
-
+import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,6 +36,8 @@ public class TimeSheet {
 	private String mean;
 	@Column(name="days")
 	private int workingDays;
+	@Column(name="last_update")
+	private Date lastUpdate;
 	
 	//FK to month table
 	@ManyToOne
@@ -110,6 +113,12 @@ public class TimeSheet {
 	}
 	public void setUser(User user) {
 		this.user = user;
+	}
+	public Date getLastUpdate() {
+		return lastUpdate;
+	}
+	public void setLastUpdate(Date localDateTime) {
+		this.lastUpdate = localDateTime;
 	}
 	public TimeSheet(File file, String desiredMean, int daysPending, String restAverage, String insertMean,
 			String exitMean, String mean,int workingDays) {

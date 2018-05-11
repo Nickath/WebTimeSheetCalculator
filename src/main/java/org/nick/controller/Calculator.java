@@ -84,11 +84,8 @@ public class Calculator {
 	    	model.addAttribute("error","The file you uploaded is not a .xlsx file");
 	    	return "index";
 	    }
-	    
         File myFile = fileHandlerImpl.readFile(path,form.getFile()); // get the file
         TimeSheet timesheet = new TimeSheet();
-
-        
         LOGGER.info("Upload file size in bytes: \n"+myFile.length());
 
         try {
@@ -97,12 +94,10 @@ public class Calculator {
 			LOGGER.severe("ERROR"+e);
 			return "index";
 		}
-
         //get the current month so we write the record in the database pointing to the month ID of the month table
         LocalDate localDate = LocalDate.now();
         String date = DateTimeFormatter.ofPattern("yyy/MM/dd").format(localDate).substring(5,7);
         Long month = Long.parseLong(date);
-        
         timesheet.setMonth(new Month(month));
         User user = userService.getAuthenticatedUser();
 		model.addAttribute("user",user);
@@ -110,8 +105,6 @@ public class Calculator {
 		model.addAttribute("timesheet",timesheet);
 		
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());
-		
-		
 		if(form.getChecked()) {
 			userService.insertOtUpdateTimeSheet(timesheet);
 		}

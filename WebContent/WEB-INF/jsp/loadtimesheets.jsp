@@ -75,6 +75,7 @@
            </c:forEach>
          </select>
         </div>
+         <p id="fileerror" class="error"> ${error} </p>
       </section>
      </div>
      

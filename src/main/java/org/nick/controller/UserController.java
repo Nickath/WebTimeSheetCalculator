@@ -99,6 +99,11 @@ public class UserController {
 	 @RequestMapping(value = "/loadTimeSheetsAttempt", method = RequestMethod.POST)
 	    public String loadTimeSheetsAttempt(HttpSession session, HttpServletRequest request,
 	    		@RequestParam("file") MultipartFile file ,@RequestParam("month") String month, Model model) {
+		 
+		    if(month.equals("") || month.equals(null)) {
+		    	model.addAttribute("error","Select a month please");
+		    	return loadTimeSheetsPage(model); //if error exist, show it and go to the get control of the page
+		    }
 		    
 		    //add attributes to the model first
 		    User user = userService.getAuthenticatedUser();

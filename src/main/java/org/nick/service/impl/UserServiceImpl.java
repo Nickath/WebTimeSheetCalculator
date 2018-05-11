@@ -1,5 +1,10 @@
 package org.nick.service.impl;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.nick.form.RegisterForm;
@@ -26,17 +31,18 @@ public class UserServiceImpl implements UserService {
 		return repository.findAll();
 	}
 
+	//updates the timesheet 
 	@Override
 	public void updateTimeSheet(TimeSheet timesheet) {
-		repository.updateTimeSheetByID(timesheet.getFile(), timesheet.getDesiredMean(), timesheet.getRestAverage(),
+		repository.updateTimeSheetByID(timesheet.getFile(), timesheet.getDesiredMean(), timesheet.getRestAverage(), getCurrentTime(),
 				timesheet.getMonth().getId(), timesheet.getUser().getId());
-		
 	}
 
 
 
 	@Override
 	public void insertTimeSheet(TimeSheet timesheet) {
+		timesheet.setLastUpdate(getCurrentTime());
 		repository.save(timesheet);
 	}
 
@@ -89,5 +95,12 @@ public class UserServiceImpl implements UserService {
 			 User user = userRepository.findByUsername(username);
 			 return user;
 		 
+	}
+	
+	@Override 
+	public Date getCurrentTime() {
+		Calendar calendar = Calendar.getInstance();
+		java.util.Date now = calendar.getTime();
+		return now;
 	}
 }

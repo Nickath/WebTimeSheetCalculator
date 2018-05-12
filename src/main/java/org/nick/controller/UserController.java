@@ -76,7 +76,7 @@ public class UserController {
 	        return "403";
 	    }
 	 
-	 
+	 //invalid session redirects to login
 	 @RequestMapping(value = "/invalidSession", method = RequestMethod.GET)
 		public String invalidSession(Model model) {
 		
@@ -101,7 +101,7 @@ public class UserController {
 	    		@RequestParam("file") MultipartFile file ,@RequestParam("month") String month, Model model) {
 		 
 		    if(month.equals("") || month.equals(null)) {
-		    	model.addAttribute("error","Select a month please");
+		    	model.addAttribute("montherror","Select a month please");
 		    	return loadTimeSheetsPage(model); //if error exist, show it and go to the get control of the page
 		    }
 		    
@@ -124,13 +124,7 @@ public class UserController {
 		            timesheet.setUser(user);
 		            timesheet.setFile(myFile);
 		            userService.insertOtUpdateTimeSheet(timesheet);
-/*
-		            try {
-		    			 timesheet = fileHandlerImpl.makeCalculations(myFile,form);
-		    		} catch (IOException e) {
-		    			LOGGER.severe("ERROR"+e);
-		    			return "index";
-		    		}*/
+
 		            
 		    	}
 		      }

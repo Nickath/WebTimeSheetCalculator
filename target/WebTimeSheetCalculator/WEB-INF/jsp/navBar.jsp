@@ -20,19 +20,19 @@
 
  <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-      <c:if test="${not empty loggedInUser}">
+      <c:if test="${pageContext.request.userPrincipal.name != null}">
          <li><a href="<c:url value="/homePage" />" >${user.username}</a></li>
        <li><a data-toggle="modal" href="#myModal" > Actions </a></li>
        
       </c:if>
-      <c:if test="${empty loggedInUser}">
+      <c:if test="${pageContext.request.userPrincipal.name == null}">
        <li><a href="<c:url value="/loginPage" />" >Login</a></li>
        <li><a href="<c:url value="/registerPage" />" >Register</a></li>
      </c:if>
       
         
         <li><a href="#">About</a></li>
-      <c:if test="${not empty loggedInUser}">
+      <c:if test="${pageContext.request.userPrincipal.name != null}">
        <li><%-- <a href="<c:url value="/logout" />" >Logout</a> --%>
        <a href="<c:url value="/j_spring_security_logout" />"> Logout</a></li>
        

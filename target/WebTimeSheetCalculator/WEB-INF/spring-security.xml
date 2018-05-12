@@ -11,30 +11,38 @@
 <!-- securing the URLS -->
    <http auto-config="true" use-expressions="true">
         <intercept-url pattern="/welcome/**" access="permitAll" /> 
+         <intercept-url pattern="/logout" access="permitAll" />
         <!-- rule indicating that every other page needs one of roler_user or role_admin -->
         <!-- <intercept-url pattern="/**" access="hasRole('ROLE_USER,ROLE_ADMIN')" /> -->
         <intercept-url pattern="/homePage*"  access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
         <intercept-url pattern="/calculatePage*"  access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" /> 
+        <intercept-url pattern="/loadTimeSheetsPage*"  access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" /> 
         
  
       <!-- If a user tries to access any secured URL, then user will be authenticated with custom login page based on the configuration of <form-login> element. -->
         <form-login login-page="/loginPage"
          login-processing-url="/j_spring_security_check"
           default-target-url="/homePage"
-            authentication-failure-url="/loginPage" 
+            authentication-failure-url="/loginPage?error=true" 
             username-parameter="username"
             password-parameter="password" />
             <!-- default-target-url specifies the path of a method in controller where it has to go after successful authentication -->
             <!-- authentication-failure-url specifies the path of a method in controller where it has to go if authentication is failed -->
-        <logout invalidate-session="true"  logout-success-url="/logout" logout-url="/j_spring_security_logout" />
+        <logout invalidate-session="true"  delete-cookies="JSESSIONID"
+         logout-success-url="/logout" logout-url="/j_spring_security_logout" />
         <!-- disable csrf protection -->
 		<csrf disabled="true" />
 		<!-- access denied page -->
 		<access-denied-handler error-page="/403" />
+		
+		<!-- if the session expires, go to invalidSession controller -->
+		<session-management invalid-session-url="/invalidSession">
+       </session-management>
     </http>
  
-    <authentication-manager>
-        <authentication-provider>
+ <!-- if we want to keep password erase-credentials="false" -->
+    <authentication-manager >
+      <authentication-provider>
          <!-- datasource is assigned to it.
          users-by-username-query
 a sql query that will select username and password.
@@ -48,6 +56,8 @@ a sql query that will select username and authority  -->
         </authentication-provider>
         
     </authentication-manager>
+    
+    
  
    
 </beans:beans>

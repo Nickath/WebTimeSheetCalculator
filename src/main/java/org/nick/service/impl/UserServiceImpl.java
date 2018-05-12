@@ -93,8 +93,7 @@ public class UserServiceImpl implements UserService {
 			 String username = auth.getName();
 			 Object credentials = auth.getCredentials();
 			 User user = userRepository.findByUsername(username);
-			 return user;
-		 
+			 return user;	 
 	}
 	
 	@Override 
@@ -103,4 +102,13 @@ public class UserServiceImpl implements UserService {
 		java.util.Date now = calendar.getTime();
 		return now;
 	}
+	
+	@Override
+	public Date getLastUpdateOfTimesheetForMonth(User user, long month) {
+		long userID = user.getId();
+		Date date = repository.getLastUpdateOfTimeSheet(userID, month);
+		return date;
+		
+	}
+	
 }

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.nick.model.TimeSheet;
+import org.nick.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -26,6 +27,11 @@ public interface TimeSheetRepository extends JpaRepository<TimeSheet, Long> {
 	@Query(value = "update timesheets  set  file = ?1, desiredmean = ?2, restmean = ?3, last_update = ?4 WHERE month_id = ?5 AND user_id = ?6", nativeQuery = true)
 	void updateTimeSheetByID(File file,String desiredmean, String restmean,  Date now, Long monthID,  Long userId);
 	
+	
+	
+    @Transactional(readOnly=true)
+	@Query(value = "select last_update from timesheets where user_id = ?1 AND month_id= ?2 ", nativeQuery = true)
+	Date getLastUpdateOfTimeSheet(long userID, long month);
 	
 	
 }

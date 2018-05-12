@@ -68,17 +68,17 @@
     <div class="col-sm-2">  
       <section class="container">
         <div class="dropdown">
-         <select name="month" class="dropdown-select">
-          <option value="">Select…</option>
+         <select name="month" class="dropdown-select" id="selectID" onChange="ajaxGetUpdate(this.selectedIndex);">
+          <option value="">Select Month</option>
            <c:forEach items="${months.months}" var="month" varStatus="status">
             <option name="month" value="${status.index}" >${month.month}</option>
            </c:forEach>
          </select>
         </div>
-         <p id="fileerror" class="error"> ${error} </p>
+         <p id="fileerror" class="error"> ${montherror} </p>
       </section>
      </div>
-     
+     <div id="result"></div>
         
       </div>
       
@@ -119,6 +119,8 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
+	
+	
 $('#file').change(function() {
    
      if($(this).val()){
@@ -154,9 +156,34 @@ $('#eraseInput').click(function() {
 
 
 
+<!-- ajax to get results for the date -->
 
-
-
+<script type="text/javascript">
+function ajaxGetUpdate(selectedIndex){
+	
+ $.ajax({
+  type: "POST",
+  url: "http://localhost:8080/WebTimeSheetCalculator/getLastUpdate",
+  cache: false,    
+  data: { month: $("#selectID").val() }, // parameters 
+  success: function(response){
+   $('#result').html("");
+  // var obj = JSON.parse(response); to convert a valid JSON object into javascript object
+   var date = response;
+   if(response != null && response !=""){
+	   $('#result').html("Last Update: " + response +"</br" );
+   }
+   else{
+	   $('#result').html("No file uploaded for this month" );
+   }
+  
+  },
+  error: function(){      
+   alert('Error while request..');
+  }
+ });
+}
+</script>
 
 
 

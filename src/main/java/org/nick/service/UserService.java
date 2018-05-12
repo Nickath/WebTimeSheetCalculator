@@ -20,4 +20,6 @@ public interface UserService {
 	public User getAuthenticatedUser();
 
 	public Date getCurrentTime();
+
+	Date getLastUpdateOfTimesheetForMonth(User user, long month);
 }

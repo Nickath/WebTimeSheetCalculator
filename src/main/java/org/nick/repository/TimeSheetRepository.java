@@ -3,6 +3,7 @@ package org.nick.repository;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 import org.nick.model.TimeSheet;
 import org.nick.model.User;
@@ -32,6 +33,12 @@ public interface TimeSheetRepository extends JpaRepository<TimeSheet, Long> {
     @Transactional(readOnly=true)
 	@Query(value = "select last_update from timesheets where user_id = ?1 AND month_id= ?2 ", nativeQuery = true)
 	Date getLastUpdateOfTimeSheet(long userID, long month);
+    
+    
+
+    @Transactional(readOnly=true)
+	@Query(value = "select * from timesheets where user_id = ?1", nativeQuery = true)
+	List<TimeSheet> getStatisticsPerUser(long userID);
 	
 	
 }

@@ -110,5 +110,11 @@ public class UserServiceImpl implements UserService {
 		return date;
 		
 	}
+
+	@Override
+	public List<TimeSheet> getStatisticsByUserId(long  userID) {
+		List<TimeSheet> list = repository.getStatisticsPerUser(userID);
+		return list;
+	}
 	
 }

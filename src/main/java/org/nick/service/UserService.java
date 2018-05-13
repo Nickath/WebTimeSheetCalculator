@@ -2,6 +2,7 @@ package org.nick.service;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 import org.nick.form.RegisterForm;
 import org.nick.model.TimeSheet;
@@ -22,4 +23,6 @@ public interface UserService {
 	public Date getCurrentTime();
 
 	Date getLastUpdateOfTimesheetForMonth(User user, long month);
+	
+	public List<TimeSheet> getStatisticsByUserId(long userID);
 }

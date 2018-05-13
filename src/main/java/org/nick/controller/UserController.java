@@ -136,6 +136,21 @@ public class UserController {
 	 }
 	 
 	 
+	 // watch my Statistics action
+	 @RequestMapping(value = "/userStatisticsPage", method = RequestMethod.GET)
+	 public String getStatisticsPage(Model model) {
+		 
+		 User user = userService.getAuthenticatedUser();
+		 model.addAttribute("user",user);
+		 long userId = user.getId();
+		 List<TimeSheet> userTimeSheets = userService.getStatisticsByUserId(userId);
+		 model.addAttribute("timesheetList", userTimeSheets);
+		 return "userStatisticsPage";
+		 
+		 
+	 }
+	 
+	 
 	
 }
 	 

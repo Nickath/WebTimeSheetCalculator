@@ -35,12 +35,13 @@
 <tbody>
   <tr>
     <td>${element.month.month}</td>
-    <td>${element.insertMean}</td>
-    <td>${element.exitMean}</td>
-    <td>${element.mean}</td>
-    <td>${element.workingDays}</td>
-    <td>${element.desiredMean}</td>
-    <td>${element.lastUpdate}</td>
+    <td><c:if test="${empty element.insertMean}"> null </c:if>${element.insertMean}</td>
+    <td><c:if test="${empty element.exitMean}"> null </c:if>${element.exitMean}</td>
+    <td><c:if test="${empty element.mean}"> null </c:if>${element.mean}</td>
+    <td><c:if test="${empty element.workingDays}"> null </c:if>${element.workingDays}</td>
+    <td><c:if test="${empty element.desiredMean}"> null </c:if>${element.desiredMean}</td>
+    <td><c:if test="${empty element.lastUpdate}"> null </c:if>${element.lastUpdate}</td>
+    <td><a href="<c:url value='/deleteMonth/${element.month.id}' />" >Delete</a></td>
   </tr>
 </tbody>
 

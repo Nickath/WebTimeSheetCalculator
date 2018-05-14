@@ -26,6 +26,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -155,6 +156,13 @@ public class UserController {
 		 
 	 }
 	 
+	 
+	 @RequestMapping(value = "/deleteMonth/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+		public String deleteCountry(@PathVariable("id") long id) {
+		     User user = userService.getAuthenticatedUser();
+			 userService.deleteTimeSheetByMonth(id,user.getId());
+			 return "redirect:/userStatisticsPage";
+		}	
 	 
 	
 }

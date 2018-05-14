@@ -22,7 +22,11 @@ public interface UserService {
 
 	public Date getCurrentTime();
 
-	Date getLastUpdateOfTimesheetForMonth(User user, long month);
+	public Date getLastUpdateOfTimesheetForMonth(User user, long month);
 	
 	public List<TimeSheet> getStatisticsByUserId(long userID);
+
+	public void deleteTimeSheetByMonth(long id, long userId);
+	
+	
 }

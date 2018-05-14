@@ -106,7 +106,6 @@ public class UserServiceImpl implements UserService {
 		long userID = user.getId();
 		Date date = repository.getLastUpdateOfTimeSheet(userID, month);
 		return date;
-		
 	}
 
 	@Override
@@ -114,5 +113,21 @@ public class UserServiceImpl implements UserService {
 		List<TimeSheet> list = repository.getStatisticsPerUser(userID);
 		return list;
 	}
+
+	@Override
+	public void deleteTimeSheetByMonth(long id,long userId) {
+		List<TimeSheet> list = repository.findAll();
+		for(TimeSheet timesheet:list) {
+			if(timesheet.getMonth().getId()==id && timesheet.getUser().getId()==userId) {
+				long idToBeDeleted = timesheet.getId();
+				repository.delete(idToBeDeleted);
+			}
+		}
+		
+	}
+	
+	
+	
+	
 	
 }

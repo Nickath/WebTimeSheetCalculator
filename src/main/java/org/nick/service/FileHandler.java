@@ -12,4 +12,6 @@ public interface FileHandler {
 	public File readFile(String path,CommonsMultipartFile file);
 	
 	public TimeSheet makeCalculations(File myFile,TimeSheetForm timesheetform) throws IOException;
+
+	TimeSheet makeCalculations(File myFile) throws IOException;
 }

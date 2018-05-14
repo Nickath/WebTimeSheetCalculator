@@ -25,8 +25,8 @@ public interface TimeSheetRepository extends JpaRepository<TimeSheet, Long> {
 	
 	@Modifying
     @Transactional(readOnly=false)
-	@Query(value = "update timesheets  set  file = ?1, desiredmean = ?2, restmean = ?3, last_update = ?4 WHERE month_id = ?5 AND user_id = ?6", nativeQuery = true)
-	void updateTimeSheetByID(File file,String desiredmean, String restmean,  Date now, Long monthID,  Long userId);
+	@Query(value = "update timesheets  set  file = ?1, desiredmean = ?2, restmean = ?3, last_update = ?4, average=?5, average_coming=?6, average_leaving=?7, days=?8  WHERE month_id = ?9 AND user_id = ?10", nativeQuery = true)
+	void updateTimeSheetByID(File file,String desiredmean, String restmean,  Date now, String mean, String averagecoming, String averageleaving, int days, Long monthID,  Long userId);
 	
 	
 	

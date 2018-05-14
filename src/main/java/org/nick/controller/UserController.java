@@ -119,7 +119,12 @@ public class UserController {
 		    	}else { // if user has uploaded valid file insert or update it
 		    		String path=session.getServletContext().getRealPath("/");  
 		    		File myFile = fileHandlerImpl.readFile(path,(CommonsMultipartFile) file); // get the file
-		            TimeSheet timesheet = new TimeSheet();
+		    		TimeSheet timesheet = new TimeSheet();
+		            try {
+						timesheet = fileHandlerImpl.makeCalculations(myFile);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 		            timesheet.setMonth(new Month(Long.parseLong(month)+1));
 		            timesheet.setUser(user);
 		            timesheet.setFile(myFile);

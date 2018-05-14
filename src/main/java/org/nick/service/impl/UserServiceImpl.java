@@ -35,10 +35,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void updateTimeSheet(TimeSheet timesheet) {
 		repository.updateTimeSheetByID(timesheet.getFile(), timesheet.getDesiredMean(), timesheet.getRestAverage(), getCurrentTime(),
-				timesheet.getMonth().getId(), timesheet.getUser().getId());
+				timesheet.getMean(),timesheet.getInsertMean(), timesheet.getExitMean(), timesheet.getWorkingDays(), timesheet.getMonth().getId(), timesheet.getUser().getId());
 	}
-
-
 
 	@Override
 	public void insertTimeSheet(TimeSheet timesheet) {

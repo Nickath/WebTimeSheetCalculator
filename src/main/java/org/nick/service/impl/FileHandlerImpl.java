@@ -150,6 +150,121 @@ public class FileHandlerImpl implements FileHandler {
 	}
 	
 	
+	@Override
+	public TimeSheet makeCalculations(File myFile) throws IOException {
+		
+		TimeSheet timesheet = new TimeSheet();
+		try {
+
+			XSSFWorkbook myTimeSheet = new XSSFWorkbook (myFile);
+			XSSFSheet mySheet = myTimeSheet.getSheetAt(0);
+			// Get iterator to all the rows in current sheet
+			Iterator<Row> rowIterator = mySheet.iterator();
+			//iterate through the lines
+		
+			ArrayList<Integer> daySums = new ArrayList<>();
+			ArrayList<Integer> inSums  = new ArrayList<>();
+			ArrayList<Integer> outSums = new ArrayList<>();
+			while (rowIterator.hasNext()) {
+				
+                Row row = rowIterator.next();
+                Iterator<Cell> cellIterator = row.cellIterator();
+                String col1 = "";
+                String col2 = "";
+                boolean first = true;
+                while (cellIterator.hasNext()) {
+                	Cell cell = cellIterator.next();
+                	
+                	DataFormatter dataFormatter = new DataFormatter();
+                	String cellStringValue = dataFormatter.formatCellValue(cell);
+                
+                	
+                	if(first) {
+                		col1 = cellStringValue;
+                	}
+                	else {
+                		col2 = cellStringValue;
+                	}
+                	first = false;
+                }
+                
+                try {
+                daySums.add(calculateDifference(col1,col2));
+                }
+                catch(Exception e) {
+                	LOGGER.severe("------------------ Invalid Format of .xlsx file ---------------------");
+                	break;
+                }
+                inSums.add(Integer.parseInt(col1.substring(0,col1.indexOf(":")))*60 + Integer.parseInt(col1.substring(col1.indexOf(":")+1,col1.length())));
+                outSums.add(Integer.parseInt(col2.substring(0,col2.indexOf(":")))*60 + Integer.parseInt(col2.substring(col2.indexOf(":")+1,col2.length())));
+			}
+			int mean = daySums.stream().mapToInt(Integer::intValue).sum()/daySums.size();
+			int meanHours= mean/Constants.hourDivisor;
+			int meanMinutes= mean%Constants.hourDivisor;
+			
+			LOGGER.info("This month you have worked **"+ daySums.size()+"** days\n");
+			
+			LOGGER.info("Total Mean Average: " +mean +" ("+meanHours+":"+(  (meanMinutes<10)?("0"+meanMinutes):meanMinutes)+")");
+			if((((inSums.stream().mapToInt(Integer::intValue).sum()/inSums.size()))%60)<10) {
+				LOGGER.info("Mean Average coming time: "+ (((inSums.stream().mapToInt(Integer::intValue).sum()/inSums.size()))/60)+":0"+(((inSums.stream().mapToInt(Integer::intValue).sum()/inSums.size()))%60));
+				timesheet.setInsertMean( (((inSums.stream().mapToInt(Integer::intValue).sum()/inSums.size()))/60)+":0"+(((inSums.stream().mapToInt(Integer::intValue).sum()/inSums.size()))%60));
+			}
+			else {
+				LOGGER.info("Mean Average coming time: "+ (((inSums.stream().mapToInt(Integer::intValue).sum()/inSums.size()))/60)+":"+(((inSums.stream().mapToInt(Integer::intValue).sum()/inSums.size()))%60));
+				timesheet.setInsertMean((((inSums.stream().mapToInt(Integer::intValue).sum()/inSums.size()))/60)+":"+(((inSums.stream().mapToInt(Integer::intValue).sum()/inSums.size()))%60));
+			}
+			if((((outSums.stream().mapToInt(Integer::intValue).sum()/outSums.size()))%60)<10)
+			{
+				LOGGER.info("Mean Average leaving time: "+(((outSums.stream().mapToInt(Integer::intValue).sum()/outSums.size()))/60)+":0"+(((outSums.stream().mapToInt(Integer::intValue).sum()/outSums.size()))%60));
+				timesheet.setExitMean((((outSums.stream().mapToInt(Integer::intValue).sum()/outSums.size()))/60)+":0"+(((outSums.stream().mapToInt(Integer::intValue).sum()/outSums.size()))%60));
+			}
+			else {
+				LOGGER.info("Mean Average leaving time: "+(((outSums.stream().mapToInt(Integer::intValue).sum()/outSums.size()))/60)+":"+(((outSums.stream().mapToInt(Integer::intValue).sum()/outSums.size()))%60));
+				timesheet.setExitMean((((outSums.stream().mapToInt(Integer::intValue).sum()/outSums.size()))/60)+":"+(((outSums.stream().mapToInt(Integer::intValue).sum()/outSums.size()))%60));
+			}
+			
+			
+	
+			
+            timesheet.setMean(" ("+meanHours+":"+(  (meanMinutes<10)?("0"+meanMinutes):meanMinutes)+")" );
+            timesheet.setWorkingDays(daySums.size());
+			timesheet.setFile(myFile);
+            return	timesheet ;
+		
+		} catch (InvalidFormatException e) {
+			LOGGER.severe("Invalid Format Exception "+e);
+			e.printStackTrace();
+		}
+		
+		return timesheet;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public static int calculateDifference(String col1, String col2) {
 
 		int minutesCame = Integer.parseInt(col1.substring(0, col1.indexOf(":"))      )*Constants.hourDivisor

@@ -38,8 +38,8 @@
     <td>${element.insertMean}</td>
     <td>${element.exitMean}</td>
     <td>${element.mean}</td>
-    <td>${element.desiredMean}</td>
     <td>${element.workingDays}</td>
+    <td>${element.desiredMean}</td>
     <td>${element.lastUpdate}</td>
   </tr>
 </tbody>

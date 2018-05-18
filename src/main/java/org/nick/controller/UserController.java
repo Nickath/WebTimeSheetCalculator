@@ -6,6 +6,7 @@ import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -59,7 +60,11 @@ public class UserController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String welcomePage(Model model) {
-	
+		User user = userService.getAuthenticatedUser();
+		if(user!=null) {
+			model.addAttribute("user",user);
+			return "redirect:/homePage";
+		}
 		return "welcome";
 	}
 	
@@ -157,11 +162,19 @@ public class UserController {
 	 }
 	 
 	 
-	 @RequestMapping(value = "/deleteMonth/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-		public String deleteCountry(@PathVariable("id") long id) {
+	    @RequestMapping(value = "/deleteMonth/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+		public String deleteMonth(@PathVariable("id") long id) {
 		     User user = userService.getAuthenticatedUser();
 			 userService.deleteTimeSheetByMonth(id,user.getId());
 			 return "redirect:/userStatisticsPage";
+		}	
+	 
+	 
+	    @RequestMapping(value = "/downloadMonth/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+		public void downloadMonth(@PathVariable("id") long id, HttpServletResponse response) {
+		     User user = userService.getAuthenticatedUser();
+			 userService.downloadTimeSheetByMonth(id,user.getId(),response);
+			 //return "redirect:/userStatisticsPage";
 		}	
 	 
 	

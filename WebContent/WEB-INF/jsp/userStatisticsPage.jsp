@@ -42,6 +42,7 @@
     <td><c:if test="${empty element.desiredMean}"> null </c:if>${element.desiredMean}</td>
     <td><c:if test="${empty element.lastUpdate}"> null </c:if>${element.lastUpdate}</td>
     <td><a href="<c:url value='/deleteMonth/${element.month.id}' />" >Delete</a></td>
+    <td><a href="<c:url value='/downloadMonth/${element.month.id}' />" >Download in .xls form</a></td>
   </tr>
 </tbody>
 

@@ -1,5 +1,12 @@
 package org.nick.service.impl;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -7,6 +14,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.nick.form.RegisterForm;
 import org.nick.model.Role;
 import org.nick.model.TimeSheet;
@@ -15,6 +27,7 @@ import org.nick.repository.TimeSheetRepository;
 import org.nick.repository.UserRepository;
 import org.nick.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -124,6 +137,45 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 		
+	}
+	
+	@Override
+	public void downloadTimeSheetByMonth(long id,long userId,HttpServletResponse response) {
+		List<TimeSheet> list = repository.findAll();
+		for(TimeSheet timesheet:list) {
+			if(timesheet.getMonth().getId()==id && timesheet.getUser().getId()==userId) {
+				File file = timesheet.getFile();
+				String month = timesheet.getMonth().getMonth();
+				createXLS(month,file,response);
+			}
+		}
+		
+	}
+	
+	@Override
+	public void createXLS(String month, File file,HttpServletResponse response) {
+		try {
+            Path path = Paths.get(file.getPath());
+            byte[] data = Files.readAllBytes(path);
+           // Files.write(Paths.get(file.getPath()+"TimeSheet"+month+".xls"), data);
+            System.out.println("Your excel file has been generated! in "+path.toString()+" with name "
+            		+ ""+ (file.getPath()+"TimeSheet"+month+".xls") );
+            
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposition", "attachment; filename=sample.xls");
+            try
+            {
+                Files.copy(path, response.getOutputStream());
+                response.getOutputStream().flush();
+            }
+            
+            catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            		
+        } catch ( Exception ex ) {
+            System.out.println(ex);
+        }
 	}
 	
 	

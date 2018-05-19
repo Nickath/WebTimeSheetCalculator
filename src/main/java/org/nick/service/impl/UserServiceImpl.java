@@ -224,6 +224,12 @@ public class UserServiceImpl implements UserService {
             User user = iterator.next();
             if (user.getId() == id) {
                 iterator.remove();
+                //delete the timesheets belonging to user not to violate the FK
+                List<TimeSheet> timesheetsToDelete = repository.getStatisticsPerUser(id);
+                for(TimeSheet t : timesheetsToDelete) {
+                	repository.delete(t);
+                }
+                userRepository.delete(id);
             }
         }
 		

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -23,7 +24,7 @@ public class UserRestController {
 	UserService userService;
 	
 	@RequestMapping(value = "/userStatisticsRest/", method = RequestMethod.GET)
-    public ResponseEntity<List<User>> listAkkllUsers() {
+    public @ResponseBody ResponseEntity<List<User>> listAkkllUsers() {
         List<User> users = userService.findAllUsers();
         if(users.isEmpty()){
             return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND

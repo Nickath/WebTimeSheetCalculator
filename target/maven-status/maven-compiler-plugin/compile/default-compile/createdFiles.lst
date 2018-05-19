@@ -18,6 +18,7 @@ org\nick\model\User.class
 org\nick\model\TimeSheet.class
 org\nick\service\impl\FileHandlerImpl.class
 org\nick\web\contants\Constants.class
+org\nick\filters\CORSFilter.class
 org\nick\form\TimeSheetWrapper.class
 org\nick\form\TimeSheetForm.class
 org\nick\model\Month.class

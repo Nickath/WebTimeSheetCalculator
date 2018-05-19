@@ -17,7 +17,7 @@
         <intercept-url pattern="/homePage*"  access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
         <intercept-url pattern="/calculatePage*"  access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" /> 
         <intercept-url pattern="/loadTimeSheetsPage*"  access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" /> 
-        
+        <intercept-url pattern="/userStatisticsPage*"  access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" /> 
  
       <!-- If a user tries to access any secured URL, then user will be authenticated with custom login page based on the configuration of <form-login> element. -->
         <form-login login-page="/loginPage"

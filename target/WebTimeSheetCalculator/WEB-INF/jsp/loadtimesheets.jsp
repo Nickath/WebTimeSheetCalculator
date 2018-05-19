@@ -8,7 +8,7 @@
 <!-- bootstrap stuff -->
 <head>
 <style>
-<%@ include file="/css/main.css"%>
+<%@ include file="/resources/css/main.css"%>
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
@@ -163,13 +163,20 @@ function ajaxGetUpdate(selectedIndex){
 	
  $.ajax({
   type: "POST",
-  url: "http://localhost:8080/WebTimeSheetCalculator/getLastUpdate",
+  url: "http://localhost:8080/WebTimeSheetCalculator/getLastUpdate", //URL to access the controller
   cache: false,    
-  data: { month: $("#selectID").val() }, // parameters 
+  data: { month: $("#selectID").val() }, // parameters to send (the value of the month)
   success: function(response){
    $('#result').html("");
-   var obj = JSON.parse(response);
-   $('#result').html("Selected:- " + obj +"</br" );
+  // var obj = JSON.parse(response); to convert a valid JSON object into javascript object
+   var date = response;
+   if(response != null && response !=""){
+	   $('#result').html("Last Update: " + response +"</br" );
+   }
+   else{
+	   $('#result').html("No file uploaded for this month" );
+   }
+  
   },
   error: function(){      
    alert('Error while request..');

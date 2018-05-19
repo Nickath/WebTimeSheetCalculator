@@ -30,10 +30,35 @@ public interface UserService {
 	public List<TimeSheet> getStatisticsByUserId(long userID);
 
 	public void deleteTimeSheetByMonth(long id, long userId);
+	
+	//USERS CRUD
+	public List<User> findAllUsers();
+	
+	public User findById(long id);
+	
+	public boolean isUserExist(User user);
+	
+	public void saveUser(User user);
+	
+	public void updateUser(User currentUser);
+	
+	public void deleteUserById(long id);
+	
+	public void deleteAllUsers();
 
 	void downloadTimeSheetByMonth(long id, long userId, HttpServletResponse response);
 
 	void createXLS(String month, File file, HttpServletResponse response);
+
+	
+
+	
+
+	
+
+	
+
+	
 	
 	
 }

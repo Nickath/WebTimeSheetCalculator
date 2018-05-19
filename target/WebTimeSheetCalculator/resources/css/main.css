@@ -1,9 +1,7 @@
 @charset "ISO-8859-1";
 
 .hidden {
-	
-	display: none; 
-	
+	display: none;
 	}
 	
 	
@@ -242,3 +240,6 @@ p.results{
 }
 
 
+body.modal-open div.modal-backdrop { 
+    z-index: 0; 
+}

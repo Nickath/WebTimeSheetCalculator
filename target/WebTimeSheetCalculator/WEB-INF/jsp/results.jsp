@@ -6,7 +6,7 @@
 <html>
 <head>
 <style>
-<%@ include file="/css/main.css"%>
+<%@ include file="/resources/css/main.css"%>
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Results</title>

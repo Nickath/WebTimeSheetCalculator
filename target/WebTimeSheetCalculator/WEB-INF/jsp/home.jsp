@@ -7,7 +7,7 @@
 <%@page session="true"%>
 <html>
 <style>
-<%@ include file="/css/main.css"%>
+<%@ include file="/resources/css/main.css"%>
 </style>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -24,7 +24,7 @@
 
 <c:if test="${pageContext.request.userPrincipal.name != null}">
         <h2>
-            Welcome : ${user.username} | <a
+         ${user.username} | <a
                 href="<c:url value="/j_spring_security_logout" />"> Logout</a>
         </h2>
 </c:if>

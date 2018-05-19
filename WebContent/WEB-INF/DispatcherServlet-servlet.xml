@@ -35,6 +35,12 @@
   <!-- import persistence.xml from resources -->
   <import resource="classpath*:/persistence.xml" />
   
+  
+  <!-- UI resources exclusions from servlet mapping -->
+
+    <mvc:resources mapping="/resources/**" location="/resources/"  
+	cache-period="31556926"/>
+    
   <!-- import spring security -->
   <import resource="spring-security.xml" />
 

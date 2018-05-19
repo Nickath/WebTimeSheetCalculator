@@ -1,6 +1,7 @@
 org\nick\repository\UserRepository.class
 org\nick\service\impl\UserServiceImpl.class
 org\nick\form\LoginForm.class
+org\nick\controller\AdminController.class
 org\nick\controller\RegisterController.class
 org\nick\controller\Calculator.class
 org\nick\controller\LoginController.class
@@ -22,6 +23,8 @@ org\nick\form\TimeSheetForm.class
 org\nick\model\Month.class
 org\nick\service\UserService.class
 org\nick\repository\TimeSheetRepository.class
+org\nick\controller\HTTPErrorHandler.class
 org\nick\security\AuthSuccessHandler.class
 org\nick\service\FileHandler.class
 org\nick\controller\UserController.class
+org\nick\controller\rest\UserRestController.class

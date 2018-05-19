@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +31,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
+@Service("userService")
 public class UserServiceImpl implements UserService {
 
 	@Autowired
@@ -177,6 +180,58 @@ public class UserServiceImpl implements UserService {
         } catch ( Exception ex ) {
             System.out.println(ex);
         }
+	}
+
+	@Override
+	public List<User> findAllUsers() {
+		List<User> list = userRepository.findAll();
+		return list;
+	}
+
+	@Override
+	public User findById(long id) {
+		return userRepository.findOne(id);
+	}
+
+	@Override
+	public boolean isUserExist(User user) {
+		List<User> list = findAllUsers();
+		for(User u : list) {
+			if(user.getId().equals(u.getId()) || (user.getId() == u.getId())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public void saveUser(User user) {
+		userRepository.save(user);
+	}
+
+	@Override
+	public void updateUser(User currentUser) {
+		User userToUpdate = userRepository.getOne(currentUser.getId());
+		userToUpdate.setUsername(currentUser.getUsername());
+		userRepository.save(userToUpdate);
+	}
+
+	@Override
+	public void deleteUserById(long id) {
+		
+		List<User> users = userRepository.findAll();
+		for (Iterator<User> iterator = users.iterator(); iterator.hasNext(); ) {
+            User user = iterator.next();
+            if (user.getId() == id) {
+                iterator.remove();
+            }
+        }
+		
+	}
+
+	@Override
+	public void deleteAllUsers() {
+		userRepository.deleteAll();
 	}
 	
 	

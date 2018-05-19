@@ -9,9 +9,10 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public interface FileHandler {
 
-	public File readFile(String path,CommonsMultipartFile file);
-	
-	public TimeSheet makeCalculations(File myFile,TimeSheetForm timesheetform) throws IOException;
 
-	TimeSheet makeCalculations(File myFile) throws IOException;
+    File readFile(String path, CommonsMultipartFile file, TimeSheet timesheet);
+
+	TimeSheet makeCalculations(File myFile, TimeSheetForm timesheetform, TimeSheet timesheet) throws IOException;
+
+	TimeSheet makeCalculations(File myFile, TimeSheet timesheet) throws IOException;
 }

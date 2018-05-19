@@ -51,6 +51,7 @@ public class UserServiceImpl implements UserService {
 				timesheet.getMean(),timesheet.getInsertMean(), timesheet.getExitMean(), timesheet.getWorkingDays(), timesheet.getMonth().getId(), timesheet.getUser().getId());
 	}
 
+	//inserts a timesheet
 	@Override
 	public void insertTimeSheet(TimeSheet timesheet) {
 		timesheet.setLastUpdate(getCurrentTime());
@@ -80,7 +81,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 
-
+    //updates a timesheet if already exists, inserts it otherwise
 	@Override
 	public boolean insertOtUpdateTimeSheet(TimeSheet timesheet) {
 		List<TimeSheet> list = repository.findAll();
@@ -97,7 +98,6 @@ public class UserServiceImpl implements UserService {
 
 
 	//to get the authenticated logged in user when is needed
-
 	@Override
 	public User getAuthenticatedUser() {
 			 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -107,6 +107,7 @@ public class UserServiceImpl implements UserService {
 			 return user;	 
 	}
 	
+	//get current time
 	@Override 
 	public Date getCurrentTime() {
 		Calendar calendar = Calendar.getInstance();
@@ -114,6 +115,7 @@ public class UserServiceImpl implements UserService {
 		return now;
 	}
 	
+	//get last update date of timesheet for a month
 	@Override
 	public Date getLastUpdateOfTimesheetForMonth(User user, long month) {
 		long userID = user.getId();
@@ -157,12 +159,11 @@ public class UserServiceImpl implements UserService {
 		try {
             Path path = Paths.get(file.getPath());
             byte[] data = Files.readAllBytes(path);
-           // Files.write(Paths.get(file.getPath()+"TimeSheet"+month+".xls"), data);
             System.out.println("Your excel file has been generated! in "+path.toString()+" with name "
             		+ ""+ (file.getPath()+"TimeSheet"+month+".xls") );
-            
             response.setContentType("application/vnd.ms-excel");
-            response.setHeader("Content-Disposition", "attachment; filename=sample.xls");
+            response.setHeader("Content-Disposition", "attachment; filename=TimeSheet"+getAuthenticatedUser().getUsername()
+            		+""+month+".xls");
             try
             {
                 Files.copy(path, response.getOutputStream());

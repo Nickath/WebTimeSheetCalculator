@@ -15,6 +15,7 @@ import org.nick.form.TimeSheetForm;
 import org.nick.model.Month;
 import org.nick.model.TimeSheet;
 import org.nick.model.User;
+import org.nick.repository.MonthRepository;
 import org.nick.repository.TimeSheetRepository;
 import org.nick.repository.UserRepository;
 import org.nick.service.impl.FileHandlerImpl;
@@ -42,6 +43,9 @@ public class Calculator {
 	
     @Autowired
     FileHandlerImpl fileHandlerImpl;
+    
+    @Autowired
+    MonthRepository monthRepository;
 
      
 	
@@ -84,24 +88,30 @@ public class Calculator {
 	    	model.addAttribute("error","The file you uploaded is not a .xlsx file");
 	    	return "index";
 	    }
-        File myFile = fileHandlerImpl.readFile(path,form.getFile()); // get the file
-        TimeSheet timesheet = new TimeSheet();
+	    TimeSheet timesheet = new TimeSheet();
+	    //get the current month so we write the record in the database pointing to the month ID of the month table
+        LocalDate localDate = LocalDate.now();
+        String date = DateTimeFormatter.ofPattern("yyy/MM/dd").format(localDate).substring(5,7);
+        Long month = Long.parseLong(date);
+        Month monthObj = monthRepository.findOne(month);
+        timesheet.setMonth(monthObj); 
+        //get the logged in user and set it to the timesheet object
+        User user = userService.getAuthenticatedUser();
+        timesheet.setUser(user);
+		model.addAttribute("user",user);
+		//write the file and get it 
+        File myFile = fileHandlerImpl.readFile(path,form.getFile(),timesheet); // get the file
+       
         LOGGER.info("Upload file size in bytes: \n"+myFile.length());
 
+        //make the calculations and set them to the already existing timesheet object
         try {
-			 timesheet = fileHandlerImpl.makeCalculations(myFile,form);
+			 timesheet = fileHandlerImpl.makeCalculations(myFile,form,timesheet);
 		} catch (IOException e) {
 			LOGGER.severe("ERROR"+e);
 			return "index";
 		}
-        //get the current month so we write the record in the database pointing to the month ID of the month table
-        LocalDate localDate = LocalDate.now();
-        String date = DateTimeFormatter.ofPattern("yyy/MM/dd").format(localDate).substring(5,7);
-        Long month = Long.parseLong(date);
-        timesheet.setMonth(new Month(month));
-        User user = userService.getAuthenticatedUser();
-		model.addAttribute("user",user);
-        timesheet.setUser(new User(user.getId()));
+       
 		model.addAttribute("timesheet",timesheet);
 		
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());
@@ -139,28 +149,32 @@ public class Calculator {
 	    	return "index";
 	    }
 	    
-        File myFile = fileHandlerImpl.readFile(path,form.getFile()); // get the file
-        TimeSheet timesheet = new TimeSheet();
+	    
+	    TimeSheet timesheet = new TimeSheet();
+	    //get the current month so we write the record in the database pointing to the month ID of the month table
+        LocalDate localDate = LocalDate.now();
+        String date = DateTimeFormatter.ofPattern("yyy/MM/dd").format(localDate).substring(5,7);
+        Long month = Long.parseLong(date);
+        Month monthObj = monthRepository.findOne(month);
+        timesheet.setMonth(monthObj);
+        User user = userService.getAuthenticatedUser();
+		model.addAttribute("user",user);
+        timesheet.setUser(user);
+	    
+        File myFile = fileHandlerImpl.readFile(path,form.getFile(),timesheet); // get the file
+        
 
         
         LOGGER.info("Upload file size in bytes: \n"+myFile.length());
 
         try {
-			 timesheet = fileHandlerImpl.makeCalculations(myFile,form);
+			 timesheet = fileHandlerImpl.makeCalculations(myFile,form,timesheet);
 		} catch (IOException e) {
 			LOGGER.severe("ERROR"+e);
 			return "index";
 		}
 
-        //get the current month so we write the record in the database pointing to the month ID of the month table
-        LocalDate localDate = LocalDate.now();
-        String date = DateTimeFormatter.ofPattern("yyy/MM/dd").format(localDate).substring(5,7);
-        Long month = Long.parseLong(date);
-        
-        timesheet.setMonth(new Month(month));
-        User user = userService.getAuthenticatedUser();
-		model.addAttribute("user",user);
-        timesheet.setUser(new User(user.getId()));
+       
 		model.addAttribute("timesheet",timesheet);
 		
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());

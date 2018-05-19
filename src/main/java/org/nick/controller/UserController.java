@@ -122,17 +122,20 @@ public class UserController {
 		    		if (!file.getOriginalFilename().contains(".xlsx")) {
 		    	    	model.addAttribute("error","The file you uploaded is not a .xlsx file");
 		    	    	return "loadtimesheets";
-		    	}else { // if user has uploaded valid file insert or update it
+		    	    }else { // if user has uploaded valid file insert or update it
 		    		String path=session.getServletContext().getRealPath("/");  
-		    		File myFile = fileHandlerImpl.readFile(path,(CommonsMultipartFile) file); // get the file
 		    		TimeSheet timesheet = new TimeSheet();
+		    		//set month and username
+		    		Month monthObj = monthRepository.findOne(Long.parseLong(month)+1);
+		    		timesheet.setMonth(monthObj);
+		            timesheet.setUser(user);
+		    		File myFile = fileHandlerImpl.readFile(path,(CommonsMultipartFile) file, timesheet); // get the file
 		            try {
-						timesheet = fileHandlerImpl.makeCalculations(myFile);
+						timesheet = fileHandlerImpl.makeCalculations(myFile,timesheet);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-		            timesheet.setMonth(new Month(Long.parseLong(month)+1));
-		            timesheet.setUser(user);
+		            
 		            timesheet.setFile(myFile);
 		            userService.insertOtUpdateTimeSheet(timesheet);
 

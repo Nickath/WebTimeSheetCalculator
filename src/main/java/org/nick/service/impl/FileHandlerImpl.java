@@ -28,17 +28,17 @@ public class FileHandlerImpl implements FileHandler {
 
 
 	@Override
-	public File readFile(String path,CommonsMultipartFile file) {
+	public File readFile(String path,CommonsMultipartFile file, TimeSheet timesheet) {
 	
 		byte[] bytes = file.getBytes();
 		LOGGER.info("Path where the file is going to be stored is:\n" +FileHandlerImpl.class
                 .getClassLoader().getResource("").getPath().toString());
         File file2 = new File(FileHandlerImpl.class
-                .getClassLoader().getResource("").getPath().toString().replace("/", "\\")+"TimeSheet.xlsx");
+                .getClassLoader().getResource("").getPath().toString().replace("/", "\\")+ "timesheets\\"+"TimeSheet"+timesheet.getUser().getUsername()
+                +""+timesheet.getMonth().getMonth()+".xlsx");
      
 
         try {
- 
             OutputStream os = new FileOutputStream(file2);
             os.write(bytes);
             LOGGER.info("Write bytes to file.");
@@ -46,16 +46,13 @@ public class FileHandlerImpl implements FileHandler {
         } catch (Exception e) {
             LOGGER.severe("File was not written successfully :( "+e);
         }
-		
-		
-     
 		return file2;
 	}
 	
 	@Override
-	public TimeSheet makeCalculations(File myFile,TimeSheetForm timesheetform) throws IOException {
+	public TimeSheet makeCalculations(File myFile,TimeSheetForm timesheetform, TimeSheet timesheet) throws IOException {
 		
-		TimeSheet timesheet = new TimeSheet();
+
 		try {
 
 			XSSFWorkbook myTimeSheet = new XSSFWorkbook (myFile);
@@ -151,9 +148,9 @@ public class FileHandlerImpl implements FileHandler {
 	
 	
 	@Override
-	public TimeSheet makeCalculations(File myFile) throws IOException {
+	public TimeSheet makeCalculations(File myFile, TimeSheet timesheet) throws IOException {
 		
-		TimeSheet timesheet = new TimeSheet();
+		
 		try {
 
 			XSSFWorkbook myTimeSheet = new XSSFWorkbook (myFile);
@@ -274,6 +271,11 @@ public class FileHandlerImpl implements FileHandler {
 		int sumOfTheDay = minutesGone - minutesCame;
 		return sumOfTheDay;
 	}
+
+
+
+
+
 	
 	
 }

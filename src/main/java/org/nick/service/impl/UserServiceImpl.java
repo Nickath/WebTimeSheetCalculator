@@ -11,6 +11,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -195,6 +197,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean isUserExist(User user) {
+		if(user.getId()==null) {
+			return false;
+		}
 		List<User> list = findAllUsers();
 		for(User u : list) {
 			if(user.getId().equals(u.getId()) || (user.getId() == u.getId())) {
@@ -211,7 +216,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void updateUser(User currentUser) {
-		User userToUpdate = userRepository.getOne(currentUser.getId());
+		User userToUpdate = userRepository.findOne(currentUser.getId());
 		userToUpdate.setUsername(currentUser.getUsername());
 		userRepository.save(userToUpdate);
 	}
@@ -238,6 +243,29 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteAllUsers() {
 		userRepository.deleteAll();
+	}
+
+	@Override
+	public long getLastUserId() {
+		List<User> users = userRepository.findAll();
+		Collections.sort(users);
+		for(User u : users) {//clear the list from null because for some reason null objects are retrieved
+			if(u==null || u.getId()==null) {
+				users.remove(u);
+			}
+		}
+		return users.get(users.size()-1).getId();
+	}
+
+	@Override
+	public boolean usernameExists(User user) {
+		List<User> users = userRepository.findAll();
+		for(User u : users) {//clear the list from null because for some reason null objects are retrieved
+			if(u.getUsername().equals(user.getUsername())) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	

@@ -28,6 +28,7 @@
       <c:if test="${pageContext.request.userPrincipal.name == null}">
        <li><a href="<c:url value="/loginPage" />" >Login</a></li>
        <li><a href="<c:url value="/registerPage" />" >Register</a></li>
+       <li><a href="<c:url value="/accountEnablePage" />" >Enable Account</a></li>
      </c:if>
       
         

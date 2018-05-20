@@ -45,6 +45,10 @@ public interface UserService {
 	public void deleteUserById(long id);
 	
 	public void deleteAllUsers();
+	
+	public long getLastUserId();
+	
+	public boolean usernameExists(User user);
 
 	void downloadTimeSheetByMonth(long id, long userId, HttpServletResponse response);
 

@@ -11,10 +11,10 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="users")
-public class User {
+public class User implements Comparable<User> {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	
@@ -80,5 +80,16 @@ public class User {
 	}
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+	
+	@Override
+	public int compareTo(User arg0) {
+    long compareId = ((User) arg0).getId();
+		
+		//ascending order
+		return (int) (this.id - compareId);
+		
+		//descending order
+		//return compareQuantity - this.quantity;
 	}
 }

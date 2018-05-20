@@ -13,9 +13,10 @@ angular.module('myApp').controller('UserController', ['$scope', 'UserService', f
     self.remove = remove;
     self.reset = reset;
  
- 
+    //on rendering of the page, the fetchAllUsers() function which triggers the listAllUsers java method is invoked
     fetchAllUsers();
  
+    //list all users
     function fetchAllUsers(){
         UserService.fetchAllUsers()
             .then(
@@ -28,6 +29,7 @@ angular.module('myApp').controller('UserController', ['$scope', 'UserService', f
         );
     }
  
+    //create user method
     function createUser(user){
         UserService.createUser(user)
             .then(
@@ -38,6 +40,7 @@ angular.module('myApp').controller('UserController', ['$scope', 'UserService', f
         );
     }
  
+    //update user method
     function updateUser(user, id){
         UserService.updateUser(user, id)
             .then(
@@ -47,7 +50,8 @@ angular.module('myApp').controller('UserController', ['$scope', 'UserService', f
             }
         );
     }
- 
+  
+    //delete user method
     function deleteUser(id){
         UserService.deleteUser(id)
             .then(
@@ -58,11 +62,13 @@ angular.module('myApp').controller('UserController', ['$scope', 'UserService', f
         );
     }
  
-    function submit() {
+    // the submit function, has two functionalities, save and update
+    
+    function submit() { //if the user.id is null, that means that the plain POST method (Insert will be called)
         if(self.user.id===null){
             console.log('Saving New User', self.user);
             createUser(self.user);
-        }else{
+        }else{//if the user.id is not null, that means that the UPDATE method (Update a user will be called)
             updateUser(self.user, self.user.id);
             console.log('User updated with id ', self.user.id);
         }
@@ -79,6 +85,7 @@ angular.module('myApp').controller('UserController', ['$scope', 'UserService', f
         }
     }
  
+    //delete method to delete user
     function remove(id){
         console.log('id to be deleted', id);
         if(self.user.id === id) {//clean form if the user to be deleted is shown there.
@@ -87,7 +94,7 @@ angular.module('myApp').controller('UserController', ['$scope', 'UserService', f
         deleteUser(id);
     }
  
- 
+    //reset the form
     function reset(){
         self.user={id:null,username:'',address:'',email:''};
         $scope.myForm.$setPristine(); //reset Form

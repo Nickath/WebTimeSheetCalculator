@@ -179,6 +179,15 @@ public class UserController {
 			 userService.downloadTimeSheetByMonth(id,user.getId(),response);
 			 //return "redirect:/userStatisticsPage";
 		}	
+	    
+	    @RequestMapping(value = "/accountEnablePage", method = RequestMethod.GET)
+        public String enableAccountPage(Model model) {
+	    	User user = userService.getAuthenticatedUser();
+	    	if(user!=null) {
+	    		return "home";
+	    	}
+	    	return "enableAccountPage";
+	    }
 	 
 	
 }

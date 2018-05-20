@@ -25,7 +25,7 @@ public class UserRestController {
 	UserService userService;
 	
 	@RequestMapping(value = "/userStatisticsRest/", method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<List<User>> listAkkllUsers(Model model) {
+    public @ResponseBody ResponseEntity<List<User>> listAllUsers(Model model) {
 		User user = userService.getAuthenticatedUser();
 		model.addAttribute("user",user);
         List<User> users = userService.findAllUsers();
@@ -52,14 +52,18 @@ public class UserRestController {
   //-------------------Create a User--------------------------------------------------------
     
     @RequestMapping(value = "/userStatisticsRest/", method = RequestMethod.POST)
-    public ResponseEntity<Void> createUser(@RequestBody User user,    UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<Void> createUser(@RequestBody User user, UriComponentsBuilder ucBuilder) {
         System.out.println("Creating User " + user.getUsername());
   
-        if (userService.isUserExist(user)) {
+        if (userService.usernameExists(user)) {
             System.out.println("A User with name " + user.getUsername() + " already exist");
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
-  
+        if(!user.getRole().getRole().equals("ROLE_ADMIN") && !user.getRole().getRole().equals("ROLE_USER")) {
+        	return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+        }
+
+        user.getRole().setId(user.getRole().getRole().equals("ROLE_USER")?2L:1L);
         userService.saveUser(user);
   
         HttpHeaders headers = new HttpHeaders();

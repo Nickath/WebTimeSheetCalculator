@@ -63,6 +63,7 @@
            
           </c:if>
           <c:if test="${ (isAdmin eq true) || user.role.id == 1 }">
+             <li><a href="<c:url value="/usersPage" />" >Admin Control Panel</a></li><br>
             <li><a href="<c:url value="/userStatisticsPage" />" >Watch employees Statistics</a></li><br>
             <li><a href="<c:url value="/deleteUserPage" />" >Delete a user</a></li><br>
           </c:if>

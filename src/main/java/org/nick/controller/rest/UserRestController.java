@@ -9,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,9 @@ public class UserRestController {
 	UserService userService;
 	
 	@RequestMapping(value = "/userStatisticsRest/", method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<List<User>> listAkkllUsers() {
+    public @ResponseBody ResponseEntity<List<User>> listAkkllUsers(Model model) {
+		User user = userService.getAuthenticatedUser();
+		model.addAttribute("user",user);
         List<User> users = userService.findAllUsers();
         if(users.isEmpty()){
             return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND

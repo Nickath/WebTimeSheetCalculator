@@ -267,6 +267,25 @@ public class UserServiceImpl implements UserService {
 		}
 		return false;
 	}
+
+	@Override
+	public boolean userAwaitsEnable(String username) {
+		List<User> users = userRepository.findAll();
+		for(User u : users)
+		{
+			if(u.getUsername().equals(username) && !u.isEnabled() ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public void activateUser(boolean enabled, String username, String password) {
+		userRepository.activateUser(enabled, username, password);
+		
+	}
+	
 	
 	
 	

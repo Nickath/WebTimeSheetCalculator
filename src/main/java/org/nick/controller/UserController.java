@@ -188,6 +188,25 @@ public class UserController {
 	    	}
 	    	return "enableAccountPage";
 	    }
+	    
+	    
+	    @RequestMapping(value = "/activateUser", method = RequestMethod.POST)
+        public String checkUsername(@RequestParam String username, @RequestParam String password,
+        		@RequestParam String passwordconfirm, Model model) {
+	    	User user = userService.getAuthenticatedUser();
+	    	if(user!=null) {
+	    		return "home";
+	    	}
+	    	if(userService.userAwaitsEnable(username)) {
+	    		if(password.equals(passwordconfirm)) {
+	    			userService.activateUser(true, username, password);
+	    		}else {
+	    			model.addAttribute("passworderror", "Please confirm your password in both fields");
+	    		}
+	    	}
+	    	return "enableAccountPage";
+	    }
+	   
 	 
 	
 }

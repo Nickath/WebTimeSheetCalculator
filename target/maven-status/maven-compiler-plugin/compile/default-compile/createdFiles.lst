@@ -6,8 +6,8 @@ org\nick\controller\RegisterController.class
 org\nick\controller\Calculator.class
 org\nick\controller\LoginController.class
 org\nick\form\MonthForm.class
-org\nick\controller\SelectBoxAjaxController.class
 org\nick\repository\MonthRepository.class
+org\nick\controller\AjaxController.class
 org\nick\form\MonthsWrapper.class
 org\nick\controller\LogoutController.class
 org\nick\model\Role.class

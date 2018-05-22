@@ -28,6 +28,7 @@
       <c:if test="${pageContext.request.userPrincipal.name == null}">
        <li><a href="<c:url value="/loginPage" />" >Login</a></li>
        <li><a href="<c:url value="/registerPage" />" >Register</a></li>
+       <li><a href="<c:url value="/accountEnablePage" />" >Enable Account</a></li>
      </c:if>
       
         
@@ -63,6 +64,7 @@
            
           </c:if>
           <c:if test="${ (isAdmin eq true) || user.role.id == 1 }">
+             <li><a href="<c:url value="/usersPage" />" >Admin Control Panel</a></li><br>
             <li><a href="<c:url value="/userStatisticsPage" />" >Watch employees Statistics</a></li><br>
             <li><a href="<c:url value="/deleteUserPage" />" >Delete a user</a></li><br>
           </c:if>

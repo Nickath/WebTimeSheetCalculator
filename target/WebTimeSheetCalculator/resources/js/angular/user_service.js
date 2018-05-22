@@ -5,6 +5,9 @@
  
 angular.module('myApp').factory('UserService', ['$http', '$q', function($http, $q){
  
+	//this is the REST SERVICE URI were all the controllers in UserRestController.java have in the
+	//request mapping, some controllers are get and some post and some have only this URI and some others
+	//have extra parameter appended to the URI
     var REST_SERVICE_URI = 'http://localhost:8080/WebTimeSheetCalculator/userStatisticsRest/';
  
     var factory = {
@@ -16,6 +19,8 @@ angular.module('myApp').factory('UserService', ['$http', '$q', function($http, $
  
     return factory;
  
+    //this function will trigger the http://localhost:8080/WebTimeSheetCalculator/userStatisticsRest/ request mapping
+    //GET controller which is the listAllUsers function (get method)
     function fetchAllUsers() {
         var deferred = $q.defer();
         $http.get(REST_SERVICE_URI)
@@ -31,6 +36,8 @@ angular.module('myApp').factory('UserService', ['$http', '$q', function($http, $
         return deferred.promise;
     }
  
+    //this function will trigger the http://localhost:8080/WebTimeSheetCalculator/userStatisticsRest/  request mapping
+    //POST controller which is the createUser function and has in the RequestBody the user object
     function createUser(user) {
         var deferred = $q.defer();
         $http.post(REST_SERVICE_URI, user)
@@ -46,7 +53,8 @@ angular.module('myApp').factory('UserService', ['$http', '$q', function($http, $
         return deferred.promise;
     }
  
- 
+    //this function will trigger the  http://localhost:8080/WebTimeSheetCalculator/userStatisticsRest/{id} request mapping
+    //PUT controller which is the updateUser(@PathVariable("id") long id, @RequestBody User user) 
     function updateUser(user, id) {
         var deferred = $q.defer();
         $http.put(REST_SERVICE_URI+id, user)
@@ -61,7 +69,9 @@ angular.module('myApp').factory('UserService', ['$http', '$q', function($http, $
         );
         return deferred.promise;
     }
- 
+    
+    //this function will trigger the http://localhost:8080/WebTimeSheetCalculator/userStatisticsRest/{id} request mapping
+    //DELETE controller which is the deleteUser(@PathVariable("id") long id)
     function deleteUser(id) {
         var deferred = $q.defer();
         $http.delete(REST_SERVICE_URI+id)

@@ -49,6 +49,10 @@ public interface UserService {
 	public long getLastUserId();
 	
 	public boolean usernameExists(User user);
+	
+	public boolean userAwaitsEnable(String username);
+	
+	public void activateUser(boolean enabled, String username,String password);
 
 	void downloadTimeSheetByMonth(long id, long userId, HttpServletResponse response);
 

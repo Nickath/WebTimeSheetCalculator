@@ -54,12 +54,16 @@
         </div>
         <label cssClass = "errorpass" />
       </div>
-      <div>${passworderror}</div>
+      
        <div class="form-group">
         <div class="col-sm-offset-2 col-sm-4">
           <button type="submit" class="btn btn-lg btn-block btn-primary"  >Enable User</button>
         </div>
       </div>
+      
+      <br>
+      <div class="error">${passworderror}</div>
+      <div class="success">${success}</div>
      
   </form>
   

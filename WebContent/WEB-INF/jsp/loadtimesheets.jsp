@@ -165,7 +165,7 @@ function ajaxGetUpdate(selectedIndex){
   type: "POST",
   url: "http://localhost:8080/WebTimeSheetCalculator/getLastUpdate", //URL to access the controller
   cache: false,    
-  data: { month: $("#selectID").val() }, // parameters to send (the value of the month)
+  data: { month: $("#selectID").val() }, // parameters to send (the value of the month, using the id)
   success: function(response){
    $('#result').html("");
   // var obj = JSON.parse(response); to convert a valid JSON object into javascript object

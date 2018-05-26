@@ -18,6 +18,8 @@ public class AdminController {
     public String getAdminPage(Model model) {
 		User user = userService.getAuthenticatedUser();
 		model.addAttribute("user",user);
+		String photo  = userService.getUserImageBase64(user);
+		model.addAttribute("photoProfil",photo);
         return "userManagement";
     }
 }

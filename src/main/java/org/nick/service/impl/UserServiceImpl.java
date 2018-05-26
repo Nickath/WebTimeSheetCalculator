@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -80,6 +82,7 @@ public class UserServiceImpl implements UserService {
 				user.setPassword(form.getPassword());
 				user.setRole(new Role(2L));   //sets the user role to "2,user", (default) not any user is authorized to create admin user
 				user.setEnabled(true);
+				user.setPhoto(getDefaultImage());
 				userRepository.save(user);
 				return false;
 		
@@ -88,7 +91,7 @@ public class UserServiceImpl implements UserService {
 
     //updates a timesheet if already exists, inserts it otherwise
 	@Override
-	public boolean insertOtUpdateTimeSheet(TimeSheet timesheet) {
+	public boolean insertOrUpdateTimeSheet(TimeSheet timesheet) {
 		List<TimeSheet> list = repository.findAll();
 		for(TimeSheet t :list) {
 			if(t.getUser().getId().equals(timesheet.getUser().getId()) && t.getMonth().getId().equals(timesheet.getMonth()
@@ -215,7 +218,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateUser(User currentUser) {
+	public void updateUserUsername(User currentUser) {
 		User userToUpdate = userRepository.findOne(currentUser.getId());
 		userToUpdate.setUsername(currentUser.getUsername());
 		userRepository.save(userToUpdate);
@@ -285,6 +288,66 @@ public class UserServiceImpl implements UserService {
 		userRepository.activateUser(enabled, username, password);
 		
 	}
+	
+	@Override
+	public String getUserImageBase64(User user) {
+	   byte[] imageData = user.getPhoto();
+	   if(imageData==null) {
+		   return null;
+	   }
+       byte[] encodeBase64 = Base64.encodeBase64(imageData);
+       try {
+			String base64Encoded = new String(encodeBase64, "UTF-8");
+			return base64Encoded;
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+       return null;
+	}
+	
+	@Override
+	public byte[] getDefaultImage() {
+		File fi = new File("C:\\Users\\NICK\\eclipse-workspace\\WebTimeSheetCalculatorTestBranch\\WebTimeSheetCalculatorTestBranch\\WebContent\\resources\\images\\defaultPhoto.png");
+		byte[] fileContent;
+		try {
+			fileContent = Files.readAllBytes(fi.toPath());
+			return fileContent;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
+
+	@Override
+	public void uploadPhoto() {
+		
+		
+	}
+
+	@Override
+	public void deletePhoto() {
+		
+		
+	}
+
+	@Override
+	public boolean insertOrUpdateUser(User user) {
+		User candidateUser = userRepository.findByUsername(user.getUsername());
+		if(candidateUser==null) {
+			userRepository.save(user);
+		}
+		else {
+			userRepository.updateUser(user.getEmail(), user.isEnabled(),
+					user.getPhoto(),user.getUsername());
+		}
+		return false;
+	}
+	
+	
+	
 	
 	
 	

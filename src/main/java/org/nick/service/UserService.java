@@ -17,9 +17,11 @@ public interface UserService {
 	
 	public void insertTimeSheet(TimeSheet timesheet);
 	
+	public boolean insertOrUpdateTimeSheet(TimeSheet timesheet);
+	
 	public boolean registerUser(RegisterForm form);
 	
-	public boolean insertOtUpdateTimeSheet(TimeSheet timesheet);
+	public boolean insertOrUpdateUser(User user);
 	
 	public User getAuthenticatedUser();
 
@@ -40,7 +42,7 @@ public interface UserService {
 	
 	public void saveUser(User user);
 	
-	public void updateUser(User currentUser);
+	public void updateUserUsername(User currentUser);
 	
 	public void deleteUserById(long id);
 	
@@ -57,6 +59,14 @@ public interface UserService {
 	void downloadTimeSheetByMonth(long id, long userId, HttpServletResponse response);
 
 	void createXLS(String month, File file, HttpServletResponse response);
+
+	public String getUserImageBase64(User user);
+	
+	public void uploadPhoto();
+	
+	public void deletePhoto();
+	
+	public byte[] getDefaultImage();
 
 	
 

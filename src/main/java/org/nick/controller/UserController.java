@@ -2,16 +2,16 @@ package org.nick.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
+import org.apache.commons.codec.binary.Base64;
 import org.nick.form.MonthForm;
-import org.nick.form.TimeSheetForm;
 import org.nick.model.Month;
 import org.nick.model.TimeSheet;
 import org.nick.model.User;
@@ -20,20 +20,15 @@ import org.nick.repository.UserRepository;
 import org.nick.service.impl.FileHandlerImpl;
 import org.nick.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
-import org.springframework.web.servlet.ModelAndView;
+
 
 @Controller
 public class UserController {
@@ -54,7 +49,10 @@ public class UserController {
 	@RequestMapping(value = "/homePage", method = RequestMethod.GET)
 	public String getLoginPage(Model model, HttpSession session,HttpServletRequest request ) {
 		User user = userService.getAuthenticatedUser();
+		String photo  = userService.getUserImageBase64(user);
+		model.addAttribute("photoProfil",photo);
 		model.addAttribute("user",user);
+		
 		return "home";
 	}
 	
@@ -95,6 +93,8 @@ public class UserController {
 	    public String loadTimeSheetsPage(Model model) {
 		 User user = userService.getAuthenticatedUser();
 		 model.addAttribute("user",user);
+		 String photo  = userService.getUserImageBase64(user);
+		 model.addAttribute("photoProfil",photo);
 		 List<Month> months = monthRepository.findAll();
 		 MonthForm form = new MonthForm();
 		 form.setMonths(months);
@@ -114,6 +114,8 @@ public class UserController {
 		    //add attributes to the model first
 		    User user = userService.getAuthenticatedUser();
 		    model.addAttribute("user",user);
+		    String photo  = userService.getUserImageBase64(user);
+			model.addAttribute("photoProfil",photo);
 		    List<Month> months = monthRepository.findAll();
 			MonthForm form = new MonthForm();
 			form.setMonths(months);
@@ -137,7 +139,7 @@ public class UserController {
 					}
 		            
 		            timesheet.setFile(myFile);
-		            userService.insertOtUpdateTimeSheet(timesheet);
+		            userService.insertOrUpdateTimeSheet(timesheet);
 
 		            
 		    	}
@@ -156,6 +158,8 @@ public class UserController {
 		 
 		 User user = userService.getAuthenticatedUser();
 		 model.addAttribute("user",user);
+		 String photo  = userService.getUserImageBase64(user);
+		 model.addAttribute("photoProfil",photo);
 		 long userId = user.getId();
 		 List<TimeSheet> userTimeSheets = userService.getStatisticsByUserId(userId);
 		 model.addAttribute("timesheetList", userTimeSheets);
@@ -200,8 +204,10 @@ public class UserController {
 	    	if(userService.userAwaitsEnable(username)) {
 	    		if(password.equals(passwordconfirm)) {
 	    			userService.activateUser(true, username, password);
+	    			model.addAttribute("success","Account was successfully enabled Mr/Mrs "+username+", "
+	    					+ "click <a href=\"/WebTimeSheetCalculator/loginPage\">here</a> to login");
 	    		}else {
-	    			model.addAttribute("passworderror", "Please confirm your password in both fields");
+	    			model.addAttribute("passworderror", "Password should be the same with the confirmation");
 	    		}
 	    	}
 	    	return "enableAccountPage";

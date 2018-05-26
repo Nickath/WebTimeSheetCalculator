@@ -39,6 +39,32 @@
        
      </c:if>
       </ul>
+      
+      <ul class="nav navbar-nav navbar-left">
+         <c:if test="${pageContext.request.userPrincipal.name != null}">
+       
+       <c:if test="${photoProfil != null}">
+       <li>
+       <img alt="img" src="data:image/jpeg;base64,${photoProfil}" height="60" width="70" />
+       </li>
+       <li>
+       <div class="rail-select">
+         <select class="form-control" id="sel1" value="-1" onChange="uploadPhoto(this.selectedIndex);">
+           <option name="uploadphoto" value="" > </option>
+           <option name="uploadphoto" value="uploadphoto" >Upload a photo</option>
+           <option name="deletephoto" value="deletephoto" >Delete photo</option>
+         </select>
+         <form id="formID">
+        <input type="file" id="photoID" name="photo" onChange="uploadPhoto(this);" style="display:none">
+        </form>
+      </div>
+      </li>
+       
+      </c:if>
+     
+       
+     </c:if>
+      </ul>
     </div>
     
     
@@ -80,4 +106,79 @@
     
     
 </body>
+
+
+
+<!-- ajax to upload -->
+
+<script type="text/javascript">
+function uploadPhoto(selectedIndex){
+	alert(selectedIndex);
+    document.getElementById("photoID").click();
+    var file = $('[name="photo"]');
+    var filename = $.trim(file.val());
+    var formdata = new FormData(document.getElementById("formID"));
+    if(filename != null && filename != "") {
+      if (!(isJpg(filename) || isPng(filename))) {
+         alert('Please browse a JPG/PNG file to upload ...');
+         return;
+       }
+    }
+    else{
+    	return;
+    }
+    updatePhoto();
+    
+  
+	
+}
+
+
+
+var isJpg = function(name) {
+    return name.match(/jpg$/i)
+};
+    
+var isPng = function(name) {
+    return name.match(/png$/i)
+};
+
+function updatePhoto(){
+	  $.ajax({
+    	  type: "POST",
+    	  url: "http://localhost:8080/WebTimeSheetCalculator/uploadPhoto", //URL to access the controller
+    	  enctype: 'multipart/form-data',
+          processData: false,
+          contentType: false,
+          cache: false,
+    	  data:  new FormData(document.getElementById("formID")) , // parameters to send 
+    	  success: function(response){
+    	  // var obj = JSON.parse(response); to convert a valid JSON object into javascript object
+    	  },
+    	  error: function(){      
+    	  alert('Error while request..');
+    	  }
+    	 });
+}
+
+
+function deletePhoto(){
+	  $.ajax({
+  	  type: "POST",
+  	  url: "http://localhost:8080/WebTimeSheetCalculator/deletePhoto", //URL to access the controller
+  	  enctype: 'multipart/form-data',
+      processData: false,
+      contentType: false,
+      cache: false,
+  	  success: function(response){
+  	  // var obj = JSON.parse(response); to convert a valid JSON object into javascript object
+  	  },
+  	  error: function(){      
+  	  alert('Error while request..');
+  	  }
+  	 });
+}
+
+</script>
+
 </html>

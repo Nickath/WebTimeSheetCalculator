@@ -9,6 +9,11 @@
 color:#FF0000;
 font-weight: bold;
 }
+
+.success{
+ color:#00FF7F;
+ font-weight: bold;
+}
 	
 .inputstl { 
     padding: 9px; 
@@ -248,4 +253,65 @@ body.modal-open div.modal-backdrop {
 
 div.hidden {
     display: none;
+}
+
+
+
+
+/* css for the upload photo*/
+
+.rail-select {
+  position: absolute;
+  width: 12px;
+  
+  select {
+    border: 3px solid transparent
+    border-radius: 1px;
+    font-size: 10px;
+    color: transparent;
+    background-color: transparent;
+    height: 15px;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    
+    &:focus {
+      outline: none;
+      box-shadow: none;
+      border: solid 1px grey;
+    }
+  }
+  
+  .select-side {
+    &:before {
+      border-left: none;
+      content : "";
+      position: absolute;
+      left    : 0;
+      bottom  : 0;
+      height  : 100%;
+      width   : 1px;  /* or 100px */
+    }
+    
+    width: 40px;
+    position: absolute;
+    top: 0px;
+    background-color: #F3F9FE;
+    height: 100%;
+    left: 120px;
+    border-radius: 0px 3px 3px 0px;
+    border-right: solid 1px gray;
+    border-top: solid 1px gray;
+    border-bottom: solid 1px gray;
+    pointer-events:none;
+  
+    i {
+      &.blue {
+        color: #4E7AF0;
+      }
+      
+      left: 30%;
+      top: 12px;
+    }
+  }
 }

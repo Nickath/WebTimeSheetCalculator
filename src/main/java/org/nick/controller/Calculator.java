@@ -57,6 +57,8 @@ public class Calculator {
 		
 		  User user = userService.getAuthenticatedUser();
 		  model.addAttribute("user",user);
+		  String photo  = userService.getUserImageBase64(user);
+		  model.addAttribute("photoProfil",photo);
 		  TimeSheetForm form = new TimeSheetForm();
 		  model.addAttribute("timeSheetForm",form);
 	      return "index";
@@ -116,7 +118,7 @@ public class Calculator {
 		
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());
 		if(form.getChecked()) {
-			userService.insertOtUpdateTimeSheet(timesheet);
+			userService.insertOrUpdateTimeSheet(timesheet);
 		}
 		
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());
@@ -180,7 +182,7 @@ public class Calculator {
 		LOGGER.info("The info of the submitted form are: \n"+form.toString());
 		
 		if(form.getChecked()) {
-		    userService.insertOtUpdateTimeSheet(timesheet);
+		    userService.insertOrUpdateTimeSheet(timesheet);
 		}
 		
         

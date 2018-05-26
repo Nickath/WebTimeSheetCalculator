@@ -18,5 +18,8 @@ public interface UserRepository extends JpaRepository<User,Long> {
 	@Query(value = "update users  set  enabled = ?1, password = ?3 WHERE username =?2", nativeQuery = true)
 	void activateUser(boolean enabled, String username, String password);
 	
-	
+	@Modifying
+    @Transactional(readOnly=false)
+	@Query(value = "update users  set email = ?1, enabled = ?2, photo = ?3 WHERE username =?4", nativeQuery = true)
+	void updateUser(String email, boolean enabled, byte[] photo,String username);
 }

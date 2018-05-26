@@ -89,7 +89,7 @@ public class UserRestController {
         currentUser.setUsername(user.getUsername());
         currentUser.setEmail(user.getEmail());
           
-        userService.updateUser(currentUser);
+        userService.updateUserUsername(currentUser);
         return new ResponseEntity<User>(currentUser, HttpStatus.OK);
     }
   

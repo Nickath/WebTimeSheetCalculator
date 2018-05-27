@@ -112,8 +112,17 @@
 <!-- ajax to upload -->
 
 <script type="text/javascript">
+
+
+
+let select; 
 function uploadPhoto(selectedIndex){
-	alert(selectedIndex);
+	
+	if(selectedIndex == 2){
+		deletePhoto();
+		return;
+	}
+	
     document.getElementById("photoID").click();
     var file = $('[name="photo"]');
     var filename = $.trim(file.val());
@@ -125,12 +134,20 @@ function uploadPhoto(selectedIndex){
        }
     }
     else{
+    	select = selectedIndex;
     	return;
     }
-    updatePhoto();
     
-  
-	
+    if(select == 1){
+    	updatePhoto();
+    }
+    else if(select == 2){
+    	deletePhoto();
+    }
+    else{
+    	return;
+    }
+
 }
 
 
@@ -153,7 +170,7 @@ function updatePhoto(){
           cache: false,
     	  data:  new FormData(document.getElementById("formID")) , // parameters to send 
     	  success: function(response){
-    	  // var obj = JSON.parse(response); to convert a valid JSON object into javascript object
+    	  location.reload();//if ajax was successfull, reload the page
     	  },
     	  error: function(){      
     	  alert('Error while request..');
@@ -171,7 +188,7 @@ function deletePhoto(){
       contentType: false,
       cache: false,
   	  success: function(response){
-  	  // var obj = JSON.parse(response); to convert a valid JSON object into javascript object
+      location.reload(); //if ajax was successfull, reload the page
   	  },
   	  error: function(){      
   	  alert('Error while request..');

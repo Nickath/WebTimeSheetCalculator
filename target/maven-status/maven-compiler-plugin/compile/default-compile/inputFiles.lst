@@ -19,6 +19,7 @@ C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCal
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\form\TimeSheetWrapper.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\model\TimeSheet.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\controller\HTTPErrorHandler.java
+C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\repository\EmailRepository.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\form\LoginForm.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\controller\AjaxController.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\repository\TimeSheetRepository.java
@@ -26,6 +27,7 @@ C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCal
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\form\TimeSheetForm.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\form\RegisterForm.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\repository\MonthRepository.java
+C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\model\EmailSubscription.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\service\UserDetailsService.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\model\Month.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\filters\CORSFilter.java

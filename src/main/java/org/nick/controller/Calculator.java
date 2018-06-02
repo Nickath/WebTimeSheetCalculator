@@ -100,6 +100,8 @@ public class Calculator {
         //get the logged in user and set it to the timesheet object
         User user = userService.getAuthenticatedUser();
         timesheet.setUser(user);
+        timesheet.setDaysPending(form.getPendingDays());
+        timesheet.setDesiredMean(form.getDesiredMean());
 		model.addAttribute("user",user);
 		//write the file and get it 
         File myFile = fileHandlerImpl.readFile(path,form.getFile(),timesheet); // get the file

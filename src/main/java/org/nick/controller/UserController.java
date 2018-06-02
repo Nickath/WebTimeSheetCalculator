@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.binary.Base64;
 import org.nick.form.MonthForm;
+import org.nick.model.EmailSubscription;
 import org.nick.model.Month;
 import org.nick.model.TimeSheet;
 import org.nick.model.User;
@@ -211,6 +212,19 @@ public class UserController {
 	    		}
 	    	}
 	    	return "enableAccountPage";
+	    }
+	    
+	    
+	    @RequestMapping(value = "/subscribeMailPage", method = RequestMethod.GET)
+	    public String subscribePage(Model model) {
+	    	User user = userService.getAuthenticatedUser();
+	    	model.addAttribute("user",user);
+			EmailSubscription s = userService.isUserSubscribed(user);
+			model.addAttribute("usersubscription",s);
+	    	String photo  = userService.getUserImageBase64(user);
+			model.addAttribute("photoProfil",photo);
+
+	    	return "subscribepage";
 	    }
 	   
 	 

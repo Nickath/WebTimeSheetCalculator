@@ -90,4 +90,17 @@ public class AjaxController {
 	}
 	
 	
+	@RequestMapping(value="/subsribeAction", method = RequestMethod.POST)
+	public @ResponseBody void subscribeAction(@RequestParam("subscribed") boolean subscribed) {
+        User user = userService.getAuthenticatedUser();
+		if(subscribed == true) {
+			userService.subscribeUser(user);
+		}
+		else {
+			userService.unsubscribeUser(user);
+		}
+		
+	}
+	
+	
 }

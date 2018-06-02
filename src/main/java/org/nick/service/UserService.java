@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.nick.form.RegisterForm;
+import org.nick.model.EmailSubscription;
 import org.nick.model.TimeSheet;
 import org.nick.model.User;
 
@@ -67,7 +68,12 @@ public interface UserService {
 	public void deletePhoto();
 	
 	public byte[] getDefaultImage();
+	
+	public EmailSubscription isUserSubscribed(User user);
+	
+	public void subscribeUser(User user);
 
+	public void unsubscribeUser(User user);
 	
 
 	

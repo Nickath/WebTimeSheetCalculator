@@ -25,9 +25,11 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.nick.form.RegisterForm;
+import org.nick.model.EmailSubscription;
 import org.nick.model.Role;
 import org.nick.model.TimeSheet;
 import org.nick.model.User;
+import org.nick.repository.EmailRepository;
 import org.nick.repository.TimeSheetRepository;
 import org.nick.repository.UserRepository;
 import org.nick.service.UserService;
@@ -45,6 +47,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	EmailRepository emailRepository;
 
 	
 	public List<TimeSheet> getAllTimeSheets(){
@@ -344,6 +349,37 @@ public class UserServiceImpl implements UserService {
 					user.getPhoto(),user.getUsername());
 		}
 		return false;
+	}
+
+	@Override
+	public EmailSubscription isUserSubscribed(User user) {
+		List<EmailSubscription> subscriptions = emailRepository.findAll();
+		for(EmailSubscription s : subscriptions) {
+			if(s.getUser().getId().equals(user.getId())) {
+				return s;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void subscribeUser(User user) {
+		if(isUserSubscribed(user) == null) {
+			emailRepository.save(new EmailSubscription(user, getCurrentTime()));
+		}
+		
+	}
+
+	@Override
+	public void unsubscribeUser(User user) {
+		List<EmailSubscription> list = emailRepository.findAll();
+		for(EmailSubscription e : list) {
+			if(e.getUser().getId().equals(user.getId())) {
+				emailRepository.delete(e);
+				return;
+			}
+		}
+		
 	}
 	
 	

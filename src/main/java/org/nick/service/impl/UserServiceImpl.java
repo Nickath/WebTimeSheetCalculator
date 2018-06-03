@@ -381,6 +381,17 @@ public class UserServiceImpl implements UserService {
 		}
 		
 	}
+
+	@Override
+	public String getUserCurrentMean(User user) {
+		List<TimeSheet> timesheets = repository.findAll();
+		for(TimeSheet timesheet : timesheets) {
+			if(timesheet.getUser().getId().equals(user.getId())) {
+				return timesheet.getMean();
+			}
+		}
+		return null;
+	}
 	
 	
 	

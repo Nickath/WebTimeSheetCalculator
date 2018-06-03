@@ -75,6 +75,8 @@ public interface UserService {
 
 	public void unsubscribeUser(User user);
 	
+	public String getUserCurrentMean(User user);
+	
 
 	
 

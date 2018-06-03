@@ -46,10 +46,14 @@
 
 <script type="text/javascript">
 
-<!-- ajax to get results for the date -->
 function ajaxCheckBox(){
-
-	var r = confirm("Are you sure?");
+    if($("#checkboxID").is(":checked")){
+    	var r = confirm("Are you sure you want to subscribe to mail list?");
+    }
+    else{
+    	var r = confirm("Are you sure you want to unsubscribe?");
+    }
+	
 	if (r == true) {
 	} else {
 		if($("#checkboxID").is(":checked")){

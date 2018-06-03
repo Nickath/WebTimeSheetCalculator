@@ -31,7 +31,7 @@
     <!-- Definition for fileHandler bean without constructor-arg to make it autowired -->
    <bean id = "fileHandler" class = "org.nick.service.impl.FileHandlerImpl"></bean>
    <bean id = "userService" class = "org.nick.service.impl.UserServiceImpl"></bean>
-   
+   <bean id = "jobsService" class = "org.nick.scheduler.services.impl.JobsServiceImpl"></bean>
    
    <!-- jpa -->
       <!-- Scans for components that will be auto-registered as Spring beans -->

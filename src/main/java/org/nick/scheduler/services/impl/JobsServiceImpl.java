@@ -1,6 +1,7 @@
 package org.nick.scheduler.services.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.nick.model.User;
@@ -22,14 +23,17 @@ public class JobsServiceImpl implements JobsService {
 	UserService userService;
 
 	@Override
-	public List<String> getBelowBaseUsersMail() {
-		List<String> belowMeanUsersEmails = new ArrayList<>();
+	public HashMap<String, String> getBelowBaseUsersMail() {
+		HashMap<String, String> belowMeanUsersEmails = new HashMap<String, String>();
 		List<User> users = userRepository.findAll();
 		for(User u : users) {
-			int meanHours = Character.getNumericValue(userService.getUserCurrentMean(u).charAt(0));
-			if(meanHours < 9) {
-				belowMeanUsersEmails.add(u.getEmail());
+			if(userService.isUserSubscribed(u) != null) { //if user exists in email_subscription table
+				int meanHours = Character.getNumericValue(userService.getUserCurrentMean(u).charAt(0));
+				if(meanHours < 9) {
+					belowMeanUsersEmails.put(u.getEmail(), userService.getUserCurrentMean(u));
+				}
 			}
+			
 		}
 		return belowMeanUsersEmails;
 	}

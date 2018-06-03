@@ -4,8 +4,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -31,7 +35,7 @@ public class EmailJob  {
 	JobsService jobsService;
 
 	//At 00:00:00am every day
-	@Scheduled(cron="0 0 0 ? * * *")
+	@Scheduled(cron="0 0 0 ? * *")
 	public void execute() {
 		
 		
@@ -46,18 +50,23 @@ public class EmailJob  {
 		
 
 		  final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-		     final String username = "<<mail>>";//
+		     final String username = "<<email>>";//
 		     final String password = "<<pass>>";
 		     
 		     //set the password authenticator object of javax.mail
 		     PasswordAuthentication pa = new PasswordAuthentication(username,password);
 		     
 			  // get below mean users emails
-		     List<String> recipients = jobsService.getBelowBaseUsersMail();
-		   
+		     HashMap<String, String> recipients = jobsService.getBelowBaseUsersMail();
+		     
+		      Set set = recipients.entrySet();
+		      Iterator iterator = set.iterator();
+		      
+
 		     //send emails to users
 		     
-		 for(String recipient : recipients) {
+	while(iterator.hasNext()) {
+		Map.Entry mapentry = (Map.Entry)iterator.next();
 		     try{
 		     Session session = Session.getDefaultInstance(prop, 
 		                          new Authenticator(){
@@ -72,13 +81,18 @@ public class EmailJob  {
 		  // -- Set the FROM and TO fields --
 		     msg.setFrom(new InternetAddress("javaxmailtester@gmail.com"));
 		     msg.setRecipients(Message.RecipientType.TO, 
-		                      InternetAddress.parse(recipient,false));
-		     msg.setSubject("You are late");
-		     msg.setText("You are late");
+		                      InternetAddress.parse((String)mapentry.getKey(),false));
+		     msg.setSubject("Below average mean warning");
+		     msg.setText("Be careful, your current mean is: " +mapentry.getValue());
 		     msg.setSentDate(new Date());
 		     Transport.send(msg);
 		     System.out.println("Message sent.");
-		  }catch (MessagingException e){ System.out.println("Erreur d'envoi, cause: " + e);}
+		     try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		  }catch (MessagingException e){ System.out.println("Error, message was not send correctly" + e);}
 		     
 		 }
 

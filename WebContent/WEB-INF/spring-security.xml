@@ -42,7 +42,40 @@
 		<session-management invalid-session-url="/invalidSession">
        </session-management>
     </http>
- 
+    
+    
+    <!-- database password encryption -->
+    
+   <!-- enable password encoder  -->
+   <!--  <authentication-manager>
+	<authentication-provider>
+	    <password-encoder hash="bcrypt" />
+	</authentication-provider>
+  </authentication-manager>
+  
+  pass a strength parameter to the BCryptPasswordEncoder
+  <authentication-manager>
+	<authentication-provider>
+	    <password-encoder ref="encoder" />
+	</authentication-provider>
+  </authentication-manager>
+	
+  <beans:bean id="encoder" 
+	class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+	<beans:constructor-arg name="strength" value="11" />
+  </beans:bean>
+  
+  pass an encoder to DaoAuthenticationProvider
+  
+  <beans:bean id="authProvider" 
+	class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+    	<beans:property name="userDetailsService" ref="customUserService" />
+	    <beans:property name="passwordEncoder" ref="encoder" />
+  </beans:bean>
+  
+  <beans:bean id="encoder" 
+	class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+  -->
  <!-- if we want to keep password erase-credentials="false" -->
     <authentication-manager >
       <authentication-provider>

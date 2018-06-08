@@ -37,6 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service("userService")
@@ -84,7 +85,9 @@ public class UserServiceImpl implements UserService {
 				User user = new User();
 				user.setEmail(form.getEmail());
 				user.setUsername(form.getUsername());
-				user.setPassword(form.getPassword());
+				BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); //encrypt the password using BCryptPasswordEncoder
+				String hashedPassword = passwordEncoder.encode(form.getPassword());
+				user.setPassword(hashedPassword);
 				user.setRole(new Role(2L));   //sets the user role to "2,user", (default) not any user is authorized to create admin user
 				user.setEnabled(true);
 				user.setPhoto(getDefaultImage());
@@ -385,8 +388,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String getUserCurrentMean(User user) {
 		List<TimeSheet> timesheets = repository.findAll();
+		//get current month
+		LocalDate localDate = LocalDate.now();
+        String date = DateTimeFormatter.ofPattern("yyy/MM/dd").format(localDate).substring(5,7);
+        Long currentMonth = Long.parseLong(date)+1;
 		for(TimeSheet timesheet : timesheets) {
-			if(timesheet.getUser().getId().equals(user.getId())) {
+			if(timesheet.getUser().getId().equals(user.getId()) && timesheet.getMonth().getId() == currentMonth) {
 				return timesheet.getMean();
 			}
 		}

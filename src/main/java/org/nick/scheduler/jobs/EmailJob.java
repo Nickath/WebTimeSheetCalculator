@@ -21,12 +21,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.nick.scheduler.services.JobsService;
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 
 public class EmailJob  {
@@ -50,8 +46,8 @@ public class EmailJob  {
 		
 
 		  final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-		     final String username = "<<email>>";//
-		     final String password = "<<pass>>";
+		     final String username = "javaxmailtester@gmail.com";//
+		     final String password = "javaxmailtester12";
 		     
 		     //set the password authenticator object of javax.mail
 		     PasswordAuthentication pa = new PasswordAuthentication(username,password);

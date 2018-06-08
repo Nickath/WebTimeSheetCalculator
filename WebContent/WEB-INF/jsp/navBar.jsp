@@ -45,9 +45,11 @@
        
        <c:if test="${photoProfil != null}">
        <li>
+       <span class ="inlinehref">
        <a href="<c:url value="/homePage" />" class="inlinehref" >
        <img alt="img" style="border: 0;" src="data:image/jpeg;base64,${photoProfil}" height="60" width="70" />
        </a>
+       </span>
        </li>
        <li>
        <div class="rail-select">

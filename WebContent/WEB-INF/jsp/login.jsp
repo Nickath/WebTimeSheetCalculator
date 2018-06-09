@@ -47,7 +47,17 @@
         <label cssClass = "error" />
       </div>
       
-      <br><div class="error"> ${invalidCreds} </div>
+      <br><div class="error">
+
+          <!-- /login?error=true -->
+     <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
+      <font color="red">
+        Your login attempt was not successful due to <br/><br/>
+        <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.
+      </font>
+     </c:if>
+
+        </div>
  
 
      <div class="form-group">
@@ -76,13 +86,7 @@
   
    </div> 
    
-     <!-- /login?error=true -->
-     <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
-      <font color="red">
-        Your login attempt was not successful due to <br/><br/>
-        <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.
-      </font>
-     </c:if>
+ 
    
    
   </div>

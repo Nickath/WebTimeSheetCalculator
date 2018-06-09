@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,8 +25,15 @@
       
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-4">
-      <input type="checkbox" name="subscribed" value="subscribed" checked>
-      <c:if test="${usersubscription != null}"> Subscribed since ${usersubscription.date} </c:if> <br>
+         <c:if test="${usersubscription != null}">
+         <input type="checkbox" name="subscribed" id = "checkboxID" value="subscribed" checked onChange="ajaxCheckBox()">
+         Subscribed since ${usersubscription.subscription_date}
+         </c:if> 
+      <c:if test="${usersubscription == null}">
+      <input type="checkbox" name="subscribed" id = "checkboxID" value="subscribed" onChange="ajaxCheckBox()">
+       You are not subscribed to the mail list
+     </c:if> 
+        <br>
       </div>
       </div>
       
@@ -32,4 +41,44 @@
 </div>
 </div>
 </body>
+
+
+
+<script type="text/javascript">
+
+function ajaxCheckBox(){
+    if($("#checkboxID").is(":checked")){
+    	var r = confirm("Are you sure you want to subscribe to mail list?");
+    }
+    else{
+    	var r = confirm("Are you sure you want to unsubscribe?");
+    }
+	
+	if (r == true) {
+	} else {
+		if($("#checkboxID").is(":checked")){
+		   $("#checkboxID").prop("checked", false);
+		}
+		else {
+			$("#checkboxID").prop("checked", true);
+		}
+	    return;
+	}
+	
+	
+ $.ajax({
+  type: "POST",
+  url: "http://localhost:8080/WebTimeSheetCalculator/subsribeAction", //URL to access the controller
+  cache: false,    
+  data: { subscribed: $("#checkboxID").is(":checked") }, // parameters to send (the value of the month)
+  success: function(response){
+  location.reload();//if ajax was successfull, reload the page
+  },
+  error: function(){      
+   alert('Error while request..');
+  }
+ });
+}
+</script>
+
 </html>

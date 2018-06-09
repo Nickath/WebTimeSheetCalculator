@@ -4,11 +4,20 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
         http://www.springframework.org/schema/data/jpa
-        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+        
+        <!-- for quartz scheduler -->
+        <task:annotation-driven></task:annotation-driven>
+        <!-- declare the job class -->
+        <bean id="emailSchedulerService" class="org.nick.scheduler.jobs.EmailJob">
+        </bean>
 
   <!-- mechanism to scan packages for the controllers- autodiscovery -->
     <context:component-scan base-package="org.nick.controller" />
@@ -22,7 +31,8 @@
     <!-- Definition for fileHandler bean without constructor-arg to make it autowired -->
    <bean id = "fileHandler" class = "org.nick.service.impl.FileHandlerImpl"></bean>
    <bean id = "userService" class = "org.nick.service.impl.UserServiceImpl"></bean>
-   
+   <bean id = "jobsService" class = "org.nick.scheduler.services.impl.JobsServiceImpl"></bean>
+   <bean id = "accountconfirmationService" class = "org.nick.email.AccountConfirmation"></bean>
    
    <!-- jpa -->
       <!-- Scans for components that will be auto-registered as Spring beans -->

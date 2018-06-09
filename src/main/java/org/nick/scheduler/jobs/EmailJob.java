@@ -21,6 +21,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.nick.scheduler.services.JobsService;
+import org.nick.web.contants.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -45,14 +46,12 @@ public class EmailJob  {
 		}
 		
 
-		  final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-		     final String username = "javaxmailtester@gmail.com";//
-		     final String password = "javaxmailtester12";
+
 		     
 		     //set the password authenticator object of javax.mail
-		     PasswordAuthentication pa = new PasswordAuthentication(username,password);
-		     
-			  // get below mean users emails
+		     PasswordAuthentication pa = new PasswordAuthentication(Constants.username,Constants.password);
+			 
+		     // get below mean users emails
 		     HashMap<String, String> recipients = jobsService.getBelowBaseUsersMail();
 		     
 		      Set set = recipients.entrySet();
@@ -75,7 +74,7 @@ public class EmailJob  {
 
   
 		  // -- Set the FROM and TO fields --
-		     msg.setFrom(new InternetAddress("javaxmailtester@gmail.com"));
+		     msg.setFrom(new InternetAddress(Constants.username));
 		     msg.setRecipients(Message.RecipientType.TO, 
 		                      InternetAddress.parse((String)mapentry.getKey(),false));
 		     msg.setSubject("Below average mean warning");

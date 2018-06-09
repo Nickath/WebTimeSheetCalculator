@@ -37,6 +37,9 @@ public class User implements Comparable<User> {
 	@Column(name="photo")
 	private byte[]  photo;
 	
+	@Column(name="confirmid")
+	private String confirmId;
+	
 	//FK TO TABLE role, each user has his/her own role
 	@ManyToOne
 	private Role role;
@@ -94,6 +97,12 @@ public class User implements Comparable<User> {
 	}
 	public void setPhoto(byte[] photo) {
 		this.photo = photo;
+	}
+	public String getConfirmId() {
+		return confirmId;
+	}
+	public void setConfirmId(String confirmId) {
+		this.confirmId = confirmId;
 	}
 	@Override
 	public int compareTo(User arg0) {

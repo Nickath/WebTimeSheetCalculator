@@ -24,6 +24,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.nick.email.AccountConfirmation;
 import org.nick.form.RegisterForm;
 import org.nick.model.EmailSubscription;
 import org.nick.model.Role;
@@ -51,6 +52,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	EmailRepository emailRepository;
+	
+	@Autowired
+	AccountConfirmation accountConfirmationService;
 
 	
 	public List<TimeSheet> getAllTimeSheets(){
@@ -77,7 +81,7 @@ public class UserServiceImpl implements UserService {
 	public boolean registerUser(RegisterForm form) {
 		//if username already exists, do not allow, else write him on database
 				List<User> existingUsers = userRepository.findAll();
-				for(User user :existingUsers) {
+				for(User user : existingUsers) {
 					if(user.getUsername().equals(form.getUsername())){
 						return true;
 					}
@@ -89,8 +93,16 @@ public class UserServiceImpl implements UserService {
 				String hashedPassword = passwordEncoder.encode(form.getPassword());
 				user.setPassword(hashedPassword);
 				user.setRole(new Role(2L));   //sets the user role to "2,user", (default) not any user is authorized to create admin user
-				user.setEnabled(true);
+				//user.setEnabled(true);
 				user.setPhoto(getDefaultImage());
+				
+				//generate the unique user id to confirm password
+				String randomId = java.util.UUID.randomUUID().toString();
+				user.setConfirmId(randomId);
+				
+				//send the verification email to the registered user to enable account
+				accountConfirmationService.sendConfirmationMail(user.getEmail(),user.getConfirmId());
+				
 				userRepository.save(user);
 				return false;
 		
@@ -395,6 +407,19 @@ public class UserServiceImpl implements UserService {
 		for(TimeSheet timesheet : timesheets) {
 			if(timesheet.getUser().getId().equals(user.getId()) && timesheet.getMonth().getId() == currentMonth) {
 				return timesheet.getMean();
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public User searchConfirmUserByID(String id) {
+		List<User> existingUsers = userRepository.findAll();
+		for(User user : existingUsers) {
+			if(user.getConfirmId()!=null && user.getConfirmId()!="") {
+			    if(user.getConfirmId().equals(id) && user.isEnabled() == false) {
+				   return user;
+			    }
 			}
 		}
 		return null;

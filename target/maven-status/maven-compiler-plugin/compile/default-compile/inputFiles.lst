@@ -1,3 +1,5 @@
+C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\email\AccountConfirmation.java
+C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\email\templates\AccountVerificationTemplate.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\model\User.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\controller\Calculator.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\service\impl\FileHandlerImpl.java
@@ -20,13 +22,17 @@ C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCal
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\model\TimeSheet.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\controller\HTTPErrorHandler.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\repository\EmailRepository.java
+C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\scheduler\jobs\EmailJob.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\form\LoginForm.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\controller\AjaxController.java
+C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\controller\ConfirmAccountEmail.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\repository\TimeSheetRepository.java
+C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\scheduler\services\JobsService.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\service\impl\UserServiceImpl.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\form\TimeSheetForm.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\form\RegisterForm.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\repository\MonthRepository.java
+C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\scheduler\services\impl\JobsServiceImpl.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\model\EmailSubscription.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\service\UserDetailsService.java
 C:\Users\NICK\eclipse-workspace\WebTimeSheetCalculatorTestBranch\WebTimeSheetCalculatorTestBranch\src\main\java\org\nick\model\Month.java

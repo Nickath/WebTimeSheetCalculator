@@ -77,6 +77,7 @@ public interface UserService {
 	
 	public String getUserCurrentMean(User user);
 	
+	public User searchConfirmUserByID(String id);
 
 	
 

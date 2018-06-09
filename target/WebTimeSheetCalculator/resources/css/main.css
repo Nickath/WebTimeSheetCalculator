@@ -336,6 +336,6 @@ div.hidden {
 }
 
 
-.inlinehref.a {
-	
+.inlinehref a {
+	display: inline !important;
 }

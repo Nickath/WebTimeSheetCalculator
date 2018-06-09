@@ -2,5 +2,8 @@ package org.nick.web.contants;
 
 public class Constants {
 
-	public static int hourDivisor = 60;
+	public static final int hourDivisor = 60;
+    public static final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+    public static final String username = "javaxmailtester@gmail.com";//
+    public static final String password = "<<>>";
 }

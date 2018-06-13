@@ -19,10 +19,10 @@ public class ConfirmAccountEmail {
 			public String emailConfirmation(@PathVariable("id") String id) {
                  User isUserToBeEnabled = userService.searchConfirmUserByID(id);
                  if(isUserToBeEnabled != null) {
-                	 userService.activateUser(true, isUserToBeEnabled.getUsername(), isUserToBeEnabled.getPassword());
+                	 userService.activateUser(true, isUserToBeEnabled.getUsername(), isUserToBeEnabled.getPassword(),"");
                  }
 	        	 
-	 			 return "login";
+	 			 return "redirect:/loginPage";
 	 		}	
 	 	 
 }

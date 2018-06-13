@@ -304,8 +304,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void activateUser(boolean enabled, String username, String password) {
-		userRepository.activateUser(enabled, username, password);
+	public void activateUser(boolean enabled, String username, String password, String confirmid) {
+		userRepository.activateUser(enabled, username, password,"");
 		
 	}
 	

@@ -48,7 +48,7 @@ public class UserController {
 
 	
 	@RequestMapping(value = "/homePage", method = RequestMethod.GET)
-	public String getLoginPage(Model model, HttpSession session,HttpServletRequest request ) {
+	public String getHomePage(Model model, HttpSession session,HttpServletRequest request ) {
 		User user = userService.getAuthenticatedUser();
 		String photo  = userService.getUserImageBase64(user);
 		model.addAttribute("photoProfil",photo);
@@ -204,7 +204,7 @@ public class UserController {
 	    	}
 	    	if(userService.userAwaitsEnable(username)) {
 	    		if(password.equals(passwordconfirm)) {
-	    			userService.activateUser(true, username, password);
+	    			userService.activateUser(true, username, password,"");
 	    			model.addAttribute("success","Account was successfully enabled Mr/Mrs "+username+", "
 	    					+ "click <a href=\"/WebTimeSheetCalculator/loginPage\">here</a> to login");
 	    		}else {

@@ -40,7 +40,7 @@ public class LoginController {
 		    /* The user is logged in :) */
 			User user = userService.getAuthenticatedUser();
 			model.addAttribute("user",user);
-		    return "home";
+		    return "redirect:/homePage";
 		}
 		LoginForm loginForm = new LoginForm();
 		model.addAttribute("loginForm",loginForm);

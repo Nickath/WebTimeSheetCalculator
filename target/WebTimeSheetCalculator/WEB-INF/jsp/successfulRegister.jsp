@@ -12,6 +12,7 @@
 <div class="content">
  <div class="container">
   <h2>You account with username <i>${userForm.username} </i> was successfully created !</h2><br><br><br>
+  <h3>Check your email for the account confirmation link and then </h3><br>
   <p>Go to   <a href="<c:url value="/loginPage" />" >Login Page</a></p>
  </div>
 </div>

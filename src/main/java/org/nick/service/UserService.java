@@ -55,7 +55,7 @@ public interface UserService {
 	
 	public boolean userAwaitsEnable(String username);
 	
-	public void activateUser(boolean enabled, String username,String password);
+	public void activateUser(boolean enabled, String username,String password, String confirmid);
 
 	void downloadTimeSheetByMonth(long id, long userId, HttpServletResponse response);
 

@@ -64,7 +64,7 @@
         
       <label for="file" class="col-sm-2 control-label">Month:</label>
       
-    <div class="col-sm-2">  
+    <div class="col-sm-2" style="margin-left:-18px;">  
       <section class="container">
         <div class="dropdown">
          <select name="month" class="dropdown-select" id="selectID" onChange="ajaxGetUpdate(this.selectedIndex);">
@@ -159,6 +159,10 @@ $('#eraseInput').click(function() {
 
 <script type="text/javascript">
 function ajaxGetUpdate(selectedIndex){
+	
+ if($("#selectID").val()=="" || $("#selectID").val() == null ){
+	 return;
+ }
 	
  $.ajax({
   type: "POST",

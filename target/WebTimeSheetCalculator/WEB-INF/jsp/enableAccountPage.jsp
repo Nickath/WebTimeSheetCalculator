@@ -125,7 +125,7 @@ function ajaxSearchUser(){
 </script>
 
 
-
+<jsp:include page="footer.jsp" />
 
 </body>
 

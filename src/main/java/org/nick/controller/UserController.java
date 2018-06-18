@@ -1,11 +1,14 @@
 package org.nick.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,19 +19,26 @@ import org.nick.model.EmailSubscription;
 import org.nick.model.Month;
 import org.nick.model.TimeSheet;
 import org.nick.model.User;
+import org.nick.pdf.templates.PdfTemplates;
 import org.nick.repository.MonthRepository;
 import org.nick.repository.UserRepository;
 import org.nick.service.impl.FileHandlerImpl;
 import org.nick.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import com.github.jhonnymertz.wkhtmltopdf.wrapper.Pdf;
+import com.github.jhonnymertz.wkhtmltopdf.wrapper.configurations.WrapperConfig;
+import com.github.jhonnymertz.wkhtmltopdf.wrapper.params.Param;
 
 
 @Controller
@@ -84,7 +94,6 @@ public class UserController {
 	 //invalid session redirects to login
 	 @RequestMapping(value = "/invalidSession", method = RequestMethod.GET)
 		public String invalidSession(Model model) {
-		
 			return "login";
 		}
 	 
@@ -204,7 +213,9 @@ public class UserController {
 	    	}
 	    	if(userService.userAwaitsEnable(username)) {
 	    		if(password.equals(passwordconfirm)) {
-	    			userService.activateUser(true, username, password,"");
+	    			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); //encrypt the password using BCryptPasswordEncoder
+					String hashedPassword = passwordEncoder.encode(password);
+	    			userService.activateUser(true, username, hashedPassword,"");
 	    			model.addAttribute("success","Account was successfully enabled Mr/Mrs "+username+", "
 	    					+ "click <a href=\"/WebTimeSheetCalculator/loginPage\">here</a> to login");
 	    		}else {
@@ -225,6 +236,31 @@ public class UserController {
 			model.addAttribute("photoProfil",photo);
 
 	    	return "subscribepage";
+	    }
+	    
+	    
+	    @RequestMapping(value = "/downloadPdf", method = RequestMethod.POST)
+	    public  @ResponseBody void downloadPdf(HttpServletRequest req, HttpServletResponse response, @RequestParam("form") String form) {
+	    	Pdf pdf = new Pdf();
+
+	    	
+	    	String html = PdfTemplates.startingHtmlTag + PdfTemplates.statisticsHeader+ PdfTemplates.startingCssTag 
+	    			+ PdfTemplates.readMainCss(req,response) + PdfTemplates.endingCssTag + form + PdfTemplates.endingHtmlTag;
+	    			
+            pdf.addPageFromString(html);
+
+	    	// Save the PDF
+	    	try {
+				pdf.saveAs(UserController.class
+	                    .getClassLoader().getResource("").getPath().toString().replace("/", "\\")+ "statistics\\"+
+	                    "statistics.pdf");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	    }
 	   
 	 

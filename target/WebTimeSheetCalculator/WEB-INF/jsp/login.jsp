@@ -141,7 +141,7 @@ $('#eraseInput').click(function() {
 });
 </script>
 
-
+<jsp:include page="footer.jsp" />
 
 </body>
 

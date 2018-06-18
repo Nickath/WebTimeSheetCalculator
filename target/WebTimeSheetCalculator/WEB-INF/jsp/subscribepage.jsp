@@ -20,7 +20,7 @@
 <jsp:include page="navBar.jsp" />
 
 <div class="content">
-<div class="container">
+<div class="container" style="width:1000px;margin-left:-70px;">
 
       
       <div class="form-group">
@@ -40,6 +40,8 @@
 
 </div>
 </div>
+
+<jsp:include page="footer.jsp" />
 </body>
 
 

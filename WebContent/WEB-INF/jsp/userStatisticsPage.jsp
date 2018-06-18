@@ -43,7 +43,9 @@
     <td><c:if test="${empty element.desiredMean}"> null </c:if>${element.desiredMean}</td>
     <td><c:if test="${empty element.lastUpdate}"> null </c:if>${element.lastUpdate}</td>
     <td><a href="<c:url value='/deleteMonth/${element.month.id}' />" >Delete</a></td>
-    <td><a href="<c:url value='/downloadMonth/${element.month.id}' />" >Download in .xls form</a></td>
+    <td><a href="<c:url value='/downloadMonth/${element.month.id}' />" >Download in .xls form 
+    <img src="${pageContext.request.contextPath}/resources/images/xls.gif"/> 
+    </a></td>
   </tr>
 </tbody>
 
@@ -51,6 +53,41 @@
 </c:forEach>
 </table>
 </div>
+<p class="pdftitle">
+<a href="javascript:ajaxGetForm();" >Download statistics in .pdf form
+    <img src="${pageContext.request.contextPath}/resources/images/pdficon.png"/> 
+</a>
+</p>
 </div>
+<jsp:include page="footer.jsp" />
 </body>
+
+
+
+
+<!-- ajax to get the dom of the form -->
+
+<script type="text/javascript">
+function ajaxGetForm(){
+
+ var htmlString = $('.container').html();
+ alert(htmlString);
+
+ $.ajax({
+  type: "POST",
+  url: "http://localhost:8080/WebTimeSheetCalculator/downloadPdf", //URL to access the controller
+  cache: false,    
+  data: { form: htmlString }, // parameters to send (the value of the month, using the id)
+  success: function(response){
+
+  alert('PDF successfully generated');
+  
+  },
+  error: function(){      
+   alert('Error while request..');
+  }
+ });
+}
+</script>
+
 </html>

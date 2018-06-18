@@ -45,5 +45,6 @@
 </div>
 
 </sec:authorize>
+<jsp:include page="footer.jsp" />
 </body>
 </html>

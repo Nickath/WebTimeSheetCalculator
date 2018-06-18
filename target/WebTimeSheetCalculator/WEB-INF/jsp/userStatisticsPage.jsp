@@ -43,7 +43,9 @@
     <td><c:if test="${empty element.desiredMean}"> null </c:if>${element.desiredMean}</td>
     <td><c:if test="${empty element.lastUpdate}"> null </c:if>${element.lastUpdate}</td>
     <td><a href="<c:url value='/deleteMonth/${element.month.id}' />" >Delete</a></td>
-    <td><a href="<c:url value='/downloadMonth/${element.month.id}' />" >Download in .xls form</a></td>
+    <td><a href="<c:url value='/downloadMonth/${element.month.id}' />" >Download in .xls form 
+    <img src="${pageContext.request.contextPath}/resources/images/xls.gif"/> 
+    </a></td>
   </tr>
 </tbody>
 
@@ -51,6 +53,12 @@
 </c:forEach>
 </table>
 </div>
+<p class="pdftitle">
+<a href="<c:url value='/downloadPdf' />" >Download statistics in .pdf form
+    <img src="${pageContext.request.contextPath}/resources/images/pdficon.png"/> 
+</a>
+</p>
 </div>
+<jsp:include page="footer.jsp" />
 </body>
 </html>

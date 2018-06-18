@@ -42,6 +42,11 @@
       org.springframework.security.web.session.HttpSessionEventPublisher
     </listener-class>
    </listener>
+<!--    <listener>
+        <listener-class>
+            org.nick.pdf.templates.PdfTemplates
+        </listener-class>
+    </listener> -->
     <filter-mapping>
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>

@@ -146,5 +146,7 @@
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
       <link rel="stylesheet" href="datatables.bootstrap.css">
       <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
+  
+  <jsp:include page="footer.jsp" />
   </body>
 </html>

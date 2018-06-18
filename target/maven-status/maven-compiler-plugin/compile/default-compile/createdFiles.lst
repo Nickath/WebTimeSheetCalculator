@@ -1,5 +1,8 @@
+com\github\jhonnymertz\wkhtmltopdf\wrapper\configurations\WrapperConfig.class
 org\nick\form\LoginForm.class
 org\nick\controller\AdminController.class
+com\github\jhonnymertz\wkhtmltopdf\wrapper\params\Params.class
+com\github\jhonnymertz\wkhtmltopdf\wrapper\PDFExportException.class
 org\nick\controller\LoginController.class
 org\nick\form\MonthForm.class
 org\nick\repository\MonthRepository.class
@@ -10,7 +13,10 @@ org\nick\service\impl\UserDetailsServiceImpl.class
 org\nick\service\UserDetailsService.class
 org\nick\form\RegisterForm.class
 org\nick\model\User.class
+com\github\jhonnymertz\wkhtmltopdf\wrapper\Pdf$1.class
 org\nick\web\contants\Constants.class
+com\github\jhonnymertz\wkhtmltopdf\wrapper\configurations\XvfbConfig.class
+com\github\jhonnymertz\wkhtmltopdf\wrapper\params\Param.class
 org\nick\model\Month.class
 org\nick\scheduler\services\JobsService.class
 org\nick\repository\TimeSheetRepository.class
@@ -18,11 +24,14 @@ org\nick\security\AuthSuccessHandler.class
 org\nick\controller\ConfirmAccountEmail.class
 org\nick\controller\UserController.class
 org\nick\email\templates\AccountVerificationTemplate.class
+com\github\jhonnymertz\wkhtmltopdf\wrapper\params\Symbol.class
 org\nick\scheduler\jobs\EmailJob.class
 org\nick\repository\UserRepository.class
 org\nick\service\impl\UserServiceImpl.class
 org\nick\email\AccountConfirmation$1.class
+com\github\jhonnymertz\wkhtmltopdf\wrapper\page\Page.class
 org\nick\controller\RegisterController.class
+org\nick\pdf\templates\PdfTemplates.class
 org\nick\controller\Calculator.class
 org\nick\repository\EmailRepository.class
 org\nick\scheduler\jobs\EmailJob$1.class
@@ -34,7 +43,9 @@ org\nick\filters\CORSFilter.class
 org\nick\form\TimeSheetWrapper.class
 org\nick\email\AccountConfirmation.class
 org\nick\form\TimeSheetForm.class
+com\github\jhonnymertz\wkhtmltopdf\wrapper\page\PageType.class
 org\nick\service\UserService.class
+com\github\jhonnymertz\wkhtmltopdf\wrapper\Pdf.class
 org\nick\controller\HTTPErrorHandler.class
 org\nick\model\EmailSubscription.class
 org\nick\service\FileHandler.class

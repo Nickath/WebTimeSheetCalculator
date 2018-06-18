@@ -195,7 +195,7 @@ function ajaxGetUpdate(selectedIndex){
 
 
 
-
+<jsp:include page="footer.jsp" />
 </body>
 
  

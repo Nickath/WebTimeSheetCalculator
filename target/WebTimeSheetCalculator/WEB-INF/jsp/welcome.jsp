@@ -8,5 +8,6 @@
 </head>
 <body>
 <jsp:include page="navBar.jsp" />
+<jsp:include page="footer.jsp" />
 </body>
 </html>

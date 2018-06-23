@@ -5,6 +5,15 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<head>
+<link rel="shortcut icon" type="image/png" href="${pageContext.request.contextPath}/resources/images/clock.png">
+<link rel="apple-touch-icon" href="${pageContext.request.contextPath}/resources/images/clock.png">
+<!-- Hide this line for IE (needed for Firefox and others) -->
+<![if !IE]>
+<link rel="icon" href="http://yourwebsite/images/favicon.png" type="image/x-icon" />
+<![endif]>
+<!-- This is needed for IE -->
+<link rel="shortcut icon" href="http://yourwebsite/images/favicon.ico" type="image/ico" />
 <!-- bootstrap stuff -->
 <style>
 <%@ include file="/resources/css/main.css"%>
@@ -45,11 +54,12 @@
         </div>
       </div>
       
-      <br>
+      
    <div class="error">
 
           <!-- /login?error=true -->
      <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
+     <br>
       <font color="red">
         Your login attempt was not successful due to: <br/>
         <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.
@@ -68,11 +78,13 @@
         </div>
       </div>
       
-   <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
+
    <p class="forgot-pass">
-    <span class="forget-pass link" tabindex="0">Forgot your password?</span>
+    <span class="forget-pass link" tabindex="0">
+    <a href="<c:url value="/forgotPassword" />"> Forgot your password?  </a>
+    
+    </span>
    </p>
-   </c:if>
   </form>
   
   

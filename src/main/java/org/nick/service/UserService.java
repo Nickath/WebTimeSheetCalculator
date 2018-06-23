@@ -81,6 +81,7 @@ public interface UserService {
 	
 	public User searchConfirmUserByID(String id);
 
+	public boolean mailExists(String mail);
 	
 
 	

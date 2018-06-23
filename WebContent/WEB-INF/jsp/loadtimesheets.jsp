@@ -7,6 +7,8 @@
 <html>
 <!-- bootstrap stuff -->
 <head>
+<link rel="shortcut icon" type="image/png" href="${pageContext.request.contextPath}/resources/images/clock.png">
+<link rel="apple-touch-icon" href="${pageContext.request.contextPath}/resources/images/clock.png">
 <style>
 <%@ include file="/resources/css/main.css"%>
 </style>

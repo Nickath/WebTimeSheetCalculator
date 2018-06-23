@@ -18,7 +18,7 @@
 </head>
 <body>
 <jsp:include page="navBar.jsp" />
-<div class="container">
+<div class="container" style="margin-left:420px; width:1280px !important;">
 <div class="table-responsive">
 <table class="table">
 <thead>

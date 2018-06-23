@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.binary.Base64;
+import org.nick.email.ChangePasswordRequest;
 import org.nick.form.MonthForm;
 import org.nick.model.EmailSubscription;
 import org.nick.model.Month;
@@ -55,6 +56,9 @@ public class UserController {
 	
 	@Autowired
     FileHandlerImpl fileHandlerImpl;
+	
+	@Autowired
+	ChangePasswordRequest changePasswordService;
 
 	
 	@RequestMapping(value = "/homePage", method = RequestMethod.GET)
@@ -90,6 +94,45 @@ public class UserController {
 	        }
 	        return "403";
 	    }
+	 
+	 
+	 //forgot password page
+	 @RequestMapping(value = "/forgotPassword", method = RequestMethod.GET)
+	     public String forgotPassword(Model model) {
+		    User user = userService.getAuthenticatedUser();
+		    if(user!=null) {
+		       model.addAttribute("user",user);
+		       return "redirect:/homePage";
+		    }
+		    else {
+		       return "forgotPassword";
+		    }
+	 }
+	 
+	 @RequestMapping(value = "/changePassRequest", method = RequestMethod.POST)
+	      public String changePassRequest(@RequestParam String email, Model model) {
+		    User user = userService.getAuthenticatedUser();
+		    if(user!=null) {
+		    	model.addAttribute("user",user);
+			    return "redirect:/homePage";
+		    }
+		    else {
+		    	if(userService.mailExists(email)) {
+		    		String changePassId = java.util.UUID.randomUUID().toString();
+		    		changePasswordService.sendChangePasswordMail(email, changePassId);
+		    		model.addAttribute("success","An email for password change has been sent into your account");
+		    	    
+		    	}
+		    	else {
+		    		model.addAttribute("notexistingmail","No registered user with email: "+email+" was found");
+		    	    
+		    	}
+		    }
+		    
+		    return "forgotPassword";
+		    
+	 }
+	 
 	 
 	 //invalid session redirects to login
 	 @RequestMapping(value = "/invalidSession", method = RequestMethod.GET)

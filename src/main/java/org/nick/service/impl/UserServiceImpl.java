@@ -476,6 +476,17 @@ public class UserServiceImpl implements UserService {
 		}
 		return null;
 	}
+
+	@Override
+	public boolean mailExists(String mail) {
+		List<User> users = userRepository.findAll();
+		for(User user : users) {
+			if(user.getEmail().equals(mail)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	
 	

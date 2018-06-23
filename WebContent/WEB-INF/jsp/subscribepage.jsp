@@ -20,7 +20,7 @@
 <jsp:include page="navBar.jsp" />
 
 <div class="content">
-<div class="container" style="width:1000px;margin-left:-70px;">
+<div class="container" style="width:1000px;">
 
       
       <div class="form-group">

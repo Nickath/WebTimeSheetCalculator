@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -47,6 +48,7 @@
     <img src="${pageContext.request.contextPath}/resources/images/xls.gif"/> 
     </a></td>
   </tr>
+
 </tbody>
 
   <br>
@@ -54,9 +56,12 @@
 </table>
 </div>
 <p class="pdftitle">
-<a href="javascript:ajaxGetForm();" >Download statistics in .pdf form
-    <img src="${pageContext.request.contextPath}/resources/images/pdficon.png"/> 
-</a>
+    <form id="statisticsform" action="downloadPdf" method="POST">
+      <input type="hidden" id="hiddenform" name="hiddenform"> </input>
+      <a href="#" onclick="formSubmit();">Download statistics in .pdf form
+       <img src="${pageContext.request.contextPath}/resources/images/pdficon.png"/> 
+     </a>
+    </form>
 </p>
 </div>
 <jsp:include page="footer.jsp" />
@@ -67,14 +72,13 @@
 
 <!-- ajax to get the dom of the form -->
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 function ajaxGetForm(){
 
  var htmlString = $('.container').html();
- alert(htmlString);
 
  $.ajax({
-  type: "POST",
+  type: "GET",
   url: "http://localhost:8080/WebTimeSheetCalculator/downloadPdf", //URL to access the controller
   cache: false,    
   data: { form: htmlString }, // parameters to send (the value of the month, using the id)
@@ -88,6 +92,18 @@ function ajaxGetForm(){
   }
  });
 }
+</script> -->
+
+<script type="text/javascript">
+$( document ).ready(function() {
+   $('#hiddenform').val($('.container').html());
+});
+
+function formSubmit()    
+{    
+     document.getElementById('statisticsform').submit();    
+} 
+
 </script>
 
 </html>

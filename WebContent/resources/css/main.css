@@ -5,7 +5,7 @@
 	}
 	
 a img
-{  
+{  	
 	border-style: none;
 }
 
@@ -14,12 +14,23 @@ img
 	border-style: none;
 }
 
+@media (min-width: 1200px){
+  .container{
+    padding-right:380px !important;
+  }  
+}
 
-	
+@media (min-width: 768px){
+  .container{
+    padding-right:380px !important;
+  }  
+}
+
 	
 .error {
 color:#FF0000;
 font-weight: bold;
+padding-left:120px;
 }
 
 .success{
@@ -358,5 +369,13 @@ p.pdftitle  {
 	margin: 0 0 10px;
 }
 
+.forgot-pass {
+    margin-top: 20px;
+    padding-left: 180px;
+}
 
+.link {
+    cursor: pointer;
+    color: #1F6EB0;
+}
 

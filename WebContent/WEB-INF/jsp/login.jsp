@@ -37,27 +37,29 @@
         <div class="col-sm-4">
           <input class="form-control inputstl" name="username" id="username" placeholder="Enter username"/>
         </div>
-        <label cssClass = "error" />
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">Password:</label>
         <div class="col-sm-4">
           <input type= "password" class="form-control inputstl" name="password" id="password"/>
         </div>
-        <label cssClass = "error" />
       </div>
       
-      <br><div class="error">
+      <br>
+   <div class="error">
 
           <!-- /login?error=true -->
      <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
       <font color="red">
-        Your login attempt was not successful due to <br/><br/>
+        Your login attempt was not successful due to: <br/>
         <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.
       </font>
      </c:if>
-
-        </div>
+     
+    </div>
+    <br>
+        
+     
  
 
      <div class="form-group">
@@ -65,6 +67,12 @@
           <button type="submit" class="btn btn-lg btn-block btn-primary"  >Login</button>
         </div>
       </div>
+      
+   <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
+   <p class="forgot-pass">
+    <span class="forget-pass link" tabindex="0">Forgot your password?</span>
+   </p>
+   </c:if>
   </form>
   
   

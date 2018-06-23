@@ -60,6 +60,8 @@ public interface UserService {
 	void downloadTimeSheetByMonth(long id, long userId, HttpServletResponse response);
 
 	void createXLS(String month, File file, HttpServletResponse response);
+	
+	void createPDF(File file, HttpServletResponse response);
 
 	public String getUserImageBase64(User user);
 	

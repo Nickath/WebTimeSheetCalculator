@@ -212,6 +212,7 @@ public class UserController {
 	    		return "home";
 	    	}
 	    	if(userService.userAwaitsEnable(username)) {
+	    		if(!password.equals("") && !password.equals(null) && !passwordconfirm.equals("") && !passwordconfirm.equals(null)) {
 	    		if(password.equals(passwordconfirm)) {
 	    			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); //encrypt the password using BCryptPasswordEncoder
 					String hashedPassword = passwordEncoder.encode(password);
@@ -220,6 +221,10 @@ public class UserController {
 	    					+ "click <a href=\"/WebTimeSheetCalculator/loginPage\">here</a> to login");
 	    		}else {
 	    			model.addAttribute("passworderror", "Password should be the same with the confirmation");
+	    		}
+	    	  }
+	    		else {
+	    			model.addAttribute("passworderror", "Password && password confirmation should be the same and not empty");
 	    		}
 	    	}
 	    	return "enableAccountPage";
@@ -239,8 +244,8 @@ public class UserController {
 	    }
 	    
 	    
-	    @RequestMapping(value = "/downloadPdf", method = RequestMethod.POST)
-	    public  @ResponseBody void downloadPdf(HttpServletRequest req, HttpServletResponse response, @RequestParam("form") String form) {
+	    @RequestMapping(value = "/downloadPdfAjax", method = RequestMethod.GET, headers = "Accept=application/json")
+	    public  @ResponseBody void downloadPdfAjax(HttpServletRequest req, HttpServletResponse response, @RequestParam("form") String form) {
 	    	Pdf pdf = new Pdf();
 
 	    	
@@ -251,9 +256,12 @@ public class UserController {
 
 	    	// Save the PDF
 	    	try {
-				pdf.saveAs(UserController.class
+			  File file = pdf.saveAs(UserController.class
 	                    .getClassLoader().getResource("").getPath().toString().replace("/", "\\")+ "statistics\\"+
 	                    "statistics.pdf");
+			  
+			  userService.createPDF(file, response);
+			  
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -262,6 +270,42 @@ public class UserController {
 				e.printStackTrace();
 			}
 	    }
+	    
+	    
+	    
+	    
+	    @RequestMapping(value = "/downloadPdf", method = RequestMethod.POST)
+	    public void downloadPdf(HttpServletRequest req, HttpServletResponse response) {
+	    	/*, 
+    		@RequestParam(value = "hiddenform") String hiddenform*/
+	    	String hiddenform = req.getParameter("hiddenform");
+	    	Pdf pdf = new Pdf();
+
+	    	String html = PdfTemplates.startingHtmlTag + PdfTemplates.statisticsHeader+ PdfTemplates.startingCssTag 
+	    			+ PdfTemplates.readMainCss(req,response) + PdfTemplates.endingCssTag + hiddenform + PdfTemplates.endingHtmlTag;
+	    			
+            pdf.addPageFromString(html);
+
+	    	// Save the PDF
+	    	try {
+			  File file = pdf.saveAs(UserController.class
+	                    .getClassLoader().getResource("").getPath().toString().replace("/", "\\")+ "statistics\\"+
+	                    "statistics.pdf");
+			  
+			  userService.createPDF(file, response);
+			  
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    }
+	    
+	    
+	    
+	    
 	   
 	 
 	

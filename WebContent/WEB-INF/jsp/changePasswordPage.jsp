@@ -35,6 +35,7 @@
       
       <br>
       <div class="error">${passworderror}</div>
+      <div class="error">${error}</div>
       <div class="success">${success}</div>
      
   </form>

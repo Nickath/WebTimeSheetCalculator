@@ -59,7 +59,7 @@
         
   
         <div class="col-sm-1">
-          <input type="button" class="form-control inputstl" name="eraseInput" id="eraseInput" value="clear"  > 
+          <input type="button" class="form-control inputstl" name="eraseInput" id="eraseInput" style="width:70px;" value="clear"  > 
         </div>
         <p id="fileerror" class="error"> ${error} </p>
         <br><br>

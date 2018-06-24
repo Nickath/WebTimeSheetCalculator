@@ -18,6 +18,7 @@
         <intercept-url pattern="/loadTimeSheetsPage*"  access="hasAnyRole('ROLE_USER')" /> 
         <intercept-url pattern="/calculatePage*"  access="hasAnyRole('ROLE_USER')" /> 
         <intercept-url pattern="/userStatisticsPage*"  access="hasRole('ROLE_USER')" /> 
+        <intercept-url pattern="/subscribeMailPage*"  access="hasRole('ROLE_USER')" /> 
         <intercept-url pattern="/usersPage*"  access="hasAnyRole('ROLE_ADMIN')" /> 
 
  

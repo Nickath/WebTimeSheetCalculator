@@ -146,9 +146,16 @@ public class UserController {
 		        	model.addAttribute("passworderror","Password should be same with password confirm and not null");
 		        }
 		        else {
-                String id = (String) session.getAttribute("changeID");
-                userService.changePasswordUsingCRid(id, password);
-		        model.addAttribute("success","Your password has been successfully updated");
+                   String id = (String) session.getAttribute("changeID");
+                   if(id.equals("") || id == null)
+                     {
+                	  model.addAttribute("error","You have not asked for a password change");
+                     }
+                   else
+                     {
+                     userService.changePasswordUsingCRid(id, password);
+		             model.addAttribute("success","Your password has been successfully updated");
+                     }
 		        }
 	        	return "changePasswordPage";
 		 

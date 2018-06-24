@@ -534,6 +534,7 @@ public class UserServiceImpl implements UserService {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); //encrypt the password using BCryptPasswordEncoder
 		String hashedPassword = passwordEncoder.encode(newpassword);
 		user.setPassword(hashedPassword);
+		user.setChangePassRequestID("");
 		userRepository.save(user);
 		
 	}

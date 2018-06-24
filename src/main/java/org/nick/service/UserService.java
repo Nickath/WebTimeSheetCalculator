@@ -39,6 +39,12 @@ public interface UserService {
 	
 	public User findById(long id);
 	
+	public User findByUsername(String username);
+	
+	public User findByEmail(String email);
+	
+	public void writeChangePassRequestInDB(User user, String id);
+	
 	public boolean isUserExist(User user);
 	
 	public void saveUser(User user);
@@ -80,6 +86,10 @@ public interface UserService {
 	public String getUserCurrentMean(User user);
 	
 	public User searchConfirmUserByID(String id);
+	
+	public User searchChangeRequestPasswordUserByID(String id);
+	
+	public void changePasswordUsingCRid(String id, String newpassword);
 
 	public boolean mailExists(String mail);
 	

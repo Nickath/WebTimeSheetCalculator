@@ -40,6 +40,9 @@ public class User implements Comparable<User> {
 	@Column(name="confirmid")
 	private String confirmId;
 	
+	@Column(name="changepass_request_ID")
+	private String changePassRequestID;
+	
 	//FK TO TABLE role, each user has his/her own role
 	@ManyToOne
 	private Role role;
@@ -103,6 +106,12 @@ public class User implements Comparable<User> {
 	}
 	public void setConfirmId(String confirmId) {
 		this.confirmId = confirmId;
+	}
+	public String getChangePassRequestID() {
+		return changePassRequestID;
+	}
+	public void setChangePassRequestID(String changePassRequestID) {
+		this.changePassRequestID = changePassRequestID;
 	}
 	@Override
 	public int compareTo(User arg0) {

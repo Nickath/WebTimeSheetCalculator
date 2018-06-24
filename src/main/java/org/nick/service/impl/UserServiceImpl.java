@@ -487,13 +487,66 @@ public class UserServiceImpl implements UserService {
 		}
 		return false;
 	}
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public User searchChangeRequestPasswordUserByID(String id) {
+		List<User> users = userRepository.findAll();
+		for(User user : users) {
+			if(user.getChangePassRequestID().equals(id)) {
+				return user;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public User findByUsername(String username) {
+		List<User> users = userRepository.findAll();
+		for(User user : users) {
+			if(user.getUsername().equals(username)) {
+				return user;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public User findByEmail(String email) {
+		List<User> users = userRepository.findAll();
+		for(User user : users) {
+			if(user.getEmail().equals(email)) {
+				return user;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void writeChangePassRequestInDB(User user, String id) {
+		user.setChangePassRequestID(id);
+		userRepository.save(user);
+		
+	}
+
+	@Override
+	public void changePasswordUsingCRid(String id, String newpassword) {
+		User user = findByChangePasswordID(id);
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); //encrypt the password using BCryptPasswordEncoder
+		String hashedPassword = passwordEncoder.encode(newpassword);
+		user.setPassword(hashedPassword);
+		userRepository.save(user);
+		
+	}
+
+	private User findByChangePasswordID(String id) {
+		List<User> users = userRepository.findAll();
+		for(User user : users) {
+			if(user.getChangePassRequestID().equals(id)) {
+				return user;
+			}
+		}
+		return null;
+	}
 	
 	
 }

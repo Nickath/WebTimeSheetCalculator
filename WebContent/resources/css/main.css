@@ -31,21 +31,39 @@ img
     width:500px !important;
 }
 
+@media (min-width: 1200px)
+.col-sm-1 {
+    width: 100px !important;
+}
+
 @media (min-width: 768px)
 .col-sm-4 {
    width:500px !important;
 }
 
-
 @media (min-width: 768px)
 .col-sm-1 {
     width: 100px !important;
 }
 
-@media (min-width: 1200px)
-.col-sm-1 {
+
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1200px) {
+	
+  /* Styles */
+  .col-sm-4 {
+   width:500px !important;
+  }
+
+  .col-sm-1 {
     width: 100px !important;
+  }
+
 }
+
+
+
 
 	
 .error {

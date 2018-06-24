@@ -23,6 +23,7 @@ import org.nick.model.User;
 import org.nick.pdf.templates.PdfTemplates;
 import org.nick.repository.MonthRepository;
 import org.nick.repository.UserRepository;
+import org.nick.service.UserService;
 import org.nick.service.impl.FileHandlerImpl;
 import org.nick.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class UserController {
 	MonthRepository monthRepository;
 	
 	@Autowired
-	UserServiceImpl userService;
+	UserService userService;
 	
 	@Autowired
     FileHandlerImpl fileHandlerImpl;
@@ -119,6 +120,8 @@ public class UserController {
 		    else {
 		    	if(userService.mailExists(email)) {
 		    		String changePassId = java.util.UUID.randomUUID().toString();
+		    		User userByEmail = userService.findByEmail(email);
+		    		userService.writeChangePassRequestInDB(userByEmail, changePassId);
 		    		changePasswordService.sendChangePasswordMail(email, changePassId);
 		    		model.addAttribute("success","An email for password change has been sent into your account");
 		    	    
@@ -131,6 +134,24 @@ public class UserController {
 		    
 		    return "forgotPassword";
 		    
+	 }
+	 
+	 
+	 @RequestMapping(value = "/changePassAttempt", method = RequestMethod.POST)
+	 public String changePassAttempt(@RequestParam("password") String password,
+			 @RequestParam("passwordconfirm") String passwordconfirm,
+			 Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		 
+		        if(!password.equals(passwordconfirm) || password == null || password == "") {
+		        	model.addAttribute("passworderror","Password should be same with password confirm and not null");
+		        }
+		        else {
+                String id = (String) session.getAttribute("changeID");
+                userService.changePasswordUsingCRid(id, password);
+		        model.addAttribute("success","Your password has been successfully updated");
+		        }
+	        	return "changePasswordPage";
+		 
 	 }
 	 
 	 

@@ -27,9 +27,8 @@
        
       </c:if>
       <c:if test="${pageContext.request.userPrincipal.name == null}">
-       <li><a href="<c:url value="/loginPage" />" >Login</a></li>
-       <li><a href="<c:url value="/loginXmlPage" />" >Login via XML</a></li>
-       <li><a href="<c:url value="/registerPage" />" >Register</a></li>
+       <li><a data-toggle="modal" href="#myLoginModal" > Login </a></li>
+       <li><a data-toggle="modal" href="#myRegisterModal" > Register </a></li>
        <li><a href="<c:url value="/accountEnablePage" />" >Enable Account</a></li>
      </c:if>
       
@@ -75,7 +74,7 @@
     
     
    
-  <!-- Modal -->
+  <!--Actions  Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -109,8 +108,58 @@
     </div>
   </div>
   <!-- end of Modal -->
-    
-    
+  
+  
+         
+  <!-- register modal -->
+    <div class="modal fade" id="myRegisterModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Register Actions </h4>
+        </div>
+        <div class="modal-body">
+          <p>Choose one of the following actions</p>
+        </div>
+        <div>
+        <ul class="ul-nobullets">
+          <li><a href="<c:url value="/registerPage" />" >Register</a></li> <br>
+          <li><a href="<c:url value="/registerXMLPage" />" >Register XML</a></li> <br>
+        </ul>
+          <div class="modal-footer">
+           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+        
+  <!-- login modal -->
+    <div class="modal fade" id="myLoginModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Login Actions </h4>
+        </div>
+        <div class="modal-body">
+          <p>Choose one of the following actions</p>
+        </div>
+        <div>
+        <ul class="ul-nobullets">
+          <li><a href="<c:url value="/loginPage" />" >Login</a></li><br>
+          <li><a href="<c:url value="/loginXmlPage" />" >Login via XML</a></li><br>
+        </ul>
+          <div class="modal-footer">
+           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </body>
 
 
@@ -119,6 +168,13 @@
 
 <script type="text/javascript">
 
+$(document).keypress(function(e) { 
+    if (e.keyCode == 27) { 
+        $("#myModal").fadeOut(500);
+        $("#myRegisterModal").fadeOut(500);
+        $("#myLoginModal").fadeOut(500);
+    } 
+});
 
 
 let select; 

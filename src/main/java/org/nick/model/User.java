@@ -85,6 +85,7 @@ public class User implements Comparable<User> {
 	
 	public User(UserXML userxml) {
 		this.username = userxml.getUserName();
+		this.email    = userxml.getEmail();
 		this.password = userxml.getPassword();
 		this.id       = userxml.getId();
 	}

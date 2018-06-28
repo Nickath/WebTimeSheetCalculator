@@ -116,6 +116,30 @@ public class UserServiceImpl implements UserService {
 				return false;
 		
 	}
+	
+	@Override
+	public boolean registerUserObj(User user) {
+		List<User> existingUsers = userRepository.findAll();
+		for(User u : existingUsers) {
+			if(u.getUsername().equals(user.getUsername()) || u.getEmail().equals(user.getEmail())){
+				return true;
+			}
+		}
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); //encrypt the password using BCryptPasswordEncoder
+		String hashedPassword = passwordEncoder.encode(user.getPassword());
+		user.setPassword(hashedPassword);
+		user.setRole(user.getRole()==null?new Role(2L):user.getRole());
+		user.setPhoto(getDefaultImage());
+		//generate the unique user id to confirm password
+		String randomId = java.util.UUID.randomUUID().toString();
+		user.setConfirmId(randomId);
+		
+		//send the verification email to the registered user to enable account
+		accountConfirmationService.sendConfirmationMail(user.getEmail(),user.getConfirmId());
+		
+		userRepository.save(user);
+		return false;
+	}
 
 
     //updates a timesheet if already exists, inserts it otherwise

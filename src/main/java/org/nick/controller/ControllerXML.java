@@ -81,10 +81,45 @@ public class ControllerXML {
 			LOGGER.severe(e.toString());
 			e.printStackTrace();
 		}
-    	
-
-    	
+    
     }
+
+	//register xml page
+	@RequestMapping(value = "/registerXMLPage", method = RequestMethod.GET)
+	public String getRegisterPageXML(Model model) {
+		return "registerPageXML";
+	}
+	
+	//register xml action
+	@RequestMapping(value = "/registerXMLAttempt", method = RequestMethod.POST)
+	public String registerXMLAttempt(@RequestParam("file") CommonsMultipartFile file,
+			HttpSession session,  ModelMap model ) throws IOException {
+		   
+		   String path=session.getServletContext().getRealPath("/"); 
+		   try {
+
+			File file2 = convert(file, path);
+			JAXBContext jaxbContext = JAXBContext.newInstance(UserXML.class);
+			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+			UserXML user = (UserXML) jaxbUnmarshaller.unmarshal(file2);
+            User normalUser = new User(user);
+            boolean alreadyExists = userService.registerUserObj(normalUser);
+    		
+    		if(alreadyExists) {
+    		    model.addAttribute("error","Username or email already exists");
+    		    return "registerPageXML";
+    		}
+    		else {
+    			model.addAttribute("success","Successfully registered, the email has been sent to "+user.getEmail());
+    			return "registerPageXML";
+    		}
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+		   return null;
+	}
+    	
+    
 
 	@RequestMapping(value = "/loginXmlPage", method = RequestMethod.GET)
 	public String getXMLLoginPage(Model model, HttpSession session,HttpServletRequest request ) {

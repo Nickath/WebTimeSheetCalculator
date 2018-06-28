@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
 		//if username already exists, do not allow, else write him on database
 				List<User> existingUsers = userRepository.findAll();
 				for(User user : existingUsers) {
-					if(user.getUsername().equals(form.getUsername())){
+					if(user.getUsername().equals(form.getUsername()) || user.getEmail().equals(form.getEmail())){
 						return true;
 					}
 				}
@@ -215,6 +215,33 @@ public class UserServiceImpl implements UserService {
             LOGGER.severe(ex.toString());
         }
 	}
+	
+	
+	@Override
+	public void createXML(File file,HttpServletResponse response) {
+		try {
+            Path path = Paths.get(file.getPath());
+            byte[] data = Files.readAllBytes(path);
+            LOGGER.info("Your xml file has been generated! in "+path.toString()+" with name "
+            		+ ""+ (file.getPath()) );
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposition", "attachment; filename=profil_"+getAuthenticatedUser().getUsername()
+            		+".xml");
+            try
+            {
+                Files.copy(path, response.getOutputStream());
+                response.getOutputStream().flush();
+            }
+            
+            catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            		
+        } catch ( Exception ex ) {
+            LOGGER.severe(ex.toString());
+        }
+	}
+	
 	
 	@Override
 	public void createPDF(File file,HttpServletResponse response) {

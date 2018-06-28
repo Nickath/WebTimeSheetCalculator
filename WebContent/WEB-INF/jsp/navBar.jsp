@@ -28,6 +28,7 @@
       </c:if>
       <c:if test="${pageContext.request.userPrincipal.name == null}">
        <li><a href="<c:url value="/loginPage" />" >Login</a></li>
+       <li><a href="<c:url value="/loginXmlPage" />" >Login via XML</a></li>
        <li><a href="<c:url value="/registerPage" />" >Register</a></li>
        <li><a href="<c:url value="/accountEnablePage" />" >Enable Account</a></li>
      </c:if>
@@ -92,7 +93,7 @@
            <li><a href="<c:url value="/loadTimeSheetsPage" />" >Load TimeSheets for your months</a></li><br>
            <li><a href="<c:url value="/userStatisticsPage" />" >Watch my Statistics for all months</a></li><br>
            <li><a href="<c:url value="/subscribeMailPage" />" >Subscribe to the mail list</a></li><br>
-           
+           <li><a href="<c:url value="/downloadXMLPage" />" >Get your profil in XML form</a></li><br>
           </c:if>
           <c:if test="${ (isAdmin eq true) || user.role.id == 1 }">
              <li><a href="<c:url value="/usersPage" />" >Admin Control Panel</a></li><br>

@@ -92,6 +92,8 @@ public interface UserService {
 	public void changePasswordUsingCRid(String id, String newpassword);
 
 	public boolean mailExists(String mail);
+
+	public void createXML(File file, HttpServletResponse response);
 	
 
 	

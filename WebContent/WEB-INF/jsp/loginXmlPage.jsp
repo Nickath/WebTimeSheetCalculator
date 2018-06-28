@@ -25,7 +25,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login</title>
+<title>Login XML Page</title>
 </head>
 
 
@@ -36,23 +36,28 @@
 <div class="content">
 
 <div class="container">
-<h1> Login Form</h1><br><br><br>
+<h1>XML Login Form</h1><br><br><br>
 
 
 
-   <form class="form-horizontal" name='f' action="${pageContext.request.contextPath}/j_spring_security_check" method='POST'>
+   <form class="form-horizontal" name='f' action="loginXMLAttempt" method='POST' enctype="multipart/form-data">
       <div class="form-group">
-        <label class="col-sm-2 control-label">Username:</label>
-        <div class="col-sm-4">
-          <input class="form-control inputstl" name="username" id="username" placeholder="Enter username"/>
+      <label for="file" class="col-sm-2 control-label">Upload:</label>
+        <div class="col-sm-2">
+      <%--   name="months[${status.index}].month" --%>
+         <input  type="file" class="inputstl" id="file" name="file" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);" onchange="this.form.submit()"/>
+          <div class="bootstrap-filestyle input-group">
+          <input type="hidden" class="form-control " placeholder="" disabled="" >
+           <span class="group-span-filestyle input-group-btn" tabindex="0">
+            <label for="file" class="btn btn-primary ">
+             <span class="icon-span-filestyle glyphicon glyphicon-upload">
+             </span>
+             <span class="buttonText"> Login with XML</span>
+            </label>
+           </span>
+         </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">Password:</label>
-        <div class="col-sm-4">
-          <input type= "password" class="form-control inputstl" name="password" id="password"/>
-        </div>
-      </div>
+       </div>
       
       
    <div class="error">
@@ -68,16 +73,6 @@
      
     </div>
     <br>
-        
-     
- 
-
-     <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-4">
-          <button type="submit" class="btn btn-lg btn-block btn-primary"  >Login</button>
-        </div>
-      </div>
-      
 
    <p class="forgot-pass">
     <span class="forget-pass link" tabindex="0">
@@ -89,6 +84,22 @@
    <br><br>
    
   </form>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
    </div> 
@@ -114,6 +125,39 @@
 
 <!-- end of js bootstrap -->
 
+
+
+
+
+<script type="text/javascript">
+$(document).ready(function () {
+$('#file').change(function() {
+   
+     if($(this).val()){
+    	 $('#imgValid').removeClass('hidden');
+    	 $('#fileerror').addClass('hidden');
+    	  alert($(this).val());
+     }
+     else{
+    	 $('#imgValid').addClass('hidden');
+    	 $('#fileerror').removeClass('hidden');
+    	  alert('Path is empty');
+     }
+});
+
+
+$('#eraseInput').click(function() {
+	
+	document.getElementById("file").value = "";
+	 $('#imgValid').addClass('hidden');
+	 alert('Path is empty');
+});
+
+
+
+
+});
+</script>
 
 <jsp:include page="footer.jsp" />
 

@@ -34,6 +34,7 @@
    <bean id = "jobsService" class = "org.nick.scheduler.services.impl.JobsServiceImpl"></bean>
    <bean id = "accountconfirmationService" class = "org.nick.email.AccountConfirmation"></bean>
    <bean id = "changepasswordService" class = "org.nick.email.ChangePasswordRequest"></bean>
+ 
       <!-- jpa -->
       <!-- Scans for components that will be auto-registered as Spring beans -->
     <context:component-scan base-package="org.nick.repository" />

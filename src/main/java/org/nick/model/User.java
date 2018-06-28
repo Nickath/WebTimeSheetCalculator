@@ -24,7 +24,7 @@ public class User implements Comparable<User> {
 	@Column(name="username" , unique=true)
 	private String username;
 	
-	@Column(name="email")
+	@Column(name="email", unique=true)
 	private String email;
 
 	@Column(name="password")
@@ -82,6 +82,13 @@ public class User implements Comparable<User> {
 		this.username = username;
 		this.password = password;
 	}
+	
+	public User(UserXML userxml) {
+		this.username = userxml.getUserName();
+		this.password = userxml.getPassword();
+		this.id       = userxml.getId();
+	}
+	
 	public User() {
 		// TODO Auto-generated constructor stub
 	}

@@ -40,7 +40,7 @@ public class RegisterController {
 		boolean alreadyExists = userService.registerUser(form);
 		
 		if(alreadyExists) {
-		    model.addAttribute("error","Username already exists");
+		    model.addAttribute("error","Username or email already exists");
 		    return "register";
 		}
 		else {

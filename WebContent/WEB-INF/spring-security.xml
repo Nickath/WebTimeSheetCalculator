@@ -15,6 +15,7 @@
         <!-- rule indicating that every other page needs one of roler_user or role_admin -->
         <!-- <intercept-url pattern="/**" access="hasRole('ROLE_USER,ROLE_ADMIN')" /> -->
         <intercept-url pattern="/homePage*"  access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
+        <intercept-url pattern="/downloadXMLPage*"  access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
         <intercept-url pattern="/loadTimeSheetsPage*"  access="hasAnyRole('ROLE_USER')" /> 
         <intercept-url pattern="/calculatePage*"  access="hasAnyRole('ROLE_USER')" /> 
         <intercept-url pattern="/userStatisticsPage*"  access="hasRole('ROLE_USER')" /> 
@@ -70,7 +71,7 @@ a sql query that will select username and authority  -->
 
 
 
-    
+    <!-- custom xml login authentication -->
  
    
 </beans:beans>

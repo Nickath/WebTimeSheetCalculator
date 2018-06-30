@@ -51,10 +51,7 @@ public class Calculator {
 	
 	@RequestMapping(value = "calculatePage", method = RequestMethod.GET)
 	public String TimeSheetCalcGetPage(Locale locale,Model model,HttpSession session,HttpServletRequest request) {
-		  /* if(request.getSession().getAttribute("user") == null) {
-			  return "login";
-		  }*/
-		
+
 		  User user = userService.getAuthenticatedUser();
 		  model.addAttribute("user",user);
 		  String photo  = userService.getUserImageBase64(user);

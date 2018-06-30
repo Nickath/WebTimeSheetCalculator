@@ -97,7 +97,7 @@
           <c:if test="${ (isAdmin eq true) || user.role.id == 1 }">
              <li><a href="<c:url value="/usersPage" />" >Admin Control Panel</a></li><br>
             <li><a href="<c:url value="/userStatisticsPage" />" >Watch employees Statistics</a></li><br>
-            <li><a href="<c:url value="/deleteUserPage" />" >Delete a user</a></li><br>
+            <li><a href="<c:url value="/downloadXMLPage" />" >Get your profil in XML form</a></li><br>
           </c:if>
         </ul>
           <div class="modal-footer">
@@ -170,6 +170,7 @@
 
 $(document).keypress(function(e) { 
     if (e.keyCode == 27) { 
+    	alert('Escape pressed');
         $("#myModal").fadeOut(500);
         $("#myRegisterModal").fadeOut(500);
         $("#myLoginModal").fadeOut(500);

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<userXML id="264">
+    <email>kati@hot.gr</email>
+    <enabled>true</enabled>
+    <password>123</password>
+    <photo>iVBORw0KGgoAAAANSUhEUgAAARsAAACyCAMAAABFl5uBAAAAM1BMVEXEzeD////Ayt7g5e73+Pvs7/W+yN3Z3+vK0uPd4u3GzuH7/P3y9PjV2+nv8fbk6PDP1uXdzDXyAAAEkklEQVR4nO2dAXqDIAxGNbaoVVvvf9ppbbutk1VIBPzJO4G+D0LAEItCURRFURRFURKAiGI/QnoQmaJohrZtx9iPkhRkmvrWd+WDOvbzJMI8XOrzS8vMNfYzpcAUWsbqVL5Ra8CZ5lF1ffcyMeSuhqj5PY9ejJmrmUbMupgJE/vhomKG3iYmbzdU1NYhsyxSTa6TynwwM9NmOXRo/Gxmor/kN3TovMXMTG7r+MZBs3DLSo65bTdzn1exHzgc2+fTgy6b9Yr+7Jo+k0mG7KMmk4jsp2bKdPDlGNdYk8/IodZXzRRzYj/8zjT+asoSeyk3nsFm4QQ9q2qOGuwMmTdsJprYb7AfA1NNeYI9snDeK/xliP0Ou8FWU55RIw5rAX8Q+x32gh1uSthoTJWAG9CAo27sqBs76saOiBvQchwRNxVmgqNu7KgbOwLbKXWjbtTND9SNHXVjR93YUTd2aK2CWN3c8f0Srm7UjbpZR93YUTd21I0ddWNH3dhRN3bUjR11Y0fd2FE3Vohd0Qbr5tJuuGb3mdbgySEJMRN9j1e6ZWTUzMCVC6gbO0ZoTiG6ETlIX4j9KuIIuoGrv1Y3dsjtam9ebiSKb+70cPkN93oQtBuJovQ7gJeoLlJuAHebYokxXOonmBgDXvcVS3AQb/sKBWPIa4lCwRhwmRKbVJiXyySuJCJmfjOcXhQvMIcNp4fJC9zeq+yl6gqrphi5biAXqQX21zvAnPgJ+4ALMe97wgw40A1wmCkO4PHEN8yDCuBww3aDPGyYeyq8KoFfsE7UQe/Nv+C4QV7BC96kAt4wLDC2DdCr1Iz/tqEHn1IFY+AAfnt5xzfiQO8XnnhWRaIe+P3Ga1OVQWvnGfLYjYOnxN94yIFfv1+4fxtH/NC7DjmPm3zcuH/+zceNe7zJxg25n1Tk48a9ZjQfN+7bBnVjJ5fUz6NJUId/PvHA41JrNm48vsSoG3Xjc0iRjRuPY9Fc3HgcUXSAt8LXqFv3Pn/drY392AHwrjLpYj/57jBufEAX38xwCrfA3bAK/sC/wtB/f5n/BPiHTVZ7IPDyG1ZNG3Dh9QyvMB06OTa87s7Q332Z9xmQSynYN++Qv/wy1aBeuitE7t2hupHo74fYwW4SM4o0wDnVBZgdolqiJ+TCdQQaPKaR65l0p2sbCDtkas7+0sa1PvzgoYvwkPlBdeTIM8VfueZsa5wHOqYeMq1c/LXRVQe0Q9Lx18rtYMuWGSV+p7SV/jgZIRXD/pPpjdvlCHaIKrmOsw5McTn2q3+ALvuuTP/R1SnH5bBhZoUq1XyZhj0SYEfOTXqHykThA/A6/ZjY1DKC+2w2p4T2WtOYibI02enaRMaOEfknhTRtAjvR5MbMi1vksWNSicCrxDzFoCZyPvOJrooUlamIlwNvJ0pDQCPWAH1fTmNoO8cYNAuBa1N8rnjHI2hzGCP2s4UwnMNtsgT/0RGIYHLM4dQEK04WaUMcnDCrFbuZbBxC3IZ175eQBgE6oRwvDj/Zv6xd7Lcuwdm9IO6YgXhh74HjfrU7HfbeOwj+JjM4e/8t5chunJfxL3RgQv/QvYgCAAAAAElFTkSuQmCC</photo>
+    <role>
+        <id>2</id>
+        <role>ROLE_USER</role>
+    </role>
+    <userName>kati</userName>
+</userXML>

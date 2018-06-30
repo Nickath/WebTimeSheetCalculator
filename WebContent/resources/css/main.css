@@ -418,3 +418,10 @@ p.pdftitle  {
     color: #1F6EB0;
 }
 
+
+.center {
+    margin: auto;
+    width: 60%;
+    word-break: break-all;
+}
+

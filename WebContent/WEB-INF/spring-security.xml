@@ -22,7 +22,7 @@
         <intercept-url pattern="/subscribeMailPage*"  access="hasRole('ROLE_USER')" /> 
         <intercept-url pattern="/usersPage*"  access="hasAnyRole('ROLE_ADMIN')" /> 
 
- 
+        
  
       <!-- If a user tries to access any secured URL, then user will be authenticated with custom login page based on the configuration of <form-login> element. -->
         <form-login login-page="/loginPage"
@@ -53,7 +53,7 @@
        <password-encoder hash="bcrypt" /> <!-- for password encryption-hash -->
          <!-- datasource is assigned to it.
          users-by-username-query
-a sql query that will select username and password.
+         an sql query that will select username and password.
 authorities-by-username-query
 a sql query that will select username and authority  -->
             <jdbc-user-service data-source-ref="dataSource" 
@@ -63,15 +63,35 @@ a sql query that will select username and authority  -->
         
     </authentication-manager>
     
+    
      <beans:bean id="encoder" 
 	  class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
 	 <beans:constructor-arg name="strength" value="11" />
     </beans:bean>
-    
 
-
-
-    <!-- custom xml login authentication -->
  
+    
+    <!--  authentication manager for xml login -->
+<!--     
+       <authentication-manager alias="am">
+       <authentication-provider>
+       <password-encoder hash="bcrypt" />
+       <jdbc-user-service data-source-ref="dataSource" 
+                users-by-username-query="select username,password, enabled from users where username=?"
+                authorities-by-username-query="select u.username, ur.role from users u, role ur where u.role_id = ur.id and u.username = ?" />
+        
+       </authentication-provider>
+    </authentication-manager>
+    
+    <beans:bean id="authenticationFilter" 
+	  class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+	 <beans:property name="authenticationManager" ref="am"></beans:property>
+	 <beans:property name="postOnly" value="false" />
+    </beans:bean>   -->
+    
+ 
+    
+    
+    
    
 </beans:beans>

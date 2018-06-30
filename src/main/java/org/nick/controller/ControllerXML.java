@@ -21,6 +21,7 @@ import org.nick.form.RegisterForm;
 import org.nick.model.TimeSheet;
 import org.nick.model.User;
 import org.nick.model.UserXML;
+import org.nick.repository.UserRepository;
 import org.nick.service.UserService;
 import org.nick.service.impl.FileHandlerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,8 +52,11 @@ public class ControllerXML {
 	@Autowired 
 	UserService userService;
 	
-//	@Autowired
-//	AuthenticationManager authManager;
+	@Autowired
+	UserRepository userRepository;
+	
+	/*@Autowired
+	AuthenticationManager authManager;*/
 	
 	
 	
@@ -107,16 +112,14 @@ public class ControllerXML {
     		
     		if(alreadyExists) {
     		    model.addAttribute("error","Username or email already exists");
-    		    return "registerPageXML";
     		}
     		else {
     			model.addAttribute("success","Successfully registered, the email has been sent to "+user.getEmail());
-    			return "registerPageXML";
     		}
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
-		   return null;
+		    return "registerPageXML";
 	}
     	
     
@@ -137,8 +140,11 @@ public class ControllerXML {
 	
 	@RequestMapping(value = "/loginXMLAttempt", method = RequestMethod.POST)
 	public String loginAttemptXML(@RequestParam("file") CommonsMultipartFile file,
-			HttpSession session,  ModelMap model) throws IllegalStateException, IOException {
+			HttpSession session,  ModelMap model, HttpServletRequest request) throws IllegalStateException, IOException {
 		
+		
+		  
+		    
 		   String path=session.getServletContext().getRealPath("/"); 
 		   try {
 			
@@ -151,14 +157,28 @@ public class ControllerXML {
 			JAXBContext jaxbContext = JAXBContext.newInstance(UserXML.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 			UserXML user = (UserXML) jaxbUnmarshaller.unmarshal(file2);
-            User normalUser = new User(user);
-            
+            //after unmarshalling the user object, check if the credentials of the user exist in the database
+            User normalUser = userService.customUserlXMLAuthentication(user.getUserName(), user.getPassword());
+           // if(normalUser != null) {
+              //create usernamepasswordauthenticationtoken
+              UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword());
+              //set authentication for the user
+              SecurityContextHolder.getContext().setAuthentication(authRequest);
+              User userauth = userService.getAuthenticatedUser();
+              model.addAttribute("user", userauth);
+      		  model.addAttribute("user",normalUser);
+              return "redirect:/homePage";
+           // }
+           /* else {
+            	model.addAttribute("error", "Not valid credentials");
+            }*/
+
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
+		   return "loginXmlPage";
 		
-		  
-		 return "";
+	
 	}
 	
 /*	public void login(HttpServletRequest req, String user, String pass) { 
@@ -197,7 +217,8 @@ public class ControllerXML {
 	
 	
 	public UserXML convertUserToUserXML(User user) {
-		UserXML userxml = new UserXML(user.getId(), user.getUsername(), user.getPassword(), user.getEmail());
+		//UserXML userxml = new UserXML(user.getId(), user.getUsername(), user.getPassword(), user.getEmail());
+		UserXML userxml = new UserXML(user);
 		return userxml;
 	}
 	

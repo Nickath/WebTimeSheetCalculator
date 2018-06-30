@@ -94,6 +94,8 @@ public interface UserService {
 	public boolean mailExists(String mail);
 
 	public void createXML(File file, HttpServletResponse response);
+	
+	public User customUserlXMLAuthentication(String username, String password);
 
 	boolean registerUserObj(User user);
 	

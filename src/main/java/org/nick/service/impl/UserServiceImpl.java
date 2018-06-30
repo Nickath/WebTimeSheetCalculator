@@ -127,16 +127,16 @@ public class UserServiceImpl implements UserService {
 		}
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); //encrypt the password using BCryptPasswordEncoder
 		String hashedPassword = passwordEncoder.encode(user.getPassword());
-		user.setPassword(hashedPassword);
+		user.setPassword(hashedPassword);  
+		user.setEnabled(user.isEnabled()==true?true:false);
 		user.setRole(user.getRole()==null?new Role(2L):user.getRole());
-		user.setPhoto(getDefaultImage());
+		user.setPhoto(user.getPhoto()==null?getDefaultImage():user.getPhoto());
 		//generate the unique user id to confirm password
 		String randomId = java.util.UUID.randomUUID().toString();
 		user.setConfirmId(randomId);
 		
 		//send the verification email to the registered user to enable account
 		accountConfirmationService.sendConfirmationMail(user.getEmail(),user.getConfirmId());
-		
 		userRepository.save(user);
 		return false;
 	}
@@ -248,7 +248,7 @@ public class UserServiceImpl implements UserService {
             byte[] data = Files.readAllBytes(path);
             LOGGER.info("Your xml file has been generated! in "+path.toString()+" with name "
             		+ ""+ (file.getPath()) );
-            response.setContentType("application/vnd.ms-excel");
+            response.setContentType("text/xml");
             response.setHeader("Content-Disposition", "attachment; filename=profil_"+getAuthenticatedUser().getUsername()
             		+".xml");
             try
@@ -594,6 +594,17 @@ public class UserServiceImpl implements UserService {
 		List<User> users = userRepository.findAll();
 		for(User user : users) {
 			if(user.getChangePassRequestID().equals(id)) {
+				return user;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public User customUserlXMLAuthentication(String username, String password) {
+		List<User> users = userRepository.findAll();
+		for(User user : users) {
+			if(user.getUsername().equals(username) && user.getPassword().equals(password)) {
 				return user;
 			}
 		}

@@ -34,9 +34,9 @@
       </div>
       
       <br>
-      <div class="error">${passworderror}</div>
-      <div class="error">${error}</div>
-      <div class="success">${success}</div>
+      <div class="center error">${passworderror}</div>
+      <div class="center error">${error}</div>
+      <div class="center success">${success}</div>
      
   </form>
    

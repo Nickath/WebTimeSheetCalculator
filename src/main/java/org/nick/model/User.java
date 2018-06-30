@@ -84,10 +84,14 @@ public class User implements Comparable<User> {
 	}
 	
 	public User(UserXML userxml) {
+		this.id       = userxml.getId();
 		this.username = userxml.getUserName();
 		this.email    = userxml.getEmail();
 		this.password = userxml.getPassword();
-		this.id       = userxml.getId();
+		this.enabled  = userxml.isEnabled();
+		this.photo    = userxml.getPhoto();
+		this.role     = userxml.getRole();
+		
 	}
 	
 	public User() {
@@ -131,4 +135,8 @@ public class User implements Comparable<User> {
 		//descending order
 		//return compareQuantity - this.quantity;
 	}
+	
+	public boolean match(String name, String password) {
+            return this.username.equals(name) && this.password.equals(password);
+        }
 }

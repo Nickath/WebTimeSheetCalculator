@@ -36,8 +36,8 @@
  
     </div>
     <br>
-   <div class="error"> ${error} </div>
-   <div class="success"> ${success} </div>
+   <div class="center error"> ${error} </div>
+   <div class="center success"> ${success} </div>
    <br>
    <p class="forgot-pass">
     <span class="forget-pass link" tabindex="0">

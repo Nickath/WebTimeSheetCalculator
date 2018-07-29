@@ -26,12 +26,13 @@ To build and run the app: A machine with JDK>= 8, tomcat compatible with your JD
 
 1) Go to server.xml and add the following connector port
    
+    ```xml
     <Connector SSLEnabled="true" acceptCount="100" clientAuth="false"
     disableUploadTimeout="true" enableLookups="false" maxThreads="25"
     port="8443" keystoreFile="<<path_of_keystore>>" keystorePass="<<your_pass>>"
     protocol="org.apache.coyote.http11.Http11NioProtocol" scheme="https"
     secure="true" sslProtocol="TLS" />
-
+    ```
 
 ### Build and develop 
 

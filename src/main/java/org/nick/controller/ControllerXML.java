@@ -1,8 +1,11 @@
 package org.nick.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.logging.Logger;
 
@@ -10,10 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
 
 import org.nick.form.LoginForm;
 import org.nick.form.LoginFormXML;
@@ -43,6 +51,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.xml.sax.SAXException;
 
 @Controller
 public class ControllerXML {
@@ -65,6 +74,8 @@ public class ControllerXML {
     public String getDownloadXMLPage(Model model) {
     	User user = userService.getAuthenticatedUser();
     	model.addAttribute("user",user);
+    	String photo  = userService.getUserImageBase64(user);
+		model.addAttribute("photoProfil",photo);
     	return "downloadXmlPage";
     }
     
@@ -128,7 +139,6 @@ public class ControllerXML {
 	public String getXMLLoginPage(Model model, HttpSession session,HttpServletRequest request ) {
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
 		if (!(auth instanceof AnonymousAuthenticationToken)) {
 		    /* The user is logged in :) */
 			User user = userService.getAuthenticatedUser();
@@ -141,25 +151,18 @@ public class ControllerXML {
 	@RequestMapping(value = "/loginXMLAttempt", method = RequestMethod.POST)
 	public String loginAttemptXML(@RequestParam("file") CommonsMultipartFile file,
 			HttpSession session,  ModelMap model, HttpServletRequest request) throws IllegalStateException, IOException {
-		
-		
-		  
-		    
+
 		   String path=session.getServletContext().getRealPath("/"); 
 		   try {
-			
-			/*File testfile = new java.io.File("C:/Users/NICK/"+file.getOriginalFilename());
-			testfile.getParentFile().mkdirs(); // correct!
-			if (!testfile.exists()) {
-			    ((File) testfile).createNewFile();
-			} */
 			File file2 = convert(file, path);
-			JAXBContext jaxbContext = JAXBContext.newInstance(UserXML.class);
-			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-			UserXML user = (UserXML) jaxbUnmarshaller.unmarshal(file2);
-            //after unmarshalling the user object, check if the credentials of the user exist in the database
-            User normalUser = userService.customUserlXMLAuthentication(user.getUserName(), user.getPassword());
-           // if(normalUser != null) {
+			boolean isvalidXML = isValidXML(file2);
+			if(isvalidXML) {
+			  JAXBContext jaxbContext = JAXBContext.newInstance(UserXML.class);
+			  Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+			  UserXML user = (UserXML) jaxbUnmarshaller.unmarshal(file2);
+              //after unmarshalling the user object, check if the credentials of the user exist in the database
+              User normalUser = userService.customUserlXMLAuthentication(user.getUserName(), user.getPassword());
+              // if(normalUser != null) {
               //create usernamepasswordauthenticationtoken
               UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword());
               //set authentication for the user
@@ -168,10 +171,10 @@ public class ControllerXML {
               model.addAttribute("user", userauth);
       		  model.addAttribute("user",normalUser);
               return "redirect:/homePage";
-           // }
-           /* else {
-            	model.addAttribute("error", "Not valid credentials");
-            }*/
+			}
+			else {
+				model.addAttribute("error","Not valid XML submitted");
+			}
 
 		} catch (JAXBException e) {
 			e.printStackTrace();
@@ -201,8 +204,6 @@ public class ControllerXML {
 	        File file2 = new File(FileHandlerImpl.class
 	                .getClassLoader().getResource("").getPath().toString().replace("/", "\\")+ "xls\\"
 	                +"");
-	     
-
 	        try {
 	            OutputStream os = new FileOutputStream(file2);
 	            os.write(bytes);
@@ -220,6 +221,35 @@ public class ControllerXML {
 		//UserXML userxml = new UserXML(user.getId(), user.getUsername(), user.getPassword(), user.getEmail());
 		UserXML userxml = new UserXML(user);
 		return userxml;
+	}
+	
+	public boolean isValidXML(File xmlfile) throws FileNotFoundException {
+		File fileXSD = new File("C:\\Users\\NICK\\eclipse-workspace\\WebTimeSheetCalculator\\xml_samples\\xsd\\profil_XSD.xsd");
+		FileInputStream xsd = null;
+		xsd = new FileInputStream(fileXSD);
+		try {
+			InputStream xml = new FileInputStream(xmlfile);
+			SchemaFactory factory =  SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+		    try {
+				Schema schema = factory.newSchema(new StreamSource(xsd));
+				Validator validator = schema.newValidator();
+		        try {
+					validator.validate(new StreamSource(xml));
+					return true;
+				} catch (IOException e) {
+					LOGGER.warning("Could not open xsd file");
+				}
+			} catch (SAXException e) {
+				e.printStackTrace();
+				LOGGER.warning("Not valid XML file");
+				return false;
+			}
+		           
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return true;
+		
 	}
 	
 	

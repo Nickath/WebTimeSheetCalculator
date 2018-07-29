@@ -7,6 +7,8 @@
 <html>
 <!-- bootstrap stuff -->
 <head>
+<link rel="shortcut icon" type="image/png" href="${pageContext.request.contextPath}/resources/images/clock.png">
+<link rel="apple-touch-icon" href="${pageContext.request.contextPath}/resources/images/clock.png">
 <style>
 <%@ include file="/resources/css/main.css"%>
 </style>
@@ -57,7 +59,7 @@
         
   
         <div class="col-sm-1">
-          <input type="button" class="form-control inputstl" name="eraseInput" id="eraseInput" value="clear"  > 
+          <input type="button" class="form-control inputstl" name="eraseInput" id="eraseInput" style="width:70px;" value="clear"  > 
         </div>
         <p id="fileerror" class="error"> ${error} </p>
         <br><br>

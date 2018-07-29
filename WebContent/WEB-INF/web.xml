@@ -53,5 +53,16 @@
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping> 
+    
+    <!-- force web application to work with SSL, if we want to change this we just put NONE instead of confidential -->
+    <security-constraint>
+    <web-resource-collection>
+        <web-resource-name>WebTimeSheetCalculator</web-resource-name>
+        <url-pattern>/*</url-pattern>
+    </web-resource-collection>
+    <user-data-constraint>
+        <transport-guarantee>NONE</transport-guarantee>
+    </user-data-constraint>
+</security-constraint>
 
 </web-app>

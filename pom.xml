@@ -13,8 +13,8 @@
    <hibernate.version>4.1.9.Final</hibernate.version>
    <jackson.version>2.7.5</jackson.version>
 
-   
   </properties>
+  
   <build>
    <finalName>WebTimeSheetCalculator</finalName>
     <plugins>
@@ -79,8 +79,8 @@
 <!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
 <dependency>
     <groupId>javax.servlet</groupId>
-    <artifactId>servlet-api</artifactId>
-    <version>2.5</version>
+    <artifactId>javax.servlet-api</artifactId>
+    <version>3.0.1</version>
     <scope>provided</scope>
 </dependency>
 
@@ -267,6 +267,7 @@
             <version>1.7.5</version>
             <scope>test</scope>
         </dependency>
+
   
   </dependencies>
   

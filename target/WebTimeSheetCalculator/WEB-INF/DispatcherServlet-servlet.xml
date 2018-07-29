@@ -28,12 +28,13 @@
     <!--  in order to declare explicit support for annotation driven support -->
     <mvc:annotation-driven></mvc:annotation-driven>
     
-    <!-- Definition for fileHandler bean without constructor-arg to make it autowired -->
+    <!-- Definition for  beans without constructor-arg to make them autowired -->
    <bean id = "fileHandler" class = "org.nick.service.impl.FileHandlerImpl"></bean>
    <bean id = "userService" class = "org.nick.service.impl.UserServiceImpl"></bean>
    <bean id = "jobsService" class = "org.nick.scheduler.services.impl.JobsServiceImpl"></bean>
    <bean id = "accountconfirmationService" class = "org.nick.email.AccountConfirmation"></bean>
-   
+   <bean id = "changepasswordService" class = "org.nick.email.ChangePasswordRequest"></bean>
+ 
       <!-- jpa -->
       <!-- Scans for components that will be auto-registered as Spring beans -->
     <context:component-scan base-package="org.nick.repository" />
@@ -42,16 +43,14 @@
     <!-- Activates various annotations to be detected in bean classes e.g: @Autowired -->
     <context:annotation-config />
 
-  <!-- import persistence.xml from resources -->
-  <import resource="classpath*:/persistence.xml" />
-  
-  
   <!-- UI resources exclusions from servlet mapping -->
 
     <mvc:resources mapping="/resources/**" location="/resources/"  
 	cache-period="31556926"/>
     
-  <!-- import spring security -->
+  <!-- import persistence.xml from resources -->
+  <import resource="classpath*:/persistence.xml" />
+    <!-- import spring security -->
   <import resource="spring-security.xml" />
 
    <!--  view resolver -->

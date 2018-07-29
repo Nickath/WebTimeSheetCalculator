@@ -5,6 +5,15 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<head>
+<link rel="shortcut icon" type="image/png" href="${pageContext.request.contextPath}/resources/images/clock.png">
+<link rel="apple-touch-icon" href="${pageContext.request.contextPath}/resources/images/clock.png">
+<!-- Hide this line for IE (needed for Firefox and others) -->
+<![if !IE]>
+<link rel="icon" href="http://yourwebsite/images/favicon.png" type="image/x-icon" />
+<![endif]>
+<!-- This is needed for IE -->
+<link rel="shortcut icon" href="http://yourwebsite/images/favicon.ico" type="image/ico" />
 <!-- bootstrap stuff -->
 <style>
 <%@ include file="/resources/css/main.css"%>
@@ -37,27 +46,30 @@
         <div class="col-sm-4">
           <input class="form-control inputstl" name="username" id="username" placeholder="Enter username"/>
         </div>
-        <label cssClass = "error" />
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">Password:</label>
         <div class="col-sm-4">
           <input type= "password" class="form-control inputstl" name="password" id="password"/>
         </div>
-        <label cssClass = "error" />
       </div>
       
-      <br><div class="error">
+      
+   <div class="error">
 
           <!-- /login?error=true -->
      <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
+     <br>
       <font color="red">
-        Your login attempt was not successful due to <br/><br/>
+        Your login attempt was not successful due to: <br/>
         <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.
       </font>
      </c:if>
-
-        </div>
+     
+    </div>
+    <br>
+        
+     
  
 
      <div class="form-group">
@@ -65,23 +77,18 @@
           <button type="submit" class="btn btn-lg btn-block btn-primary"  >Login</button>
         </div>
       </div>
+      
+
+   <p class="forgot-pass">
+    <span class="forget-pass link" tabindex="0">
+    <a href="<c:url value="/forgotPassword" />"> Forgot your password?  </a>
+    
+    </span>
+   </p>
+   
+   <br><br>
+   
   </form>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
   
    </div> 
@@ -107,39 +114,6 @@
 
 <!-- end of js bootstrap -->
 
-
-
-
-
-<script type="text/javascript">
-$(document).ready(function () {
-$('#file').change(function() {
-   
-     if($(this).val()){
-    	 $('#imgValid').removeClass('hidden');
-    	 $('#fileerror').addClass('hidden');
-    	  alert($(this).val());
-     }
-     else{
-    	 $('#imgValid').addClass('hidden');
-    	 $('#fileerror').removeClass('hidden');
-    	  alert('Path is empty');
-     }
-});
-
-
-$('#eraseInput').click(function() {
-	
-	document.getElementById("file").value = "";
-	 $('#imgValid').addClass('hidden');
-	 alert('Path is empty');
-});
-
-
-
-
-});
-</script>
 
 <jsp:include page="footer.jsp" />
 

@@ -425,3 +425,38 @@ p.pdftitle  {
     word-break: break-all;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+.selectClass {
+  -webkit-appearance: none;
+  -webkit-border-radius: 0;
+  -moz-appearance: none;
+  border: none;
+  width: 100px;
+  background: #EEE;
+  height: 30px;
+  font-size: 20px;
+  padding-left: 5px;
+}
+.dropDownArrow {
+  pointer-events: none;
+  position: relative;
+  margin-left: 75px;
+  margin-top: -20px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #555;
+}

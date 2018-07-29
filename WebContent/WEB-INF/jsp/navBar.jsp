@@ -7,6 +7,20 @@
 <head>
 <style>
 <%@ include file="/resources/css/main.css"%>
+
+.notification-container {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    top: 15px;
+    left: 15px;
+    
+    i {
+        color: #fff;
+    }
+}
+
+
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
@@ -22,8 +36,11 @@
  <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
       <c:if test="${pageContext.request.userPrincipal.name != null}">
-         <li><a href="<c:url value="/homePage" />" >${user.username}</a></li>
-       <li><a data-toggle="modal" href="#myModal" > Actions </a></li>
+        <li>
+        <a href="Notifications">Notifications</a>
+        </li>
+        <li><a href="<c:url value="/homePage" />" >${user.username}</a></li>
+        <li><a data-toggle="modal" href="#myModal" > Actions </a></li>
        
       </c:if>
       <c:if test="${pageContext.request.userPrincipal.name == null}">
@@ -46,25 +63,24 @@
        
        <c:if test="${photoProfil != null}">
        <li>
-       <span class ="inlinehref">
-       <a href="<c:url value="/homePage" />" class="inlinehref" >
-       <img alt="img" style="border: 0;" src="data:image/jpeg;base64,${photoProfil}" height="60" width="70" />
-       </a>
-       </span>
+         <span class ="inlinehref">
+          <a href="<c:url value="/homePage" />" class="inlinehref" >
+          <img alt="img" style="border: 0;" src="data:image/jpeg;base64,${photoProfil}" height="60" width="70" />
+          </a>
+         </span>
        </li>
        <li>
        <div class="rail-select">
          <select class="form-control" id="sel1" value="-1" onChange="uploadPhoto(this.selectedIndex);">
-           <option name="uploadphoto" value="" > </option>
+           <option name="uploadphoto" value=""> </option>
            <option name="uploadphoto" value="uploadphoto" >Upload a photo</option>
            <option name="deletephoto" value="deletephoto" >Delete photo</option>
          </select>
          <form id="formID">
-        <input type="file" id="photoID" name="photo" onChange="uploadPhoto(this);" style="display:none">
-        </form>
+          <input type="file" id="photoID" name="photo" onChange="uploadPhoto(this);" style="display:none">
+         </form>
       </div>
       </li>
-       
       </c:if>
      
        

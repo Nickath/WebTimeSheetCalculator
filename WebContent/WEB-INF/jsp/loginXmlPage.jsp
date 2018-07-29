@@ -61,7 +61,7 @@
       
       
    <div class="error">
-
+   ${error}
           <!-- /login?error=true -->
      <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
      <br>

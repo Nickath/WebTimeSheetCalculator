@@ -20,6 +20,6 @@ public class AdminController {
 		model.addAttribute("user",user);
 		String photo  = userService.getUserImageBase64(user);
 		model.addAttribute("photoProfil",photo);
-        return "userManagement";
+        return "admin/userManagement";
     }
 }

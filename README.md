@@ -13,6 +13,26 @@ To run the docker image: A host OS containing Oracle Virtual box and Vagrant (co
 
 To build and run the app: A machine with JDK>= 8, tomcat compatible with your JDK (f.e tomcat 8), maven compatible with the JDK
 
+
+## Setting Up SSL on Tomcat
+
+### Creating a Keystore file 
+
+1) cd %JAVA_HOME%/bin
+2) keytool -genkey -alias tomcat -keyalg RSA
+3) Enter creds
+
+### Configuring Tomcat for using the keystore file – SSL config in port 8443
+
+1) Go to server.xml and add the following connector port
+   
+    <Connector SSLEnabled="true" acceptCount="100" clientAuth="false"
+    disableUploadTimeout="true" enableLookups="false" maxThreads="25"
+    port="8443" keystoreFile="<<path_of_keystore>>" keystorePass="<<your_pass>>"
+    protocol="org.apache.coyote.http11.Http11NioProtocol" scheme="https"
+    secure="true" sslProtocol="TLS" />
+
+
 ### Build and develop 
 
 1) git clone https://github.com/Nickath/WebTimeSheetCalculator.git

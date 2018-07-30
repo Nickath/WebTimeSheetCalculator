@@ -59,7 +59,7 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-left">
-         <c:if test="${pageContext.request.userPrincipal.name != null}">
+      <c:if test="${pageContext.request.userPrincipal.name != null}">
        
        <c:if test="${photoProfil != null}">
        <li>
@@ -69,6 +69,7 @@
           </a>
          </span>
        </li>
+       </c:if>
        <li>
        <div class="rail-select">
          <select class="form-control" id="sel1" value="-1" onChange="uploadPhoto(this.selectedIndex);">
@@ -81,7 +82,7 @@
          </form>
       </div>
       </li>
-      </c:if>
+      
      
        
      </c:if>

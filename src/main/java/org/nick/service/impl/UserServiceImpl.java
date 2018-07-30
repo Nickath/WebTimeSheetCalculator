@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -41,7 +42,9 @@ import org.nick.repository.UserRepository;
 import org.nick.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -167,6 +170,17 @@ public class UserServiceImpl implements UserService {
 			 User user = userRepository.findByUsername(username);
 			 return user;	 
 	}
+	
+	//to get the edited authenticated logged in user when admin changes his/her name
+	@Override
+	public void changeLoggedInAuthenticatedUser(String username, String password) {
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    Collection<SimpleGrantedAuthority> nowAuthorities =(Collection<SimpleGrantedAuthority>)SecurityContextHolder
+                .getContext().getAuthentication().getAuthorities();	
+UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, password, nowAuthorities);
+SecurityContextHolder.getContext().setAuthentication(authentication);
+
+}
 	
 	//get current time
 	@Override 

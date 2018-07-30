@@ -98,6 +98,8 @@ public interface UserService {
 	public User customUserlXMLAuthentication(String username, String password);
 
 	boolean registerUserObj(User user);
+
+	public void changeLoggedInAuthenticatedUser(String username, String password);
 	
 
 	

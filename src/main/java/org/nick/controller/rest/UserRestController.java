@@ -82,22 +82,22 @@ public class UserRestController {
     //------------------- Update a User --------------------------------------------------------
       
     @RequestMapping(value = "/userStatisticsRest/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User user) {
+    public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User user, Model model) {
     	LOGGER.info("Updating User " + id);
           
-        User currentUser = userService.findById(id);
-        if (currentUser==null) {
+        User userFromDB = userService.findById(id);
+        if (userFromDB==null) {
         	LOGGER.warning("User with id " + id + " not found");
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
-  
-        currentUser.setUsername(user.getUsername());
-        currentUser.setEmail(user.getEmail());
-        userService.updateUserUsername(currentUser);
-        if(id == currentUser.getId()) {
-        	userService.changeLoggedInAuthenticatedUser(currentUser.getUsername(), currentUser.getPassword());
+        //if the logged in admin decides to change his username re-authenticate him with the new name
+        if(userFromDB.getUsername().equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
+        	userService.changeLoggedInAuthenticatedUser(user.getUsername(), user.getPassword());
         }
-        return new ResponseEntity<User>(currentUser, HttpStatus.OK);
+        userFromDB.setUsername(user.getUsername());
+        userFromDB.setEmail(user.getEmail());
+        userService.updateUserUsername(userFromDB);
+        return new ResponseEntity<User>(userFromDB, HttpStatus.OK);
     }
   
      

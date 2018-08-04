@@ -2,8 +2,6 @@ package org.nick.controller.rest;
 
 import java.util.List;
 import java.util.logging.Logger;
-
-import org.nick.controller.ControllerXML;
 import org.nick.model.User;
 import org.nick.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -82,7 +79,7 @@ public class UserRestController {
     //------------------- Update a User --------------------------------------------------------
       
     @RequestMapping(value = "/userStatisticsRest/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User user, Model model) {
+    public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User user) {
     	LOGGER.info("Updating User " + id);
           
         User userFromDB = userService.findById(id);

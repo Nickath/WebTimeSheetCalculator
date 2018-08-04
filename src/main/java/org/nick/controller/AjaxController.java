@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import com.google.gson.Gson;
 
 
 @Controller
@@ -99,8 +102,18 @@ public class AjaxController {
 		else {
 			userService.unsubscribeUser(user);
 		}
-		
 	}
+	
+	@RequestMapping(value="/addRecipient", method = RequestMethod.POST)
+	public @ResponseBody String addRecipient(@RequestParam("recipient") String recipient,
+			HttpServletResponse response) {
+            List<User> allUsers = userService.excludeCurrentUser();
+            Gson gson = new Gson();
+			String usersJson = gson.toJson(allUsers);
+			return usersJson;
+	}
+	
+	
 	
 	
 }

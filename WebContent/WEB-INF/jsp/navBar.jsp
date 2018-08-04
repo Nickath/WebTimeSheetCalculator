@@ -110,6 +110,7 @@
            <li><a href="<c:url value="/userStatisticsPage" />" >Watch my Statistics for all months</a></li><br>
            <li><a href="<c:url value="/subscribeMailPage" />" >Subscribe to the mail list</a></li><br>
            <li><a href="<c:url value="/downloadXMLPage" />" >Get your profil in XML form</a></li><br>
+           <li><a href="<c:url value="/leaveRequestPage" />" >Leave Request</a></li><br>
           </c:if>
           <c:if test="${ (isAdmin eq true) || user.role.id == 1 }">
              <li><a href="<c:url value="/usersPage" />" >Admin Control Panel</a></li><br>

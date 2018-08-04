@@ -1,7 +1,6 @@
 package org.nick.service;
 
 import java.io.File;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -101,6 +100,7 @@ public interface UserService {
 
 	public void changeLoggedInAuthenticatedUser(String username, String password);
 	
+	public List<User> excludeCurrentUser();
 
 	
 

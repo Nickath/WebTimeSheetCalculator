@@ -41,6 +41,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.github.jhonnymertz.wkhtmltopdf.wrapper.Pdf;
 import com.github.jhonnymertz.wkhtmltopdf.wrapper.configurations.WrapperConfig;
 import com.github.jhonnymertz.wkhtmltopdf.wrapper.params.Param;
+import com.google.gson.Gson;
 
 
 @Controller
@@ -375,6 +376,20 @@ public class UserController {
 	    }
 	    
 	    
+	    @RequestMapping(value = "/leaveRequestPage", method = RequestMethod.GET)
+	    public String getLeaveRequestPage(Model model) {
+	    	User user = userService.getAuthenticatedUser();
+	    	model.addAttribute("user",user);
+	    	String photo  = userService.getUserImageBase64(user);
+			model.addAttribute("photoProfil",photo);
+			List<User> allUsers = userService.excludeCurrentUser();
+			Gson gson = new Gson();
+			String usersJson = gson.toJson(allUsers);
+			model.addAttribute("usersJson",usersJson);
+			model.addAttribute("allUsers",allUsers);
+			return "leaveRequest";
+
+	    }
 	    
 	    
 	   

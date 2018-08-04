@@ -108,12 +108,12 @@ $( document ).ready(function() {
 
 //on change of the select box, add the value selected to the list on the right first and then delete from the list
 $('select[name="recipients"]').change(function() {
-	  addRecipient(this.value);
+	  addRecipient(this.value,$(this).children(":selected").attr("id"));
 	  removeRecipientFromOptions();
 });
 
 
-function addRecipient(selectedRecipient){
+function addRecipient(selectedRecipient,selectedRecipientId){
  $.ajax({
   type: "POST",
   url: "http://localhost:8080/WebTimeSheetCalculator/addRecipient", //URL to access the controller
@@ -121,7 +121,7 @@ function addRecipient(selectedRecipient){
   data: { recipient: selectedRecipient }, // parameters to send (the value of the month, using the id)
   success: function(response){
   json = JSON.parse(response);
-  $('#tbSelectedID').append('<span style="display:block;white-space: pre;" id="'+selectedRecipient+'id"> <label for="recipient">' +selectedRecipient+ ' </label> <a href="#" onclick="deleteFromList(&quot;'+selectedRecipient+'&quot;);" style="position:absolute;right:50px;"><i class="material-icons">delete</i></a></span>');
+  $('#tbSelectedID').append('<span style="display:block;white-space: pre;" id="'+selectedRecipientId+'"> <label for="recipient">' +selectedRecipient+ ' </label> <a href="#" onclick="deleteFromList(&quot;'+selectedRecipient+'&quot;,'+selectedRecipientId+');" style="position:absolute;right:50px;"><i class="material-icons">delete</i></a></span>');
   },
   error: function(){      
   alert('Error while request..');
@@ -142,13 +142,13 @@ function removeRecipientFromOptions(){
 	  $("#optionsRecID").val($("#optionsRecID option:first").val());
 }
 
-function deleteFromList(selectedRecipient){
-	document.getElementById(selectedRecipient+'id').remove();
-	addOptionToSelect(selectedRecipient);
+function deleteFromList(selectedRecipient,selectedRecipientId){
+	$('span#'+selectedRecipientId+'').remove();
+	addOptionToSelect(selectedRecipient,selectedRecipientId);
 }
 
-function addOptionToSelect(selectedRecipient){
-	$('select[name="recipients"]').append('<option value="'+selectedRecipient+'" id="">'+selectedRecipient+'</option>');
+function addOptionToSelect(selectedRecipient,selectedRecipientId){
+	$('select[name="recipients"]').append('<option value="'+selectedRecipient+'" id="'+selectedRecipientId+'">'+selectedRecipient+'</option>');
 }
 
 

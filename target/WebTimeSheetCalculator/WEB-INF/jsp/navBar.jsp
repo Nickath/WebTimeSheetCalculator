@@ -36,8 +36,11 @@
  <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
       <c:if test="${pageContext.request.userPrincipal.name != null}">
-         <li><a href="<c:url value="/homePage" />" >${user.username}</a></li>
-       <li><a data-toggle="modal" href="#myModal" > Actions </a></li>
+        <li>
+        <a href="Notifications">Notifications</a>
+        </li>
+        <li><a href="<c:url value="/homePage" />" >${user.username}</a></li>
+        <li><a data-toggle="modal" href="#myModal" > Actions </a></li>
        
       </c:if>
       <c:if test="${pageContext.request.userPrincipal.name == null}">
@@ -56,7 +59,7 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-left">
-         <c:if test="${pageContext.request.userPrincipal.name != null}">
+      <c:if test="${pageContext.request.userPrincipal.name != null}">
        
        <c:if test="${photoProfil != null}">
        <li>
@@ -66,6 +69,7 @@
           </a>
          </span>
        </li>
+       </c:if>
        <li>
        <div class="rail-select">
          <select class="form-control" id="sel1" value="-1" onChange="uploadPhoto(this.selectedIndex);">
@@ -78,13 +82,7 @@
          </form>
       </div>
       </li>
-
-     <li>
-        <i class="icon-globe"></i>
-        <span class="notification-counter">1</span>
-    </li>
-       
-      </c:if>
+      
      
        
      </c:if>
@@ -112,6 +110,7 @@
            <li><a href="<c:url value="/userStatisticsPage" />" >Watch my Statistics for all months</a></li><br>
            <li><a href="<c:url value="/subscribeMailPage" />" >Subscribe to the mail list</a></li><br>
            <li><a href="<c:url value="/downloadXMLPage" />" >Get your profil in XML form</a></li><br>
+           <li><a href="<c:url value="/leaveRequestPage" />" >Leave Request</a></li><br>
           </c:if>
           <c:if test="${ (isAdmin eq true) || user.role.id == 1 }">
              <li><a href="<c:url value="/usersPage" />" >Admin Control Panel</a></li><br>

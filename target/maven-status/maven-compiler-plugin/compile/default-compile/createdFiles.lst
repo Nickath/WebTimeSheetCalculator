@@ -9,6 +9,7 @@ com\github\jhonnymertz\wkhtmltopdf\wrapper\params\Params.class
 com\github\jhonnymertz\wkhtmltopdf\wrapper\PDFExportException.class
 org\nick\controller\LoginController.class
 org\nick\form\MonthForm.class
+org\nick\model\Notification.class
 org\nick\repository\MonthRepository.class
 org\nick\controller\AjaxController.class
 org\nick\controller\LogoutController.class

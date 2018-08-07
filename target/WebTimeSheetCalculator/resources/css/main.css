@@ -5,7 +5,7 @@
 	}
 	
 a img
-{  	
+{  
 	border-style: none;
 }
 
@@ -14,62 +14,12 @@ img
 	border-style: none;
 }
 
-@media (min-width: 1200px){
-  .container{
-    padding-right:380px !important;
-  }  
-}
 
-@media (min-width: 768px){
-  .container{
-    padding-right:380px !important;
-  }  
-}
-
-@media (min-width: 1200px)
-.col-sm-4 {
-    width:500px !important;
-}
-
-@media (min-width: 1200px)
-.col-sm-1 {
-    width: 100px !important;
-}
-
-@media (min-width: 768px)
-.col-sm-4 {
-   width:500px !important;
-}
-
-@media (min-width: 768px)
-.col-sm-1 {
-    width: 100px !important;
-}
-
-
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1200px) {
 	
-  /* Styles */
-  .col-sm-4 {
-   width:500px !important;
-  }
-
-  .col-sm-1 {
-    width: 100px !important;
-  }
-
-}
-
-
-
-
 	
 .error {
 color:#FF0000;
 font-weight: bold;
-padding-left:120px;
 }
 
 .success{
@@ -425,3 +375,38 @@ p.pdftitle  {
     word-break: break-all;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+.selectClass {
+  -webkit-appearance: none;
+  -webkit-border-radius: 0;
+  -moz-appearance: none;
+  border: none;
+  width: 100px;
+  background: #EEE;
+  height: 30px;
+  font-size: 20px;
+  padding-left: 5px;
+}
+.dropDownArrow {
+  pointer-events: none;
+  position: relative;
+  margin-left: 75px;
+  margin-top: -20px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #555;
+}

@@ -12,7 +12,7 @@ $(function () {
 
         // if the validator does not prevent form submit
         if (!e.isDefaultPrevented()) {
-            var url = "contact-2.php";
+            var url = "leaveRequestAttempt";
 
             // POST values in the background the the script URL
             $.ajax({

@@ -1,5 +1,7 @@
 package org.nick.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +22,8 @@ public class Notification {
 		private String description;
 		@Column(name="is_active")
 		private boolean isActive;
+		@Column(name = "date")
+		private Date date;
 		//FK to User table
 		@ManyToOne
 		private User Referreruser;
@@ -56,6 +60,48 @@ public class Notification {
 		public void setAssignedUser(User assignedUser) {
 			AssignedUser = assignedUser;
 		}
+		
+		public Notification() {
+			
+		}
+		public Notification(Long id, String description, boolean isActive, User referreruser, User assignedUser) {
+			super();
+			this.id = id;
+			this.description = description;
+			this.isActive = isActive;
+			Referreruser = referreruser;
+			AssignedUser = assignedUser;
+		}
+		public Notification(Long id, String description, boolean isActive, Date date, User referreruser,
+				User assignedUser) {
+			super();
+			this.id = id;
+			this.description = description;
+			this.isActive = isActive;
+			this.date = date;
+			Referreruser = referreruser;
+			AssignedUser = assignedUser;
+		}
+		public Notification(User referrer, User recipient, boolean isActive, Date date) {
+			super();
+			this.Referreruser = referrer;
+			this.AssignedUser = recipient;
+			this.isActive = isActive;
+			this.date = date;
+		}
+		
+		
+		public Notification(User referrer, User recipient, boolean isActive, Date date, String description) {
+			super();
+			this.Referreruser = referrer;
+			this.AssignedUser = recipient;
+			this.isActive = isActive;
+			this.date = date;
+			this.description = description;
+		}
+		
+		
+		
 
         
 }

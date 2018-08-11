@@ -5,6 +5,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="shortcut icon" type="image/png" href="${pageContext.request.contextPath}/resources/images/clock.png">
+<link rel="apple-touch-icon" href="${pageContext.request.contextPath}/resources/images/clock.png">
 <style>
 <%@ include file="/resources/css/main.css"%>
 

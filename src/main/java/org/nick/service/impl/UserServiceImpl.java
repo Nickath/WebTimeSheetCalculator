@@ -2,10 +2,12 @@ package org.nick.service.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -14,19 +16,36 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Logger;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.codec.binary.Base64;
 import org.nick.email.AccountConfirmation;
+import org.nick.email.templates.AccountVerificationTemplate;
+import org.nick.email.templates.NotificationTemplate;
+import org.nick.form.LeaveRequestForm;
 import org.nick.form.RegisterForm;
 import org.nick.model.EmailSubscription;
+import org.nick.model.Notification;
 import org.nick.model.Role;
 import org.nick.model.TimeSheet;
 import org.nick.model.User;
 import org.nick.repository.EmailRepository;
+import org.nick.repository.NotificationRepository;
 import org.nick.repository.TimeSheetRepository;
 import org.nick.repository.UserRepository;
 import org.nick.service.UserService;
+import org.nick.web.contants.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -49,6 +68,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	AccountConfirmation accountConfirmationService;
+	
+	@Autowired
+	NotificationRepository notificationRepository;
 	
 	private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class.getName());
 
@@ -621,6 +643,113 @@ SecurityContextHolder.getContext().setAuthentication(authentication);
 			}
 		}
 		return allUsers;
+	}
+
+	@Override
+	public void createLeaveRequestNoticications(String[] recipientIds, long referrerId, LeaveRequestForm form) {
+		User referrer = userRepository.findOne(referrerId);
+		for(String recipientId : recipientIds) {
+			long recipientIdLong = Long.parseLong(recipientId);
+			User recipient = userRepository.findOne(recipientIdLong);
+			Notification notification = new Notification(referrer,recipient,true,getCurrentTime(), form.getMessage());
+			notificationRepository.save(notification);
+		}
+		
+	}
+
+	@Override
+	public void mailNotifications(String[] recipientsIds, User referrer, LeaveRequestForm form) {
+
+		for(String recipient : recipientsIds) {
+			User recipientUser = userRepository.findOne(Long.parseLong(recipient));
+			mailNotificationLeaveRequest(recipientUser, referrer, form.getMessage(), form.getFromDate(), form.getToDate());
+		}
+		
+	}
+	
+	private void mailNotification(User recipient, User referrer, String message) {
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		InputStream input = classLoader.getResourceAsStream("mail_scheduler.properties");
+		Properties prop = new Properties();
+		try {
+			prop.load(input);
+		} catch (IOException e2) {
+			e2.printStackTrace();
+		}
+		
+		//set the password authenticator object of javax.mail
+	     PasswordAuthentication pa = new PasswordAuthentication(Constants.username,Constants.password);
+	     try{
+	     Session session = Session.getDefaultInstance(prop, 
+	                          new Authenticator(){
+	                             protected PasswordAuthentication getPasswordAuthentication() {
+	                                return pa;
+	                             }});
+
+	   // -- Create a new message --
+	     Message msg = new MimeMessage(session);
+
+
+	  // -- Set the FROM and TO fields --
+	     msg.setFrom(new InternetAddress(Constants.username));
+	     msg.setRecipients(Message.RecipientType.TO, 
+	                      InternetAddress.parse(recipient.getEmail(),false));
+	     msg.setSubject(NotificationTemplate.header);
+	     msg.setText(MessageFormat.format(NotificationTemplate.leaveRequestFrom, referrer.getUsername())
+	    		 + message);
+	     msg.setSentDate(new Date());
+	     Transport.send(msg);
+	     LOGGER.info("Message sent.");
+	     try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	  }catch (MessagingException e){ LOGGER.severe("Error, message was not send correctly" + e);}
+	     
+	}
+	
+	
+	private void mailNotificationLeaveRequest(User recipient, User referrer, String message, String fromDate, String toDate) {
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		InputStream input = classLoader.getResourceAsStream("mail_scheduler.properties");
+		Properties prop = new Properties();
+		try {
+			prop.load(input);
+		} catch (IOException e2) {
+			e2.printStackTrace();
+		}
+		
+		//set the password authenticator object of javax.mail
+	     PasswordAuthentication pa = new PasswordAuthentication(Constants.username,Constants.password);
+	     try{
+	     Session session = Session.getDefaultInstance(prop, 
+	                          new Authenticator(){
+	                             protected PasswordAuthentication getPasswordAuthentication() {
+	                                return pa;
+	                             }});
+
+	   // -- Create a new message --
+	     Message msg = new MimeMessage(session);
+
+
+	  // -- Set the FROM and TO fields --
+	     msg.setFrom(new InternetAddress(Constants.username));
+	     msg.setRecipients(Message.RecipientType.TO, 
+	                      InternetAddress.parse(recipient.getEmail(),false));
+	     msg.setSubject(NotificationTemplate.header);
+	     msg.setText(MessageFormat.format(NotificationTemplate.leaveRequestFrom, referrer.getUsername())
+	    		 +MessageFormat.format(NotificationTemplate.leaveRequestDates, fromDate,toDate)+ message);
+	     msg.setSentDate(new Date());
+	     Transport.send(msg);
+	     LOGGER.info("Message sent.");
+	     try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	  }catch (MessagingException e){ LOGGER.severe("Error, message was not send correctly" + e);}
+	     
 	}
 	
 	

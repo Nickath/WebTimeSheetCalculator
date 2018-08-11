@@ -1,20 +1,15 @@
 package org.nick.controller;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.List;
-
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.commons.codec.binary.Base64;
+import javax.validation.Valid;
 import org.nick.email.ChangePasswordRequest;
+import org.nick.form.LeaveRequestForm;
 import org.nick.form.MonthForm;
 import org.nick.model.EmailSubscription;
 import org.nick.model.Month;
@@ -25,11 +20,13 @@ import org.nick.repository.MonthRepository;
 import org.nick.repository.UserRepository;
 import org.nick.service.UserService;
 import org.nick.service.impl.FileHandlerImpl;
-import org.nick.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,10 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
 import com.github.jhonnymertz.wkhtmltopdf.wrapper.Pdf;
-import com.github.jhonnymertz.wkhtmltopdf.wrapper.configurations.WrapperConfig;
-import com.github.jhonnymertz.wkhtmltopdf.wrapper.params.Param;
 import com.google.gson.Gson;
 
 
@@ -387,9 +381,31 @@ public class UserController {
 			String usersJson = gson.toJson(allUsers);
 			model.addAttribute("usersJson",usersJson);
 			model.addAttribute("allUsers",allUsers);
+			LeaveRequestForm form = new LeaveRequestForm();
+			model.addAttribute("leaveRequestForm",form);
 			return "leaveRequest";
 
 	    }
+	    
+	    @RequestMapping(value = "/leaveRequestAttempt", method = RequestMethod.POST)
+	    public String leaveRequestAttempt(@Valid  @ModelAttribute("leaveRequestForm")LeaveRequestForm form, BindingResult result,
+				HttpSession session, HttpServletRequest request, ModelMap model) {
+	    	User user = userService.getAuthenticatedUser();
+	    	model.addAttribute("user",user);
+	    	String photo  = userService.getUserImageBase64(user);
+			model.addAttribute("photoProfil",photo);
+	    	if(result.hasErrors()) {
+	    		return "leaveRequest";
+	    	}
+	    	else {
+	    		String[] recipientsIds = form.getRecipients().split(",");
+	    		userService.createLeaveRequestNoticications(recipientsIds, userService.getAuthenticatedUser().getId(), form);
+	    		userService.mailNotifications(recipientsIds, userService.getAuthenticatedUser(), form);
+	    		model.addAttribute("success","Leave Request Submitted successfully");
+	    		return "leaveRequest";
+		    }
+	    	}
+	    	
 	    
 	    
 	   

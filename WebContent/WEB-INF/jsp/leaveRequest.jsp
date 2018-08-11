@@ -2,12 +2,15 @@
     pageEncoding="ISO-8859-1"%>
     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
         <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
-        <title>Contact Form Tutorial by Bootstrapious.com</title>
+    <link rel="shortcut icon" type="image/png" href="${pageContext.request.contextPath}/resources/images/clock.png">
+    <link rel="apple-touch-icon" href="${pageContext.request.contextPath}/resources/images/clock.png">
+        <title>Leave Request form</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -25,22 +28,24 @@
                     <h1>Leave Request Form</h1>
                     <p class="lead">You can use the following form to make a leave request</p>
 
-                    <form id="contact-form" method="post" action="/leaveRequestAttempt">
+                    <form:form id="leaveRequestFormID" method="post" modelAttribute="leaveRequestForm" action="leaveRequestAttempt">
                         <div class="messages"></div>
                         <div class="controls">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="fromDate">From *</label>
-                                         <input type="date" name="dateFrom" required="required" data-error="Valid date is required">
+                                         <form:input path="fromDate" type="date" name="fromDate" required="required" data-error="Valid date is required"/>
                                         <div class="help-block with-errors"></div>
+                                        <form:errors path = "fromDate" cssClass = "error" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="toDate">To *</label>
-                                         <input type="date" name="dateTo" required="required" data-error="Valid date is required">
+                                         <form:input path="toDate" type="date" name="toDate" required="required" data-error="Valid date is required"/>
                                         <div class="help-block with-errors"></div>
+                                        <form:errors path = "toDate" cssClass = "error" />
                                     </div>
                                 </div>
                             </div>
@@ -49,8 +54,7 @@
                                     <div class="form-group">
                                         <label for="recipients">Recipient(s)</label>
                                          <select name="recipients" id="optionsRecID" class="dropdown-select">
-                                         <option selected="true" disabled="disabled">Choose Recipient(s)</option>   
-                                        
+                                           <option selected="true" disabled="disabled">Choose Recipient(s)</option>   
                                          </select>
                                         <div class="help-block with-errors"></div>
                                     </div>
@@ -63,6 +67,9 @@
                                         
                                         </table>
                                         <div class="help-block with-errors"></div>
+                                        <form:input path="recipients" type="text" name="recipients" id="recipID" style="visibility: hidden;"/>
+                                        <div class="help-block with-errors"></div>
+                                        <form:errors path = "recipients" cssClass = "error" />
                                     </div>
                                 </div>
                                 
@@ -73,10 +80,11 @@
                                         <label for="form_message">Message *</label>
                                         <textarea id="form_message" name="message" class="form-control" placeholder="Message for me *" rows="4" required="required" data-error="Please,leave us a message."></textarea>
                                         <div class="help-block with-errors"></div>
+                                         <form:errors path = "message" cssClass = "error" />
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <input type="submit" class="btn btn-success btn-send" value="Send message">
+                                    <button type="submit" id="submitButtonID" class="btn btn-success btn-send">Send Request</button>
                                 </div>
                             </div>
                             <div class="row">
@@ -85,7 +93,12 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </form:form>
+                    <div class="success">
+                    
+                    <span class="success">${success}</span>
+                    
+                    </div>
                 </div><!-- /.8 -->
             </div> <!-- /.row-->
         </div> <!-- /.container-->
@@ -99,12 +112,13 @@
 
 <script type="text/javascript">
 
+var recip = [];
+
 //when the page is rendered, fill the options with the recipients
 $( document ).ready(function() {
 	var json = ${usersJson};
 	addRecipientOptions(json);
 });
-	
 
 //on change of the select box, add the value selected to the list on the right first and then delete from the list
 $('select[name="recipients"]').change(function() {
@@ -122,7 +136,7 @@ function addRecipient(selectedRecipient,selectedRecipientId){
   success: function(response){
   json = JSON.parse(response);
   $('#tbSelectedID').append('<span style="display:block;white-space: pre;" id="'+selectedRecipientId+'"> <label for="recipient">' +selectedRecipient+ ' </label> <a href="#" onclick="deleteFromList(&quot;'+selectedRecipient+'&quot;,'+selectedRecipientId+');" style="position:absolute;right:50px;"><i class="material-icons">delete</i></a></span>');
-  },
+  recip.push(selectedRecipientId);  $('#recipID').val(recip);},
   error: function(){      
   alert('Error while request..');
   }
@@ -144,12 +158,22 @@ function removeRecipientFromOptions(){
 
 function deleteFromList(selectedRecipient,selectedRecipientId){
 	$('span#'+selectedRecipientId+'').remove();
+	removeByItem(recip,selectedRecipientId);
 	addOptionToSelect(selectedRecipient,selectedRecipientId);
 }
 
 function addOptionToSelect(selectedRecipient,selectedRecipientId){
 	$('select[name="recipients"]').append('<option value="'+selectedRecipient+'" id="'+selectedRecipientId+'">'+selectedRecipient+'</option>');
 }
+
+function removeByItem(recip, removeid){
+	var index = recip.indexOf(removeid.toString());
+	if (index > -1) {
+	    recip.splice(index, 1);
+	    $('#recipID').val(recip);
+	}
+}
+
 
 
 </script>

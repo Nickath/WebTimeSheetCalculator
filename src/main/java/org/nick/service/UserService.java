@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.nick.form.LeaveRequestForm;
 import org.nick.form.RegisterForm;
 import org.nick.model.EmailSubscription;
 import org.nick.model.TimeSheet;
@@ -102,7 +103,9 @@ public interface UserService {
 	
 	public List<User> excludeCurrentUser();
 
-	
+	public void createLeaveRequestNoticications(String[] recipientsIds, long referredId, LeaveRequestForm form);
+
+	public void mailNotifications(String[] recipientsIds, User referrer, LeaveRequestForm form);
 
 	
 

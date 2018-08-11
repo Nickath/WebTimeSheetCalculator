@@ -1,14 +1,18 @@
 package org.nick.model;
 
 import java.sql.Blob;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -46,6 +50,10 @@ public class User implements Comparable<User> {
 	//FK TO TABLE role, each user has his/her own role
 	@ManyToOne
 	private Role role;
+	
+	//one user has many timesheets (list), while a timesheet belongs explicitly to one user
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
+	List<TimeSheet> timesheets;
 	
 	public String getUsername() {
 		return username;
@@ -125,6 +133,12 @@ public class User implements Comparable<User> {
 	public void setChangePassRequestID(String changePassRequestID) {
 		this.changePassRequestID = changePassRequestID;
 	}
+	public List<TimeSheet> getTimesheets() {
+		return timesheets;
+	}
+	public void setTimesheets(List<TimeSheet> timesheets) {
+		this.timesheets = timesheets;
+	}
 	@Override
 	public int compareTo(User arg0) {
     long compareId = ((User) arg0).getId();
@@ -139,4 +153,18 @@ public class User implements Comparable<User> {
 	public boolean match(String name, String password) {
             return this.username.equals(name) && this.password.equals(password);
         }
+	public User(Long id, String username, String email, String password, boolean enabled, byte[] photo,
+			String confirmId, String changePassRequestID, Role role, List<TimeSheet> timesheets) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.enabled = enabled;
+		this.photo = photo;
+		this.confirmId = confirmId;
+		this.changePassRequestID = changePassRequestID;
+		this.role = role;
+		this.timesheets = timesheets;
+	}
 }

@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -23,29 +22,20 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
-import org.nick.form.LoginForm;
-import org.nick.form.LoginFormXML;
-import org.nick.form.RegisterForm;
-import org.nick.model.TimeSheet;
 import org.nick.model.User;
 import org.nick.model.UserXML;
 import org.nick.repository.UserRepository;
 import org.nick.service.UserService;
 import org.nick.service.impl.FileHandlerImpl;
+import org.nick.web.contants.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -83,7 +73,7 @@ public class ControllerXML {
     @RequestMapping(value = "/downloadXMLAttempt", method = RequestMethod.GET, headers = "Accept=application/json")
     public void downloadXmlAttempt(HttpServletResponse response) {
     	User user = userService.getAuthenticatedUser();
-    	File file = new File("C:/Users/NICK/profil.xml");
+    	File file = new File(Constants.DOWNLOAD_XML_PROFIL_PATH);
     	UserXML userxml = convertUserToUserXML(user);
     	JAXBContext jaxbContext;
 		try {
@@ -224,7 +214,7 @@ public class ControllerXML {
 	}
 	
 	public boolean isValidXML(File xmlfile) throws FileNotFoundException {
-		File fileXSD = new File("C:\\Users\\NICK\\eclipse-workspace\\WebTimeSheetCalculator\\xml_samples\\xsd\\profil_XSD.xsd");
+		File fileXSD = new File(Constants.XSD_PATH);
 		FileInputStream xsd = null;
 		xsd = new FileInputStream(fileXSD);
 		try {

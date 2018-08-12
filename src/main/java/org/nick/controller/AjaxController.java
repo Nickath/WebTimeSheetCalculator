@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 
 @Controller
@@ -108,7 +109,7 @@ public class AjaxController {
 	public @ResponseBody String addRecipient(@RequestParam("recipient") String recipient,
 			HttpServletResponse response) {
             List<User> allUsers = userService.excludeCurrentUser();
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 			String usersJson = gson.toJson(allUsers);
 			return usersJson;
 	}

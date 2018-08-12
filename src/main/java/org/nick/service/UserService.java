@@ -107,6 +107,7 @@ public interface UserService {
 
 	public void mailNotifications(String[] recipientsIds, User referrer, LeaveRequestForm form);
 
+	public boolean compareDates(String dateFrom, String dateTo);
 	
 
 	

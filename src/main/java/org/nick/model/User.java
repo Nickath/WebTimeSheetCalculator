@@ -14,35 +14,50 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.gson.annotations.Expose;
+
+//in case of Gson you can do the other way around marking those field you do want to
+//be included in json with @Expose and creating the gson object with:
+
+
 @Entity
 @Table(name="users")
 public class User implements Comparable<User> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Expose
 	private Long id;
 
 	
 	@Column(name="username" , unique=true)
+	@Expose
 	private String username;
 	
 	@Column(name="email", unique=true)
+	@Expose
 	private String email;
 
 	@Column(name="password")
+	@Expose
 	private String password;
 	
 	@Column(name="enabled")
+	@Expose
 	private boolean enabled;
 	
 	/*@Lob*/
 	@Column(name="photo")
+	@Expose
 	private byte[]  photo;
 	
 	@Column(name="confirmid")
+	@Expose
 	private String confirmId;
 	
 	@Column(name="changepass_request_ID")
+	@Expose
 	private String changePassRequestID;
 	
 	//FK TO TABLE role, each user has his/her own role
@@ -50,17 +65,20 @@ public class User implements Comparable<User> {
 	private Role role;
 	
 	//one user has many timesheets (list), while a timesheet belongs explicitly to one user
+	@JsonIgnore//json ignore to avoid exception when converting to JSON because of circular reference and to aboid declare the objects transient
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
-	private List<TimeSheet> timesheets;
+	private  List<TimeSheet> timesheets;
 	//one user may is the referrer of many notifications, but a notification has only one referrer user
 	//we declare the below sets as transient to avoid stackoverflow in the GSON convert because of the circular reference
 	//transient declares that these variables should not be serialized
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "referreruser", cascade = CascadeType.ALL)
-	private transient Set<Notification> notificationsReferrer;
+	private  Set<Notification> notificationsReferrer;
 	
 	//one user may is assigned with many notifications, but a notification has only one user assigned to
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "assignedUser", cascade = CascadeType.ALL)
-	private transient Set<Notification> notificationsAssigned;
+	private  Set<Notification> notificationsAssigned;
 	
 	public String getUsername() {
 		return username;
@@ -146,12 +164,6 @@ public class User implements Comparable<User> {
 	public void setTimesheets(List<TimeSheet> timesheets) {
 		this.timesheets = timesheets;
 	}
-    public Set<Notification> getNotifications() {
-		return notificationsReferrer;
-	}
-	public void setNotifications(Set<Notification> notificationsReferrer) {
-		this.notificationsReferrer = notificationsReferrer;
-	}
 	public Set<Notification> getNotificationsReferrer() {
 		return notificationsReferrer;
 	}
@@ -164,12 +176,7 @@ public class User implements Comparable<User> {
 	public void setNotificationsAssigned(Set<Notification> notificationsAssigned) {
 		this.notificationsAssigned = notificationsAssigned;
 	}
-	/*	public List<User> getReferrerUsers() {
-		return referrerUsers;
-	}
-	public void setReferrerUsers(List<User> referrerUsers) {
-		this.referrerUsers = referrerUsers;
-	}*/
+
 	@Override
 	public int compareTo(User arg0) {
     long compareId = ((User) arg0).getId();

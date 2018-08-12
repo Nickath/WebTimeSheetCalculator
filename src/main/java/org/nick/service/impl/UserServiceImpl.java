@@ -8,6 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -31,7 +33,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.binary.Base64;
 import org.nick.email.AccountConfirmation;
-import org.nick.email.templates.AccountVerificationTemplate;
 import org.nick.email.templates.NotificationTemplate;
 import org.nick.enums.NotificationType;
 import org.nick.form.LeaveRequestForm;
@@ -753,6 +754,27 @@ SecurityContextHolder.getContext().setAuthentication(authentication);
 		}
 	  }catch (MessagingException e){ LOGGER.severe("Error, message was not send correctly" + e);}
 	     
+	}
+
+	@Override
+	public boolean compareDates(String dateFrom, String dateTo) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+		Date date1;
+		Date date2;
+		try {
+			date1 = format.parse(dateFrom);
+			date2 = format.parse(dateTo);
+			if (date1.compareTo(date2) <= 0) {
+				return true;
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		 
+
+
+		return false;
 	}
 	
 	

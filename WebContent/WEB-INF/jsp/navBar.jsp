@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav navbar-right">
       <c:if test="${pageContext.request.userPrincipal.name != null}">
         <li>
-        <a href="Notifications">Notifications</a>
+        <li><a href="<c:url value="/notificationsPage" />" >Notifications</a></li>
         </li>
         <li><a href="<c:url value="/homePage" />" >${user.username}</a></li>
         <li><a data-toggle="modal" href="#myModal" > Actions </a></li>

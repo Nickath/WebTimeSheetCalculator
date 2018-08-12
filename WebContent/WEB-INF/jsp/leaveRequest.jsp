@@ -97,7 +97,7 @@
                     <div class="success">
                     
                     <span class="success">${success}</span>
-                    
+                    <span class="error">${ErrorDates}</span>
                     </div>
                 </div><!-- /.8 -->
             </div> <!-- /.row-->

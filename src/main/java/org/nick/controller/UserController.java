@@ -36,6 +36,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.github.jhonnymertz.wkhtmltopdf.wrapper.Pdf;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 
 @Controller
@@ -66,7 +67,6 @@ public class UserController {
 		String photo  = userService.getUserImageBase64(user);
 		model.addAttribute("photoProfil",photo);
 		model.addAttribute("user",user);
-		
 		return "home";
 	}
 	
@@ -380,7 +380,16 @@ public class UserController {
 	    	String photo  = userService.getUserImageBase64(user);
 			model.addAttribute("photoProfil",photo);
 			List<User> allUsers = userService.excludeCurrentUser();
-			Gson gson = new Gson();
+			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+			//we set the manytone relationships with notifications null because they have a circular object reference
+			//which causes stackoverflow when the object is serialized by the gson.toJson
+			//an alternative way to avoid this is to declare the member variables 
+		    // notificationsAssigned set and notificationsReferrer set as transient in the User.java
+			// to declare that we do not want these list to be part of any serialization/deserialization
+			/*for(User u : allUsers) {
+				u.setNotificationsAssigned(null);
+				u.setNotificationsReferrer(null);
+			}*/
 			String usersJson = gson.toJson(allUsers);
 			model.addAttribute("usersJson",usersJson);
 			model.addAttribute("allUsers",allUsers);
@@ -397,21 +406,29 @@ public class UserController {
 	    	model.addAttribute("user",user);
 	    	String photo  = userService.getUserImageBase64(user);
 			model.addAttribute("photoProfil",photo);
-	    	if(result.hasErrors()) {
-	    		return "leaveRequest";
-	    	}
-	    	else {
+	    	if(!result.hasErrors()) {
+				if(userService.compareDates(form.getFromDate(), form.getToDate()) == false) {
+					model.addAttribute("ErrorDates", "The From date should be before the To date field");
+				    return "redirect:/leaveRequestPage";
+				}
 	    		String[] recipientsIds = form.getRecipients().split(",");
 	    		userService.createLeaveRequestNoticications(recipientsIds, userService.getAuthenticatedUser().getId(), form);
 	    		userService.mailNotifications(recipientsIds, userService.getAuthenticatedUser(), form);
 	    		model.addAttribute("success","Leave Request Submitted successfully");
-	    		return "leaveRequest";
-		    }
+	    	}
+	    	return "leaveRequest";
 	    	}
 	    	
 	    
 	    
-	   
+	   @RequestMapping(value = "/notificationsPage", method = RequestMethod.GET)
+	   public String notificationsPage(HttpSession session, HttpServletRequest request, ModelMap model) {
+		    User user = userService.getAuthenticatedUser();
+	    	model.addAttribute("user",user);
+	    	String photo  = userService.getUserImageBase64(user);
+			model.addAttribute("photoProfil",photo);
+			return "notifications";
+	   }
 	 
 	
 }

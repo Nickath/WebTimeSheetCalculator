@@ -6,9 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -29,9 +31,11 @@ public class Notification {
 		@Column(name = "date")
 		private Date date;
 		//FK to User table
-		@ManyToOne // many Notifications, may have as a referrer one user
+		@ManyToOne(fetch = FetchType.LAZY) // many Notifications, may have as a referrer one user
+		@JoinColumn(name = "referreruser_id", nullable = false)
 		private User referreruser;
-		@ManyToOne
+		@ManyToOne(fetch = FetchType.LAZY)
+		@JoinColumn(name = "assigneduser_id", nullable = false)
 		private User assignedUser;
 		
 		@Enumerated(EnumType.STRING)

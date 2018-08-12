@@ -25,10 +25,10 @@ public class Notification {
 		@Column(name = "date")
 		private Date date;
 		//FK to User table
+		@ManyToOne // many Notifications, may belong to one user
+		private User referreruser;
 		@ManyToOne
-		private User Referreruser;
-		@ManyToOne
-		private User AssignedUser;
+		private User assignedUser;
 		
 		public Long getId() {
 			return id;
@@ -49,16 +49,16 @@ public class Notification {
 			this.isActive = isActive;
 		}
 		public User getReferreruser() {
-			return Referreruser;
+			return referreruser;
 		}
 		public void setReferreruser(User referreruser) {
-			Referreruser = referreruser;
+			this.referreruser = referreruser;
 		}
 		public User getAssignedUser() {
-			return AssignedUser;
+			return assignedUser;
 		}
 		public void setAssignedUser(User assignedUser) {
-			AssignedUser = assignedUser;
+			this.assignedUser = assignedUser;
 		}
 		
 		public Notification() {
@@ -69,8 +69,8 @@ public class Notification {
 			this.id = id;
 			this.description = description;
 			this.isActive = isActive;
-			Referreruser = referreruser;
-			AssignedUser = assignedUser;
+			this.referreruser = referreruser;
+			this.assignedUser = assignedUser;
 		}
 		public Notification(Long id, String description, boolean isActive, Date date, User referreruser,
 				User assignedUser) {
@@ -79,13 +79,13 @@ public class Notification {
 			this.description = description;
 			this.isActive = isActive;
 			this.date = date;
-			Referreruser = referreruser;
-			AssignedUser = assignedUser;
+			this.referreruser = referreruser;
+			this.assignedUser = assignedUser;
 		}
 		public Notification(User referrer, User recipient, boolean isActive, Date date) {
 			super();
-			this.Referreruser = referrer;
-			this.AssignedUser = recipient;
+			this.referreruser = referrer;
+			this.assignedUser = recipient;
 			this.isActive = isActive;
 			this.date = date;
 		}
@@ -93,8 +93,8 @@ public class Notification {
 		
 		public Notification(User referrer, User recipient, boolean isActive, Date date, String description) {
 			super();
-			this.Referreruser = referrer;
-			this.AssignedUser = recipient;
+			this.referreruser = referrer;
+			this.assignedUser = recipient;
 			this.isActive = isActive;
 			this.date = date;
 			this.description = description;

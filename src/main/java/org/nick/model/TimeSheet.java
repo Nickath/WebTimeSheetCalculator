@@ -43,7 +43,7 @@ public class TimeSheet {
 	@ManyToOne
 	private Month month;
 	
-	//FK to User table
+	//FK to User table, many timesheets may belong to one user
 	@ManyToOne
 	private User user;
 	

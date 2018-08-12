@@ -33,6 +33,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.nick.email.AccountConfirmation;
 import org.nick.email.templates.AccountVerificationTemplate;
 import org.nick.email.templates.NotificationTemplate;
+import org.nick.enums.NotificationType;
 import org.nick.form.LeaveRequestForm;
 import org.nick.form.RegisterForm;
 import org.nick.model.EmailSubscription;
@@ -652,6 +653,8 @@ SecurityContextHolder.getContext().setAuthentication(authentication);
 			long recipientIdLong = Long.parseLong(recipientId);
 			User recipient = userRepository.findOne(recipientIdLong);
 			Notification notification = new Notification(referrer,recipient,true,getCurrentTime(), form.getMessage());
+			notification.setNotificationType(NotificationType.LEAVE_REQUEST);
+			notification.setShown(false);
 			notificationRepository.save(notification);
 		}
 		

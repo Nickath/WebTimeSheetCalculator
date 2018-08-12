@@ -4,11 +4,15 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.nick.enums.NotificationType;
 
 
 @Entity
@@ -25,10 +29,17 @@ public class Notification {
 		@Column(name = "date")
 		private Date date;
 		//FK to User table
-		@ManyToOne // many Notifications, may belong to one user
+		@ManyToOne // many Notifications, may have as a referrer one user
 		private User referreruser;
 		@ManyToOne
 		private User assignedUser;
+		
+		@Enumerated(EnumType.STRING)
+	    @Column(length = 20)
+	    private NotificationType notificationType;
+		
+		@Column(name = "shown")
+		private boolean shown;
 		
 		public Long getId() {
 			return id;
@@ -61,6 +72,24 @@ public class Notification {
 			this.assignedUser = assignedUser;
 		}
 		
+		public Date getDate() {
+			return date;
+		}
+		public void setDate(Date date) {
+			this.date = date;
+		}
+		public NotificationType getNotificationType() {
+			return notificationType;
+		}
+		public void setNotificationType(NotificationType notificationType) {
+			this.notificationType = notificationType;
+		}
+		public boolean isShown() {
+			return shown;
+		}
+		public void setShown(boolean shown) {
+			this.shown = shown;
+		}
 		public Notification() {
 			
 		}
@@ -98,6 +127,29 @@ public class Notification {
 			this.isActive = isActive;
 			this.date = date;
 			this.description = description;
+		}
+		public Notification(Long id, String description, boolean isActive, Date date, User referreruser,
+				User assignedUser, NotificationType notificationType) {
+			super();
+			this.id = id;
+			this.description = description;
+			this.isActive = isActive;
+			this.date = date;
+			this.referreruser = referreruser;
+			this.assignedUser = assignedUser;
+			this.notificationType = notificationType;
+		}
+		public Notification(Long id, String description, boolean isActive, Date date, User referreruser,
+				User assignedUser, NotificationType notificationType, boolean shown) {
+			super();
+			this.id = id;
+			this.description = description;
+			this.isActive = isActive;
+			this.date = date;
+			this.referreruser = referreruser;
+			this.assignedUser = assignedUser;
+			this.notificationType = notificationType;
+			this.shown = shown;
 		}
 		
 		

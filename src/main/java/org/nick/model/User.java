@@ -1,6 +1,7 @@
 package org.nick.model;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -50,7 +51,16 @@ public class User implements Comparable<User> {
 	
 	//one user has many timesheets (list), while a timesheet belongs explicitly to one user
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
-	List<TimeSheet> timesheets;
+	private List<TimeSheet> timesheets;
+	//one user may is the referrer of many notifications, but a notification has only one referrer user
+	//we declare the below sets as transient to avoid stackoverflow in the GSON convert because of the circular reference
+	//transient declares that these variables should not be serialized
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "referreruser", cascade = CascadeType.ALL)
+	private transient Set<Notification> notificationsReferrer;
+	
+	//one user may is assigned with many notifications, but a notification has only one user assigned to
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "assignedUser", cascade = CascadeType.ALL)
+	private transient Set<Notification> notificationsAssigned;
 	
 	public String getUsername() {
 		return username;
@@ -136,6 +146,30 @@ public class User implements Comparable<User> {
 	public void setTimesheets(List<TimeSheet> timesheets) {
 		this.timesheets = timesheets;
 	}
+    public Set<Notification> getNotifications() {
+		return notificationsReferrer;
+	}
+	public void setNotifications(Set<Notification> notificationsReferrer) {
+		this.notificationsReferrer = notificationsReferrer;
+	}
+	public Set<Notification> getNotificationsReferrer() {
+		return notificationsReferrer;
+	}
+	public void setNotificationsReferrer(Set<Notification> notificationsReferrer) {
+		this.notificationsReferrer = notificationsReferrer;
+	}
+	public Set<Notification> getNotificationsAssigned() {
+		return notificationsAssigned;
+	}
+	public void setNotificationsAssigned(Set<Notification> notificationsAssigned) {
+		this.notificationsAssigned = notificationsAssigned;
+	}
+	/*	public List<User> getReferrerUsers() {
+		return referrerUsers;
+	}
+	public void setReferrerUsers(List<User> referrerUsers) {
+		this.referrerUsers = referrerUsers;
+	}*/
 	@Override
 	public int compareTo(User arg0) {
     long compareId = ((User) arg0).getId();
@@ -151,7 +185,8 @@ public class User implements Comparable<User> {
             return this.username.equals(name) && this.password.equals(password);
         }
 	public User(Long id, String username, String email, String password, boolean enabled, byte[] photo,
-			String confirmId, String changePassRequestID, Role role, List<TimeSheet> timesheets) {
+			String confirmId, String changePassRequestID, Role role, List<TimeSheet> timesheets,
+			Set<Notification> notificationsReferrer, Set<Notification> notificationsAssigned) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -163,5 +198,9 @@ public class User implements Comparable<User> {
 		this.changePassRequestID = changePassRequestID;
 		this.role = role;
 		this.timesheets = timesheets;
+		this.notificationsReferrer = notificationsReferrer;
+		this.notificationsAssigned = notificationsAssigned;
 	}
+
+
 }

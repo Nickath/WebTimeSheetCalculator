@@ -50,8 +50,8 @@
     <filter-mapping>
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
+<!--         <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher> -->
     </filter-mapping> 
     
     <!-- force web application to work with SSL, if we want to change this we just put NONE instead of confidential -->

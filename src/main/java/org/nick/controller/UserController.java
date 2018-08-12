@@ -60,6 +60,9 @@ public class UserController {
 	@RequestMapping(value = "/homePage", method = RequestMethod.GET)
 	public String getHomePage(Model model, HttpSession session,HttpServletRequest request ) {
 		User user = userService.getAuthenticatedUser();
+		if(user == null) {
+			return "redirect:/loginPage";
+		}
 		String photo  = userService.getUserImageBase64(user);
 		model.addAttribute("photoProfil",photo);
 		model.addAttribute("user",user);

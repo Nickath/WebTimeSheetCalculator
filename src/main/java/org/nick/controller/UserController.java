@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
 import org.nick.email.ChangePasswordRequest;
 import org.nick.form.LeaveRequestForm;
 import org.nick.form.MonthForm;
@@ -34,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import com.github.jhonnymertz.wkhtmltopdf.wrapper.Pdf;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -60,13 +63,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/homePage", method = RequestMethod.GET)
 	public String getHomePage(Model model, HttpSession session,HttpServletRequest request ) {
-		User user = userService.getAuthenticatedUser();
-		if(user == null) {
-			return "redirect:/loginPage";
-		}
-		String photo  = userService.getUserImageBase64(user);
-		model.addAttribute("photoProfil",photo);
-		model.addAttribute("user",user);
+		filterUser(model);
 		return "home";
 	}
 	
@@ -170,10 +167,7 @@ public class UserController {
 	 
 	 @RequestMapping(value = "/loadTimeSheetsPage", method = RequestMethod.GET)
 	    public String loadTimeSheetsPage(Model model) {
-		 User user = userService.getAuthenticatedUser();
-		 model.addAttribute("user",user);
-		 String photo  = userService.getUserImageBase64(user);
-		 model.addAttribute("photoProfil",photo);
+		 filterUser(model);
 		 List<Month> months = monthRepository.findAll();
 		 MonthForm form = new MonthForm();
 		 form.setMonths(months);
@@ -192,9 +186,7 @@ public class UserController {
 		    
 		    //add attributes to the model first
 		    User user = userService.getAuthenticatedUser();
-		    model.addAttribute("user",user);
-		    String photo  = userService.getUserImageBase64(user);
-			model.addAttribute("photoProfil",photo);
+		    filterUser(model);
 		    List<Month> months = monthRepository.findAll();
 			MonthForm form = new MonthForm();
 			form.setMonths(months);
@@ -236,9 +228,7 @@ public class UserController {
 	 public String getStatisticsPage(Model model) {
 		 
 		 User user = userService.getAuthenticatedUser();
-		 model.addAttribute("user",user);
-		 String photo  = userService.getUserImageBase64(user);
-		 model.addAttribute("photoProfil",photo);
+		 filterUser(model);
 		 long userId = user.getId();
 		 List<TimeSheet> userTimeSheets = userService.getStatisticsByUserId(userId);
 		 model.addAttribute("timesheetList", userTimeSheets);
@@ -303,12 +293,9 @@ public class UserController {
 	    @RequestMapping(value = "/subscribeMailPage", method = RequestMethod.GET)
 	    public String subscribePage(Model model) {
 	    	User user = userService.getAuthenticatedUser();
-	    	model.addAttribute("user",user);
+	    	filterUser(model);
 			EmailSubscription s = userService.isUserSubscribed(user);
 			model.addAttribute("usersubscription",s);
-	    	String photo  = userService.getUserImageBase64(user);
-			model.addAttribute("photoProfil",photo);
-
 	    	return "subscribepage";
 	    }
 	    
@@ -375,10 +362,7 @@ public class UserController {
 	    
 	    @RequestMapping(value = "/leaveRequestPage", method = RequestMethod.GET)
 	    public String getLeaveRequestPage(Model model) {
-	    	User user = userService.getAuthenticatedUser();
-	    	model.addAttribute("user",user);
-	    	String photo  = userService.getUserImageBase64(user);
-			model.addAttribute("photoProfil",photo);
+	    	filterUser(model);
 			List<User> allUsers = userService.excludeCurrentUser();
 			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 			//we set the manytone relationships with notifications null because they have a circular object reference
@@ -401,15 +385,12 @@ public class UserController {
 	    
 	    @RequestMapping(value = "/leaveRequestAttempt", method = RequestMethod.POST)
 	    public String leaveRequestAttempt(@Valid  @ModelAttribute("leaveRequestForm")LeaveRequestForm form, BindingResult result,
-				HttpSession session, HttpServletRequest request, ModelMap model) {
-	    	User user = userService.getAuthenticatedUser();
-	    	model.addAttribute("user",user);
-	    	String photo  = userService.getUserImageBase64(user);
-			model.addAttribute("photoProfil",photo);
+				HttpSession session, HttpServletRequest request, Model model) {
+	    	filterUser(model);
 	    	if(!result.hasErrors()) {
 				if(userService.compareDates(form.getFromDate(), form.getToDate()) == false) {
 					model.addAttribute("ErrorDates", "The From date should be before the To date field");
-				    return "redirect:/leaveRequestPage";
+				    return "leaveRequest";
 				}
 	    		String[] recipientsIds = form.getRecipients().split(",");
 	    		userService.createLeaveRequestNoticications(recipientsIds, userService.getAuthenticatedUser().getId(), form);
@@ -422,12 +403,17 @@ public class UserController {
 	    
 	    
 	   @RequestMapping(value = "/notificationsPage", method = RequestMethod.GET)
-	   public String notificationsPage(HttpSession session, HttpServletRequest request, ModelMap model) {
-		    User user = userService.getAuthenticatedUser();
-	    	model.addAttribute("user",user);
-	    	String photo  = userService.getUserImageBase64(user);
-			model.addAttribute("photoProfil",photo);
+	   public String notificationsPage(HttpSession session, HttpServletRequest request, Model model) {
+		    filterUser(model);
 			return "notifications";
+	   }
+	   
+	   
+	   private void filterUser(Model model) {
+		    User user = userService.getAuthenticatedUser();
+			String photo  = userService.getUserImageBase64(user);
+			model.addAttribute("photoProfil",photo);
+			model.addAttribute("user",user);
 	   }
 	 
 	

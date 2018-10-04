@@ -16,6 +16,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.nick.form.TimeSheetForm;
 import org.nick.model.TimeSheet;
+import org.nick.org.nick.utils.Utils;
 import org.nick.service.FileHandler;
 import org.nick.web.contants.Constants;
 import org.springframework.stereotype.Service;
@@ -33,11 +34,10 @@ public class FileHandlerImpl implements FileHandler {
 		byte[] bytes = file.getBytes();
 		LOGGER.info("Path where the file is going to be stored is:\n" +FileHandlerImpl.class
                 .getClassLoader().getResource("").getPath().toString());
-        File file2 = new File(FileHandlerImpl.class
-                .getClassLoader().getResource("").getPath().toString().replace("/", "\\")+ "timesheets\\"+"TimeSheet"+timesheet.getUser().getUsername()
-                +""+timesheet.getMonth().getMonth()+".xlsx");
-     
-
+		String filePath = FileHandlerImpl.class
+				.getClassLoader().getResource("").getPath().toString().replace("/", "\\")+ "timesheets\\"+"TimeSheet"+timesheet.getUser().getUsername()
+				+""+timesheet.getMonth().getMonth()+".xlsx";
+        File file2 = new File(Utils.convertToPathOS(filePath));
         try {
             OutputStream os = new FileOutputStream(file2);
             os.write(bytes);
@@ -238,28 +238,7 @@ public class FileHandlerImpl implements FileHandler {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	public static int calculateDifference(String col1, String col2) {

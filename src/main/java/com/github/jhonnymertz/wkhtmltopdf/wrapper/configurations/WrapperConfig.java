@@ -48,8 +48,12 @@ public class WrapperConfig {
             String text = IOUtils.toString(p.getInputStream(), Charset.defaultCharset()).trim();
             //if the runtime cannot find the path take it manually
             if(text.equals("") || text == null) {
-            	text = "C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\n" + 
-            			"";
+                text = "C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\n" +
+                        "";
+                if(!osname.contains("windows"))
+                {
+                    text = text.replaceAll("\\\\", "/");
+                }
             }
             if (text.isEmpty())
                 throw new RuntimeException("wkhtmltopdf command was not found in your classpath. " +

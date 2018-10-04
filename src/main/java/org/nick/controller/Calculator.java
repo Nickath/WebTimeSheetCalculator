@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 //to bind an existing model object to the session (timeSheetForm) and reuse it
 @SessionAttributes({"timeSheetForm"})
@@ -66,6 +67,11 @@ public class Calculator {
 	public String TimeSheetCalculator( @Valid  @ModelAttribute("timeSheetForm")TimeSheetForm form,BindingResult result,
 			HttpSession session, HttpServletRequest request,  ModelMap model)    {
 
+		User user = userService.getAuthenticatedUser();
+		model.addAttribute("user",user);
+		String photo  = userService.getUserImageBase64(user);
+		model.addAttribute("photoProfil",photo);
+
 		if (result.hasErrors()) {
 	         return "index";
 	      }
@@ -77,25 +83,19 @@ public class Calculator {
 		 * Properties prop = new Properties();
 		prop.getProperty("java.util.logging.FileHandler.pattern");*/
 
-		String path=session.getServletContext().getRealPath("/");  
-		
-	    if(form.getFile().isEmpty()) {
-	    	model.addAttribute("error","File is Empty, please enter a valid .xlsx file");
-	    	return "index";
-	    }
-	    else if(!form.getFile().getOriginalFilename().contains(".xlsx")) {
-	    	model.addAttribute("error","The file you uploaded is not a .xlsx file");
-	    	return "index";
-	    }
+		String path=session.getServletContext().getRealPath("/");
+
+		if(!validateUploadedXLS(form.getFile(), model)){
+			return "index";
+		}
+
 	    TimeSheet timesheet = new TimeSheet();
 	    //get the current month so we write the record in the database pointing to the month ID of the month table
         LocalDate localDate = LocalDate.now();
         String date = DateTimeFormatter.ofPattern("yyy/MM/dd").format(localDate).substring(5,7);
         Long month = Long.parseLong(date);
         Month monthObj = monthRepository.findOne(month);
-        timesheet.setMonth(monthObj); 
-        //get the logged in user and set it to the timesheet object
-        User user = userService.getAuthenticatedUser();
+        timesheet.setMonth(monthObj);
         timesheet.setUser(user);
         timesheet.setDaysPending(form.getPendingDays());
         timesheet.setDesiredMean(form.getDesiredMean());
@@ -141,16 +141,10 @@ public class Calculator {
 		String path=session.getServletContext().getRealPath("/");  
 		
 		
-	    if(form.getFile().isEmpty()) {
-	    	model.addAttribute("error","File is Empty, please enter a valid .xlsx file");
+	    if(!validateUploadedXLS(form.getFile(), model)){
 	    	return "index";
-	    }
-	    else if(!form.getFile().getOriginalFilename().contains(".xlsx")) {
-	    	model.addAttribute("error","The file you uploaded is not a .xlsx file");
-	    	return "index";
-	    }
-	    
-	    
+		}
+
 	    TimeSheet timesheet = new TimeSheet();
 	    //get the current month so we write the record in the database pointing to the month ID of the month table
         LocalDate localDate = LocalDate.now();
@@ -189,7 +183,19 @@ public class Calculator {
  
 		
 	}
-	
+
+
+	private boolean validateUploadedXLS(CommonsMultipartFile file, ModelMap model){
+		if(file.isEmpty()) {
+			model.addAttribute("error","File is Empty, please enter a valid .xlsx file");
+			return false;
+		}
+		else if(!file.getOriginalFilename().contains(".xlsx")) {
+			model.addAttribute("error","The file you uploaded is not a .xlsx file");
+			return false;
+		}
+		return true;
+	}
 	
 	
 	

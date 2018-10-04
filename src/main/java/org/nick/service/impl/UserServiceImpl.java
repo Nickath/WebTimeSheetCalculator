@@ -455,6 +455,7 @@ SecurityContextHolder.getContext().setAuthentication(authentication);
 	
 	@Override
 	public byte[] getDefaultImage() {
+		String defaultPhotoPath = getClass().getClassLoader().getResource("").getPath();
 		File fi = new File("C:\\Users\\NICK\\eclipse-workspace\\WebTimeSheetCalculatorTestBranch\\WebTimeSheetCalculatorTestBranch\\WebContent\\resources\\images\\defaultPhoto.png");
 		byte[] fileContent;
 		try {

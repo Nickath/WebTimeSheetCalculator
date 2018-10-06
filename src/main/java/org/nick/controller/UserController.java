@@ -403,10 +403,10 @@ public class UserController {
 	    	
 	    
 	    
-	   /*@RequestMapping(value = "/notificationsPage", method = RequestMethod.GET)
+	   @RequestMapping(value = "/notificationsPage", method = RequestMethod.GET)
 	   public String notificationsPage(HttpSession session, HttpServletRequest request, Model model) {
 			return "notifications";
-	   }*/
+	   }
 	   
 	   
 	   private void filterUser(Model model) {

@@ -455,11 +455,11 @@ SecurityContextHolder.getContext().setAuthentication(authentication);
 	
 	@Override
 	public byte[] getDefaultImage() {
-		String defaultPhotoPath = getClass().getClassLoader().getResource("").getPath();
-		File fi = new File("C:\\Users\\NICK\\eclipse-workspace\\WebTimeSheetCalculatorTestBranch\\WebTimeSheetCalculatorTestBranch\\WebContent\\resources\\images\\defaultPhoto.png");
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		File defaultImage = new File(classLoader.getResource("defaultPhoto.png").getFile());
 		byte[] fileContent;
 		try {
-			fileContent = Files.readAllBytes(fi.toPath());
+			fileContent = Files.readAllBytes(defaultImage.toPath());
 			return fileContent;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -640,11 +640,18 @@ SecurityContextHolder.getContext().setAuthentication(authentication);
 	public List<User> excludeCurrentUser() {
 		User currentUser = getAuthenticatedUser();
 		List<User> allUsers = userRepository.findAll();
+		Iterator<User> iterator = allUsers.iterator();
+		while(iterator.hasNext()){
+			if(iterator.next().getUsername().equals(currentUser.getUsername())){
+				iterator.remove();
+			}
+		}
+/*		this causes ConcurrentModificationExcetion
 		for(User user : allUsers) {
 			if(user.getUsername().equals(currentUser.getUsername())) {
 				allUsers.remove(user);
 			}
-		}
+		}*/
 		return allUsers;
 	}
 

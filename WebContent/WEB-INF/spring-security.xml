@@ -24,7 +24,7 @@
 <!-- securing the URLS -->
    <http auto-config="true" use-expressions="true">
       <headers>
-        <cache-control/>
+        <!--<cache-control/> this tells to the browser to cache the page-->
         <hsts/>
       </headers>
    

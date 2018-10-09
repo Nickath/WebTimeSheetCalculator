@@ -3,12 +3,14 @@ package org.nick.service;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.nick.form.LeaveRequestForm;
 import org.nick.form.RegisterForm;
 import org.nick.model.EmailSubscription;
+import org.nick.model.Notification;
 import org.nick.model.TimeSheet;
 import org.nick.model.User;
 
@@ -108,7 +110,12 @@ public interface UserService {
 	public void mailNotifications(String[] recipientsIds, User referrer, LeaveRequestForm form);
 
 	public boolean compareDates(String dateFrom, String dateTo);
-	
+
+	public Set<Notification> getUserNotifications(User user);
+
+	public Set<Notification> getUnwatchedNotifications(User user);
+
+	public void readNotifications(User user);
 
 	
 	

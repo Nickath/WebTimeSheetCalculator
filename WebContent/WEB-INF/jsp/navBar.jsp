@@ -39,7 +39,14 @@
       <ul class="nav navbar-nav navbar-right">
       <c:if test="${pageContext.request.userPrincipal.name != null}">
         <li>
-        <li><a href="<c:url value="/notificationsPage" />" >Notifications</a></li>
+          <c:choose>
+            <c:when test="${unwatchedNotificationsNum gt 0}">
+              <li><a href="<c:url value="/notificationsPage" />"  class="badge1" data-badge="${unwatchedNotificationsNum}" >Notifications</a></li>
+            </c:when>
+            <c:otherwise>
+               <li><a href="<c:url value="/notificationsPage" />">Notifications</a></li>
+            </c:otherwise>
+          </c:choose>
         </li>
         <li><a href="<c:url value="/homePage" />" >${user.username}</a></li>
         <li><a data-toggle="modal" href="#myModal" > Actions </a></li>

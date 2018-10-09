@@ -12,13 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import java.util.logging.Logger;
 
 import javax.mail.Authenticator;
@@ -784,6 +778,44 @@ SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		return false;
 	}
-	
-	
+
+    @Override
+    public Set<Notification> getUserNotifications(User user) {
+	    //custom sort of notifications according to date and using anonymous class
+        Set<Notification> notificationsSet = user.getNotificationsAssigned();
+        SortedSet<Notification> myNotifications = new TreeSet<>(new Comparator<Notification>() {
+            @Override
+            public int compare(Notification o1, Notification o2) {
+                return  o1.getDate().compareTo(o2.getDate());
+            }
+        });
+        myNotifications.addAll(notificationsSet);
+
+        return  myNotifications;
+    }
+
+    @Override
+    public Set<Notification> getUnwatchedNotifications(User user) {
+        Set<Notification> myNotifications = user.getNotificationsAssigned();
+        Set<Notification> unwatchedNotifications = new HashSet<>();
+        Iterator iterator = myNotifications.iterator();
+        while(iterator.hasNext()){
+            Notification notification = (Notification) iterator.next();
+            if(!notification.isShown()){
+                unwatchedNotifications.add(notification);
+            }
+        }
+        return unwatchedNotifications;
+    }
+
+    @Override
+    public void readNotifications(User user) {
+        Set<Notification> myNotifications = user.getNotificationsAssigned();
+        for(Notification notification : myNotifications){
+            notification.setShown(true);
+            notificationRepository.save(notification);
+        }
+    }
+
+
 }

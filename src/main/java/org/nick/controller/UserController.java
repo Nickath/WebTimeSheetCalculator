@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,10 +14,7 @@ import javax.validation.Valid;
 import org.nick.email.ChangePasswordRequest;
 import org.nick.form.LeaveRequestForm;
 import org.nick.form.MonthForm;
-import org.nick.model.EmailSubscription;
-import org.nick.model.Month;
-import org.nick.model.TimeSheet;
-import org.nick.model.User;
+import org.nick.model.*;
 import org.nick.pdf.templates.PdfTemplates;
 import org.nick.repository.MonthRepository;
 import org.nick.repository.UserRepository;
@@ -405,15 +403,22 @@ public class UserController {
 	    
 	   @RequestMapping(value = "/notificationsPage", method = RequestMethod.GET)
 	   public String notificationsPage(HttpSession session, HttpServletRequest request, Model model) {
-			return "notifications";
+            User user = userService.getAuthenticatedUser();
+            userService.readNotifications(user);
+	        filterUser(model);
+	        Set<Notification> notificationSet = userService.getUserNotifications(user);
+	        model.addAttribute("notifications", notificationSet);
+			return "myNotifications";
 	   }
 	   
 	   
 	   private void filterUser(Model model) {
 		    User user = userService.getAuthenticatedUser();
+		    Set<Notification> unwatchedNotifications = userService.getUnwatchedNotifications(user);
 			String photo  = userService.getUserImageBase64(user);
 			model.addAttribute("photoProfil",photo);
 			model.addAttribute("user",user);
+			model.addAttribute("unwatchedNotificationsNum", unwatchedNotifications.size());
 	   }
 	   
 	 

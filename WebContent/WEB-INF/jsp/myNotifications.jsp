@@ -1,13 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <<link rel="shortcut icon" type="image/png" href="${pageContext.request.contextPath}/resources/images/clock.png">
-    <link rel="apple-touch-icon" href="${pageContext.request.contextPath}/resources/images/clock.png">
     <style>
         <%@ include file="/resources/css/main.css"%>
     </style>
@@ -17,20 +14,25 @@
     <script type="text/javascript" src="js/bootstrap-filestyle.min.js"> </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Notifications Page</title>
+    <title>My Notifications</title>
 </head>
 <body>
 <jsp:include page="navBar.jsp" />
+
 <div class="content">
-    <div class="container">
-        <h1>My Notifications</h1><br><br><br>
+    <div class="container" style="width:1000px;">
+
+            <c:forEach items="${notifications}" var="notification">
+                <p>Notification Type: ${notification.notificationType}</p>
+                <p>Description: ${notification.description}</p>
+                <p>Referrer User: ${notification.referreruser.username}</p>
+                <p>Date: ${notification.date}</p>
+            </c:forEach>
 
 
-        <div id="divID">
-
-        </div>
     </div>
 </div>
+
 <jsp:include page="footer.jsp" />
 </body>
 

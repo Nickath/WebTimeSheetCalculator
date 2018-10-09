@@ -14,12 +14,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import net.sf.ehcache.search.expression.Not;
 import org.nick.enums.NotificationType;
 
 
 @Entity
 @Table(name="notification")
-public class Notification {
+public class Notification implements Comparable<Notification> {
 
 		@Id()
 		@GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,10 +32,10 @@ public class Notification {
 		@Column(name = "date")
 		private Date date;
 		//FK to User table
-		@ManyToOne(fetch = FetchType.LAZY) // many Notifications, may have as a referrer one user
+		@ManyToOne(fetch = FetchType.EAGER) // many Notifications, may have as a referrer one user
 		@JoinColumn(name = "referreruser_id", nullable = false)
 		private User referreruser;
-		@ManyToOne(fetch = FetchType.LAZY)
+		@ManyToOne(fetch = FetchType.EAGER)
 		@JoinColumn(name = "assigneduser_id", nullable = false)
 		private User assignedUser;
 		
@@ -155,9 +156,10 @@ public class Notification {
 			this.notificationType = notificationType;
 			this.shown = shown;
 		}
-		
-		
-		
 
-        
+
+	@Override
+	public int compareTo(Notification o) {
+		return 0;
+	}
 }

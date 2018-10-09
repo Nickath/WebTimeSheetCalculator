@@ -784,9 +784,9 @@ SecurityContextHolder.getContext().setAuthentication(authentication);
 	    //custom sort of notifications according to date and using anonymous class
         Set<Notification> notificationsSet = user.getNotificationsAssigned();
         SortedSet<Notification> myNotifications = new TreeSet<>(new Comparator<Notification>() {
-            @Override
+            @Override//descending order
             public int compare(Notification o1, Notification o2) {
-                return  o1.getDate().compareTo(o2.getDate());
+                return  -o1.getDate().compareTo(o2.getDate());
             }
         });
         myNotifications.addAll(notificationsSet);
@@ -815,6 +815,12 @@ SecurityContextHolder.getContext().setAuthentication(authentication);
             notification.setShown(true);
             notificationRepository.save(notification);
         }
+    }
+
+    @Override
+    public Notification getNotificationById(long id) {
+        Notification notification = notificationRepository.findOne(id);
+        return  notification;
     }
 
 

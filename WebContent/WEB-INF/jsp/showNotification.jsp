@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: NICK
+  Date: 10/9/2018
+  Time: 8:20 PM
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
@@ -15,7 +22,7 @@
     <script type="text/javascript" src="js/bootstrap-filestyle.min.js"> </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>My Notifications</title>
+    <title>Notifications</title>
 </head>
 <body>
 <jsp:include page="navBar.jsp" />
@@ -23,24 +30,19 @@
 <div class="content">
     <div class="container" style="width:1000px;">
 
-            <c:forEach items="${notifications}" var="notification">
-            <a href="<c:url value='/showNotification/${notification.id}' />" >
-              <div class="notification">
-               <div class="row">
-                 <div class="columnLeft">
-                  <i class="material-icons">notifications</i>
-                 </div>
-                 <div class="columnRight">
-                  <p>Notification Type: ${notification.notificationType}</p>
-                  <p>Description: ${notification.description}</p>
-                  <p>Referrer User: ${notification.referreruser.username}</p>
-                  <p>Date: ${notification.date}</p>
-                 </div>
+        <div class="notification">
+            <div class="row">
+                <div class="columnLeft">
+                    <i class="material-icons">notifications</i>
                 </div>
-              </div>
-             </a>
-            </c:forEach>
-
+                <div class="columnRight">
+                    <p>Notification Type: ${notification.notificationType}</p>
+                    <p>Description: ${notification.description}</p>
+                    <p>Referrer User: ${notification.referreruser.username}</p>
+                    <p>Date: ${notification.date}</p>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>

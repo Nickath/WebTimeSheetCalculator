@@ -410,8 +410,16 @@ public class UserController {
 	        model.addAttribute("notifications", notificationSet);
 			return "myNotifications";
 	   }
-	   
-	   
+
+	   @RequestMapping(value = "/showNotification/{notification_id}", method = RequestMethod.GET, headers = "Accept=application/json")
+       public String showNotification(@PathVariable("notification_id") long notificationId, HttpServletResponse response, Model model) {
+		filterUser(model);
+		Notification notification = userService.getNotificationById(notificationId);
+		model.addAttribute("notification", notification);
+        return "showNotification";
+      }
+
+
 	   private void filterUser(Model model) {
 		    User user = userService.getAuthenticatedUser();
 		    Set<Notification> unwatchedNotifications = userService.getUnwatchedNotifications(user);
@@ -420,8 +428,11 @@ public class UserController {
 			model.addAttribute("user",user);
 			model.addAttribute("unwatchedNotificationsNum", unwatchedNotifications.size());
 	   }
-	   
-	 
-	
+
+
+
+
+
+
 }
 	 

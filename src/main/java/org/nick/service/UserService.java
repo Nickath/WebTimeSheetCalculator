@@ -117,6 +117,8 @@ public interface UserService {
 
 	public void readNotifications(User user);
 
+	public Notification getNotificationById(long id);
+
 	
 	
 	

@@ -650,14 +650,17 @@ SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
 
 	@Override
-	public void createLeaveRequestNoticications(String[] recipientIds, long referrerId, LeaveRequestForm form) {
+	public void createLeaveRequestNoticications(String[] recipientIds, long referrerId, LeaveRequestForm form) throws ParseException {
 		User referrer = userRepository.findOne(referrerId);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
 		for(String recipientId : recipientIds) {
 			long recipientIdLong = Long.parseLong(recipientId);
 			User recipient = userRepository.findOne(recipientIdLong);
 			Notification notification = new Notification(referrer,recipient,true,getCurrentTime(), form.getMessage());
 			notification.setNotificationType(NotificationType.LEAVE_REQUEST);
 			notification.setShown(false);
+			notification.setFromDate(formatter.parse(form.getFromDate()));
+			notification.setToDate(formatter.parse(form.getToDate()));
 			notificationRepository.save(notification);
 		}
 		

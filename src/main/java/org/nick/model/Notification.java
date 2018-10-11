@@ -45,6 +45,32 @@ public class Notification implements Comparable<Notification> {
 		
 		@Column(name = "shown")
 		private boolean shown;
+
+		@Column(name = "fromDate")
+		private Date fromDate;
+		@Column(name = "toDate")
+		private Date toDate;
+
+		public Date getFromDate() {
+			return fromDate;
+		}
+
+		public void setFromDate(Date fromDate) {
+			this.fromDate = fromDate;
+		}
+
+		public Date getToDate() {
+			return toDate;
+		}
+
+		public void setToDate(Date toDate) {
+			this.toDate = toDate;
+		}
+
+
+
+
+
 		
 		public Long getId() {
 			return id;

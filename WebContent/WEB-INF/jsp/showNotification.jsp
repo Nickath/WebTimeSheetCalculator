@@ -35,12 +35,32 @@
                 <div class="columnLeft">
                     <i class="material-icons">notifications</i>
                 </div>
+               <form name="leaveRequestReply" action="/leaveRequestReply${notification.id}" method="post">
                 <div class="columnRight">
                     <p>Notification Type: ${notification.notificationType}</p>
+                    <c:if test="${notification.notificationType == 'LEAVE_REQUEST'}">
+                    <p>From: ${notification.fromDate} </p>
+                    <p>To: ${notification.toDate}</p>
+                    </c:if>
                     <p>Description: ${notification.description}</p>
                     <p>Referrer User: ${notification.referreruser.username}</p>
                     <p>Date: ${notification.date}</p>
+                    <p>Status:
+                    <c:if test="${notification.active eq true}">
+                     Active
+                    </c:if>
+                    <c:if test="${notification.active ne true}">
+                     Inactive
+                    </c:if>
+                    </p>
+                </br>
+                <c:if test="${(notification.notificationType.name().toString() == 'LEAVE_REQUEST') || (notification.notificationType.name().toString() eq 'LEAVE_REQUEST')}">
+                    <button type="button" value="accept" name="accept" class="btn btn-success">Accept</button>
+                    &nbsp;&nbsp;
+                    <button type="button" value="reject" name="reject" class="btn btn-danger">Reject</button>
+                </c:if>
                 </div>
+               </form>
             </div>
         </div>
 

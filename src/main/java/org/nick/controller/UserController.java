@@ -3,6 +3,7 @@ package org.nick.controller;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Set;
 
@@ -384,7 +385,7 @@ public class UserController {
 	    
 	    @RequestMapping(value = "/leaveRequestAttempt", method = RequestMethod.POST)
 	    public String leaveRequestAttempt(@Valid  @ModelAttribute("leaveRequestForm")LeaveRequestForm form, BindingResult result,
-				HttpSession session, HttpServletRequest request, Model model) {
+				HttpSession session, HttpServletRequest request, Model model) throws ParseException {
 	    	filterUser(model);
 	    	if(!result.hasErrors()) {
 				if(userService.compareDates(form.getFromDate(), form.getToDate()) == false) {
@@ -419,6 +420,30 @@ public class UserController {
         return "showNotification";
       }
 
+        @RequestMapping(value = "/leaveRequestReply/{notification_id}", method = RequestMethod.POST)
+        public String leaveRequestReply(@PathVariable("notification_id") long notificationId, Model model,
+                                        @RequestParam(required=false, value="accept") String accept,
+                                        @RequestParam(required=false, value="reject") String reject) {
+	        String answer = "";
+	        if(accept != null && !accept.equals("")){
+	            answer = accept;
+            }
+            else if (reject != null && !reject.equals("")){
+                answer = reject;
+            }
+            if(answer.equals("accept")){
+                //accept etc
+            }
+            else if(answer.equals("reject")){
+                //reject etc
+            }
+            filterUser(model);
+            Notification notification = userService.getNotificationById(notificationId);
+            model.addAttribute("notification", notification);
+            return "showNotification";
+        }
+
+
 
 	   private void filterUser(Model model) {
 		    User user = userService.getAuthenticatedUser();
@@ -428,6 +453,7 @@ public class UserController {
 			model.addAttribute("user",user);
 			model.addAttribute("unwatchedNotificationsNum", unwatchedNotifications.size());
 	   }
+
 
 
 

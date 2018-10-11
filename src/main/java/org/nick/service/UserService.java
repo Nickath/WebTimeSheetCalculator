@@ -1,6 +1,7 @@
 package org.nick.service;
 
 import java.io.File;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -105,7 +106,7 @@ public interface UserService {
 	
 	public List<User> excludeCurrentUser();
 
-	public void createLeaveRequestNoticications(String[] recipientsIds, long referredId, LeaveRequestForm form);
+	public void createLeaveRequestNoticications(String[] recipientsIds, long referredId, LeaveRequestForm form) throws ParseException;
 
 	public void mailNotifications(String[] recipientsIds, User referrer, LeaveRequestForm form);
 

@@ -652,7 +652,7 @@ SecurityContextHolder.getContext().setAuthentication(authentication);
 	@Override
 	public void createLeaveRequestNoticications(String[] recipientIds, long referrerId, LeaveRequestForm form) throws ParseException {
 		User referrer = userRepository.findOne(referrerId);
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		for(String recipientId : recipientIds) {
 			long recipientIdLong = Long.parseLong(recipientId);
 			User recipient = userRepository.findOne(recipientIdLong);
@@ -825,6 +825,21 @@ SecurityContextHolder.getContext().setAuthentication(authentication);
         Notification notification = notificationRepository.findOne(id);
         return  notification;
     }
+
+	@Override
+	public void createNotificationReply(String answer, long notification_id) {
+		Notification notification = notificationRepository.findOne(notification_id);
+		String reply = "User " + notification.getReferreruser().getUsername() +" replied to your request with description "+notification.getDescription();
+		User newNotificationReferrer = notification.getAssignedUser();
+		User newNotificationAssigned = notification.getReferreruser();
+		Notification notificationAnswer = new Notification(reply, getCurrentTime(),newNotificationAssigned, newNotificationAssigned,NotificationType.ANSWER, false, true);
+		if(answer.equals("accept")){
+			notificationRepository.save(notificationAnswer);
+		}
+		else if(answer.equals("reject")){
+
+		}
+	}
 
 
 }

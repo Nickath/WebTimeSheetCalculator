@@ -52,8 +52,8 @@ public class Notification implements Comparable<Notification> {
 		private Date toDate;
 
 		public Date getFromDate() {
-			return fromDate;
-		}
+				return fromDate;
+			}
 
 		public void setFromDate(Date fromDate) {
 			this.fromDate = fromDate;
@@ -149,9 +149,19 @@ public class Notification implements Comparable<Notification> {
 			this.isActive = isActive;
 			this.date = date;
 		}
-		
-		
-		public Notification(User referrer, User recipient, boolean isActive, Date date, String description) {
+
+
+	public Notification(String description, Date date, User assignedUser, User referreruser, NotificationType notificationType, boolean shown, boolean isActive) {
+		this.description = description;
+		this.date = date;
+		this.assignedUser = assignedUser;
+		this.referreruser = referreruser;
+		this.notificationType = notificationType;
+		this.shown = shown;
+		this.isActive = isActive;
+	}
+
+	public Notification(User referrer, User recipient, boolean isActive, Date date, String description) {
 			super();
 			this.referreruser = referrer;
 			this.assignedUser = recipient;

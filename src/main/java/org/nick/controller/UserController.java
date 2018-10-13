@@ -385,7 +385,7 @@ public class UserController {
 	    
 	    @RequestMapping(value = "/leaveRequestAttempt", method = RequestMethod.POST)
 	    public String leaveRequestAttempt(@Valid  @ModelAttribute("leaveRequestForm")LeaveRequestForm form, BindingResult result,
-				HttpSession session, HttpServletRequest request, Model model) throws ParseException {
+										  Model model) throws ParseException {
 	    	filterUser(model);
 	    	if(!result.hasErrors()) {
 				if(userService.compareDates(form.getFromDate(), form.getToDate()) == false) {
@@ -403,7 +403,7 @@ public class UserController {
 	    
 	    
 	   @RequestMapping(value = "/notificationsPage", method = RequestMethod.GET)
-	   public String notificationsPage(HttpSession session, HttpServletRequest request, Model model) {
+	   public String notificationsPage(Model model) {
             User user = userService.getAuthenticatedUser();
             userService.readNotifications(user);
 	        filterUser(model);
@@ -420,10 +420,12 @@ public class UserController {
         return "showNotification";
       }
 
-        @RequestMapping(value = "/leaveRequestReply/{notification_id}", method = RequestMethod.POST)
-        public String leaveRequestReply(@PathVariable("notification_id") long notificationId, Model model,
+        //required=false so that in case the parameter comes empty not throw error
+	    //https://stackoverflow.com/questions/17858537/spring-mvc-http-status-code-400-bad-request-for-missing-field-which-is-defin
+        @RequestMapping(value = "/showNotification/leaveRequestReply", method = RequestMethod.POST)
+        public String leaveRequestReply(@RequestParam("notification_id") long notificationId,
                                         @RequestParam(required=false, value="accept") String accept,
-                                        @RequestParam(required=false, value="reject") String reject) {
+                                        @RequestParam(required=false, value="reject") String reject, Model model) {
 	        String answer = "";
 	        if(accept != null && !accept.equals("")){
 	            answer = accept;
@@ -432,15 +434,16 @@ public class UserController {
                 answer = reject;
             }
             if(answer.equals("accept")){
-                //accept etc
+                userService.createNotificationReply(answer, notificationId);
             }
             else if(answer.equals("reject")){
+                userService.createNotificationReply(answer, notificationId);
                 //reject etc
             }
             filterUser(model);
             Notification notification = userService.getNotificationById(notificationId);
             model.addAttribute("notification", notification);
-            return "showNotification";
+			return "redirect:/notificationsPage";
         }
 
 

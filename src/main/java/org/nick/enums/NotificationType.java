@@ -4,6 +4,7 @@ public enum NotificationType {
 
 	    LEAVE_REQUEST,
 	    MEDIUM,
-	    LOW
+	    LOW,
+	    ANSWER
 	
 }

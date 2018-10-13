@@ -120,6 +120,8 @@ public interface UserService {
 
 	public Notification getNotificationById(long id);
 
+	public void createNotificationReply(String answer, long notification_id);
+
 	
 	
 	
